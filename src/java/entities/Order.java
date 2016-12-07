@@ -65,12 +65,12 @@ public class Order implements Serializable {
     }
 
     public void setModels(Model model, int quantity) {
-        for(int i = 1; i <= quantity; i++){
+        for (int i = 1; i <= quantity; i++) {
             model.setName(model.getName() + " " + i);
             models.add(model);
             this.models = models;
         }
-        
+
     }
 
     public OrderDate getOrderDate() {
@@ -88,5 +88,5 @@ public class Order implements Serializable {
     public void setAddDate(Date addDate) {
         this.addDate = addDate;
     }
-    
+
 }
