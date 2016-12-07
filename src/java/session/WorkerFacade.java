@@ -5,7 +5,7 @@
  */
 package session;
 
-import entities.OrderDate;
+import entities.Worker;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author pupil
  */
 @Stateless
-public class OrderDateFacade extends AbstractFacade<OrderDate> {
+public class WorkerFacade extends AbstractFacade<Worker> {
 
     @PersistenceContext(unitName = "WebFurniturePU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class OrderDateFacade extends AbstractFacade<OrderDate> {
         return em;
     }
 
-    public OrderDateFacade() {
-        super(OrderDate.class);
+    public WorkerFacade() {
+        super(Worker.class);
     }
     
 }
