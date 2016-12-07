@@ -5,12 +5,14 @@
  */
 package entities;
 
-import entities.OrderDate;
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.resource.spi.work.Work;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -19,35 +21,30 @@ import javax.resource.spi.work.Work;
 @Entity
 public class DoneWork implements Serializable {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer week;// = OrderDate.getWeek();
-    private Integer month;// = OrderDate.getMonth();
-    private Integer year;// = OrderDate.getYear();
-    private Long orderNo;// = Order.getOrderNo();
-    private String orderName;// = Order.getName();
-    private String modelName;// = Model.getName();
-    private String partName;// = Part.getName();
-    private Integer money;// = Part.getPrice();
-    private String workerFirstname;// = Worker.getFirstname();
-    private String workerSurname;// = Worker.getLastname();
+    private Integer _week;// = OrderDate.getWeek();
+    private Integer _month;// = OrderDate.getMonth();
+    private Integer _year;// = OrderDate.getYear();
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    private OrderFurniture orderFurniture;
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    private Model model;
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    private Part part;
 
     public DoneWork() {
     }
 
-    public DoneWork(Integer week, Integer month, Integer year, Long orderNo, String orderName, String modelName, String partName, Integer money, String workerFirstname, String workerSurname) {
-        this.week = week;
-        this.month = month;
-        this.year = year;
-        this.orderNo = orderNo;
-        this.orderName = orderName;
-        this.modelName = modelName;
-        this.partName = partName;
-        this.money = money;
-        this.workerFirstname = workerFirstname;
-        this.workerSurname = workerSurname;
+    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part) {
+        this._week = _week;
+        this._month = _month;
+        this._year = _year;
+        this.orderFurniture = orderFurniture;
+        this.model = model;
+        this.part = part;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -57,84 +54,103 @@ public class DoneWork implements Serializable {
     }
 
     public Integer getWeek() {
-        return week;
+        return _week;
     }
 
-    public void setWeek(Integer week) {
-        this.week = week;
+    public void setWeek(Integer _week) {
+        this._week = _week;
     }
 
     public Integer getMonth() {
-        return month;
+        return _month;
     }
 
-    public void setMonth(Integer month) {
-        this.month = month;
+    public void setMonth(Integer _month) {
+        this._month = _month;
     }
 
     public Integer getYear() {
-        return year;
+        return _year;
     }
 
-    public void setYear(Integer year) {
-        this.year = year;
+    public void setYear(Integer _year) {
+        this._year = _year;
     }
 
-    public Long getOrderNo() {
-        return orderNo;
+    public OrderFurniture getOrderFurniture() {
+        return orderFurniture;
     }
 
-    public void setOrderNo(Long orderNo) {
-        this.orderNo = orderNo;
+    public void setOrderFurniture(OrderFurniture orderFurniture) {
+        this.orderFurniture = orderFurniture;
     }
 
-    public String getOrderName() {
-        return orderName;
+    public Model getModel() {
+        return model;
     }
 
-    public void setOrderName(String orderName) {
-        this.orderName = orderName;
+    public void setModel(Model model) {
+        this.model = model;
     }
 
-    public String getModelName() {
-        return modelName;
+    public Part getPart() {
+        return part;
     }
 
-    public void setModelName(String modelName) {
-        this.modelName = modelName;
+    public void setPart(Part part) {
+        this.part = part;
     }
 
-    public String getPartName() {
-        return partName;
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this._week);
+        hash = 29 * hash + Objects.hashCode(this._month);
+        hash = 29 * hash + Objects.hashCode(this._year);
+        hash = 29 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 29 * hash + Objects.hashCode(this.model);
+        hash = 29 * hash + Objects.hashCode(this.part);
+        return hash;
     }
 
-    public void setPartName(String partName) {
-        this.partName = partName;
-    }
-
-    public Integer getMoney() {
-        return money;
-    }
-
-    public void setMoney(Integer money) {
-        this.money = money;
-    }
-
-    public String getWorkerFirstname() {
-        return workerFirstname;
-    }
-
-    public void setWorkerFirstname(String workerFirstname) {
-        this.workerFirstname = workerFirstname;
-    }
-
-    public String getWorkerSurname() {
-        return workerSurname;
-    }
-
-    public void setWorkerSurname(String workerSurname) {
-        this.workerSurname = workerSurname;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final DoneWork other = (DoneWork) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this._week, other._week)) {
+            return false;
+        }
+        if (!Objects.equals(this._month, other._month)) {
+            return false;
+        }
+        if (!Objects.equals(this._year, other._year)) {
+            return false;
+        }
+        if (!Objects.equals(this.orderFurniture, other.orderFurniture)) {
+            return false;
+        }
+        if (!Objects.equals(this.model, other.model)) {
+            return false;
+        }
+        if (!Objects.equals(this.part, other.part)) {
+            return false;
+        }
+        return true;
     }
     
+
+
     
 }
