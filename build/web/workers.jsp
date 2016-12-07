@@ -38,9 +38,9 @@
                     </div>   
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="adress">Адрес:</label>
+                    <label class="control-label col-sm-2" for="adress">Электронная почта:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="adress">
+                        <input type="text" class="form-control" id="mail">
                     </div>   
                 </div>
                 <div class="form-group">

@@ -3,18 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package finalData;
+package entities;
 
-import date.OrderDate;
-import items.Model;
-import items.Order;
-import items.Part;
+import entities.OrderDate;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.resource.spi.work.Work;
-import people.Worker;
 
 /**
  *
