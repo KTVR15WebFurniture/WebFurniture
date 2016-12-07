@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package items;
 
 import java.io.Serializable;
 import java.util.List;
@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Model implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -38,7 +39,7 @@ public class Model implements Serializable {
     }
 
     public void setParts(Part part, int quantity) {
-        for(int i = 1; i <= quantity; i++){
+        for (int i = 1; i <= quantity; i++) {
             part.setName(part.getName() + " " + i);
             parts.add(part);
             this.parts = parts;
@@ -76,5 +77,5 @@ public class Model implements Serializable {
     public void setParts(List<Part> parts) {
         this.parts = parts;
     }
-    
+
 }

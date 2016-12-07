@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package entities;
+package items;
 
-import entities.Model;
 import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,15 +25,21 @@ public class Part implements Serializable {
     private Long id;
     private String name;
     private Integer price;
+    private String description;
+    private Integer time;
     @ManyToOne(cascade = CascadeType.ALL)
     private Model model;
 
     public Part() {
     }
 
-    public Part(String name, Integer price) {
+    public Part(Long id, String name, Integer price, String description, Integer time, Model model) {
+        this.id = id;
         this.name = name;
         this.price = price;
+        this.description = description;
+        this.time = time;
+        this.model = model;
     }
 
     public Long getId() {
@@ -53,6 +58,30 @@ public class Part implements Serializable {
         this.name = name;
     }
 
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
+    }
+
     public Model getModel() {
         return model;
     }
@@ -61,11 +90,4 @@ public class Part implements Serializable {
         this.model = model;
     }
 
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 }
