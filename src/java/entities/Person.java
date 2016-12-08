@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import util.ParseCode;
 
 /**
  *
@@ -27,23 +26,20 @@ public class Person implements Serializable {
     private String lastname;
     private String isikukood;
     private String mail;
-    private String telefon;
-    private ParseCode parseCode;
-    
+    private String telephon;
+        
     public Person() {
     }
 
-    public Person(String firstname, String lastname, String isikukood, String mail, String telefon) {
+    public Person(String firstname, String lastname, String isikukood, String mail, String telephon) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.isikukood = isikukood;
         this.mail = mail;
-        this.telefon = telefon;
-        this.parseCode= new ParseCode(isikukood);
+        this.telephon = telephon;
+       
     }
 
-
-    
 
     public Long getId() {
         return id;
@@ -85,12 +81,12 @@ public class Person implements Serializable {
         this.mail = mail;
     }
 
-    public String getTelefon() {
-        return telefon;
+    public String getTelephon() {
+        return telephon;
     }
 
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
+    public void setTelephon(String telefon) {
+        this.telephon = telefon;
     }
 
     public String getIsikukood() {
@@ -104,12 +100,10 @@ public class Person implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.id);
-        hash = 41 * hash + Objects.hashCode(this.firstname);
-        hash = 41 * hash + Objects.hashCode(this.lastname);
-        hash = 41 * hash + Objects.hashCode(this.isikukood);
-        hash = 41 * hash + Objects.hashCode(this.mail);
-        hash = 41 * hash + Objects.hashCode(this.telefon);
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.firstname);
+        hash = 47 * hash + Objects.hashCode(this.lastname);
+        hash = 47 * hash + Objects.hashCode(this.isikukood);
         return hash;
     }
 
@@ -134,20 +128,10 @@ public class Person implements Serializable {
         if (!Objects.equals(this.isikukood, other.isikukood)) {
             return false;
         }
-        if (!Objects.equals(this.mail, other.mail)) {
-            return false;
-        }
-        if (!Objects.equals(this.telefon, other.telefon)) {
-            return false;
-        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
-    }
-
-    public ParseCode getParseCode() {
-        return parseCode;
     }
 
        

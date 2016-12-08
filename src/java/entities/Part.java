@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,23 +24,20 @@ public class Part implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String serial;
+    private String desctiption;
     private Integer price;
-    private String description;
-    private Integer time;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Model model;
+    private Integer duration;
+
 
     public Part() {
     }
 
-    public Part(Long id, String name, Integer price, String description, Integer time, Model model) {
-        this.id = id;
-        this.name = name;
+    public Part(String serial, String desctiption, Integer price, Integer duration) {
+        this.serial = serial;
+        this.desctiption = desctiption;
         this.price = price;
-        this.description = description;
-        this.time = time;
-        this.model = model;
+        this.duration = duration;
     }
 
     public Long getId() {
@@ -50,12 +48,20 @@ public class Part implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getSerial() {
+        return serial;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public String getDesctiption() {
+        return desctiption;
+    }
+
+    public void setDesctiption(String desctiption) {
+        this.desctiption = desctiption;
     }
 
     public Integer getPrice() {
@@ -66,28 +72,55 @@ public class Part implements Serializable {
         this.price = price;
     }
 
-    public String getDescription() {
-        return description;
+    public Integer getDuration() {
+        return duration;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
-    public Integer getTime() {
-        return time;
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        hash = 43 * hash + Objects.hashCode(this.serial);
+        hash = 43 * hash + Objects.hashCode(this.desctiption);
+        hash = 43 * hash + Objects.hashCode(this.price);
+        hash = 43 * hash + Objects.hashCode(this.duration);
+        return hash;
     }
 
-    public void setTime(Integer time) {
-        this.time = time;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Part other = (Part) obj;
+        if (!Objects.equals(this.serial, other.serial)) {
+            return false;
+        }
+        if (!Objects.equals(this.desctiption, other.desctiption)) {
+            return false;
+        }
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.price, other.price)) {
+            return false;
+        }
+        if (!Objects.equals(this.duration, other.duration)) {
+            return false;
+        }
+        return true;
     }
+    
 
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
 
 }

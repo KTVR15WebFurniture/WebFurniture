@@ -5,7 +5,7 @@
  */
 package session;
 
-import entities.Part;
+import entities.OrderFurniture;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Melnikov
  */
 @Stateless
-public class PartFacade extends AbstractFacade<Part> {
+public class OrderFurnitureFacade extends AbstractFacade<OrderFurniture> {
 
     @PersistenceContext(unitName = "WebFurniturePU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class PartFacade extends AbstractFacade<Part> {
         return em;
     }
 
-    public PartFacade() {
-        super(Part.class);
+    public OrderFurnitureFacade() {
+        super(OrderFurniture.class);
     }
     
 }
