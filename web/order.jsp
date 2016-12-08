@@ -5,23 +5,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="\WEB-INF\css\bootstrap.min.css">
-        <link rel="stylesheet" href="\WEB-INF\css\bootstrap-theme.css">
-        <link rel="stylesheet" href="\WEB-INF\css\calendar.css">
+        <link rel="stylesheet" type="text/css"  href="/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css"  href="/css/bootstrap-theme.css">
+        <link rel="stylesheet" type="text/css"  href="/css/calendar.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <title>Order Furniture </title>
     </head>
     <body>
 <style>
+ 
   #calendar4 {
-  width: 100%;
-  font: monospace;
-  max-width: 700px;
-  line-height: 1.2em;
-  font-size: 15px;
-  text-align: center;
-  margin: 0 auto;
+    height:200px;
+    width:200px;
+    margin:auto;
+    line-height: 1.5em;
 }
+select{ 
+    padding: 3px;
+}
+
+
 #calendar4 thead tr:last-child {
   font-size: small;
   font-weight: 700;
@@ -41,7 +44,8 @@
   outline: 3px solid red;
 }
 </style>
-
+<div class="text-center">
+<h3> Календарь </h3>
 <table id="calendar4">
   <thead>
     <tr><td><td colspan="4"><select>
@@ -61,7 +65,7 @@
     <tr><td>Неделя<td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
   <tbody>
 </table>
-
+</div>
 <script>
 function Calendar4(id, year, month) {
 
@@ -151,97 +155,135 @@ document.querySelector('#calendar4').onchange = function Kalendar4() {
 </script>
 
 
-
      <div class="text-center">
-        <form>
-             <div class="container">
-             <fieldset>
-             <legend><h1 class="text-center">Заказ</h1></legend>   
+      <div class="container">
+          <form action="" method="post">
+         <fieldset>
+             <legend><h1>Заказ</h1></legend>   
+           
             Номер заказа:<br>
-            <input required autofocus type="text">
+            <input id="nomerz" required autofocus type="text">
             <br>
             
+            <div class="form-group">
+           <div class="col-sm-4"> 
              Неделя:<br>
             <select>
-                <option value="1"> 1</option> 
+                <option id="weeks" value="1"> 1</option> 
             </select>
-             
+           </div>
             <br>
-            
-                Месяц:<br>
+             <div class="col-sm-4">
+                 Месяц:<br>
             <select>
-                <option value="1"> 1</option> 
+                <option id="month" value="1"> 1</option> 
             </select>
-         
-            <br>
-               Год:<br>
+                </div>
+          <div class="col-sm-4">
+              Год:<br>
             <select>
-                <option value="2017"> 2017</option> 
+                <option id="year" value="2017"> 2017</option> 
             </select>
-        
+            </div>
+            </div>
             <br>
+         <div class="form-group">
+           <div class="col-sm-4">
             Модель:<br>
-             <select>
+             <select class="model" >
              <option value="1">1</option>
              <option value="2">2</option>
              <option value="2">3</option>
             </select>
             <br>
+            </div>
+              <div class="col-sm-5"> 
             Количество:<br>
             <input required type="text">
             <br>
+           </div>
+         </div>
+           <div class="form-group">
+               <div class="col-sm-4"> 
             Модель:<br>
-             <select>
+            
+             <select class="model">
              <option value="1">1</option>
              <option value="2">2</option>
              <option value="2">3</option>
             </select>
+               </div>
             <br>
+            <div class="col-sm-5"> 
             Количество:<br>
             <input required type="text">
             <br>
+            </div>
+            </div>
+               <div class="form-group">
+                     <div class="col-sm-4"> 
             Модель:<br>
-             <select>
+            <select class="model">
              <option value="1">1</option>
              <option value="2">2</option>
              <option value="2">3</option>
             </select>
+                     </div>
             <br>
+            <div class="col-sm-5"> 
             Количество:<br>
             <input required type="text">
             <br>
+            </div>
+               </div>
+             <div class="form-group">
+                     <div class="col-sm-4">
             Модель:<br>
-             <select>
+             <select class="model">
              <option value="1">1</option>
              <option value="2">2</option>
              <option value="2">3</option>
             </select>
             <br>
+                     </div>
+                   <div class="col-sm-5">
             Количество:<br>
             <input required type="text">
             <br>
-            Модель:<br>
-             <select>
+                   </div>
+                 </div>
+          <div class="form-group">
+               <div class="col-sm-4">
+                       Модель:<br>
+             <select class="model">
              <option value="1">1</option>
              <option value="2">2</option>
              <option value="2">3</option>
             </select>
+               </div>
+             <div class="col-sm-5">
+            <br>
+            Количество:<br>
+            <input  required type="text">
+            </div>
+              </div>
+            <br>
             
             <br>
-            Количество:<br>
-            <input required type="text">
-            <br>
-            <br>
-           
-            <input class="btn btn-primary"  type ="submit" value="Заказать"> </input>
-            <input class="btn btn-primary"  type ="submit" value="Изменить"> </input>
-            <input class="btn btn-primary"  type ="submit" value="Удалить"> </input>
             
-                 
+             <div class="form-group">
+                  <div class="col-sm-6">
+            <input class="btn btn-primary" id="zakazat"  type ="submit" value="Заказать"> </input>
+            <input class="btn btn-primary" id="change" type ="submit" value="Изменить"> </input>
+            <input class="btn btn-primary" id="remove" type ="submit" value="Удалить"> </input>
+            
+              </div>
+                 </div>
              </fieldset>
-        </div>
+     
         </form>
         </div>
+         </div> 
   
   <div class="container">
       <h2>Заказы:</h2>
