@@ -19,6 +19,7 @@ import javax.persistence.OneToMany;
  *
  * @author pupil
  */
+
 @Entity
 public class Model implements Serializable {
     @Id

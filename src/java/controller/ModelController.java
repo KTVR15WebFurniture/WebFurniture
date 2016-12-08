@@ -37,6 +37,7 @@ public class ModelController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -47,10 +48,11 @@ public class ModelController extends HttpServlet {
             if (newModel != null) {
                 //создaть запись в таблицу с названиями моделей
             }
-            List<Model> models = modelFacade.findAll();
-            getServletContext().setAttribute("models", models);
-            List<Part> parts = partFacade.findAll();
-            getServletContext().setAttribute("parts", parts);
+//            List<Model> models = modelFacade.findAll();
+//            getServletContext().setAttribute("models", models);
+//            
+//            List<Part> parts = partFacade.findAll();
+//            getServletContext().setAttribute("parts", parts);
         }
         request.getRequestDispatcher("/WEB-INF" + userPath + ".jsp").forward(request, response);
     }
