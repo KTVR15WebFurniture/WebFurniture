@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class Model implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -93,5 +94,5 @@ public class Model implements Serializable {
         }
         return true;
     }
-    
+
 }
