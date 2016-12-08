@@ -20,12 +20,20 @@ public class Worker extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String status;
 
     public Worker() {
     }
 
-    public Worker(String firstname, String lastname, String isikukood, String mail, String telefon) {
-        super(firstname, lastname, isikukood, mail, telefon);
+    public Worker(Long id, String status) {
+        this.id = id;
+        this.status = status;
+    }
+
+    public Worker(Long id, String status, String firstname, String lastname, String isikukood, String mail, String telephon) {
+        super(firstname, lastname, isikukood, mail, telephon);
+        this.id = id;
+        this.status = status;
     }
 
     @Override
@@ -36,6 +44,14 @@ public class Worker extends Person{
     @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

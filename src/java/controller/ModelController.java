@@ -5,12 +5,18 @@
  */
 package controller;
 
+import entities.Model;
+import entities.Part;
 import java.io.IOException;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import session.ModelFacade;
+import session.PartFacade;
 
 /**
  *
@@ -18,7 +24,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "Controller", urlPatterns = {"/models"})
 public class ModelController extends HttpServlet {
-
+    @EJB
+    ModelFacade modelFacade;
+    PartFacade partFacade;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,8 +47,10 @@ public class ModelController extends HttpServlet {
             if (newModel != null) {
                 //создaть запись в таблицу с названиями моделей
             }
-            //List<Model> models = modelFacade.findAll();
-            //getServletContext().setAttribute("models", models);
+            List<Model> models = modelFacade.findAll();
+            getServletContext().setAttribute("models", models);
+            List<Part> parts = partFacade.findAll();
+            getServletContext().setAttribute("parts", parts);
         }
         request.getRequestDispatcher("/WEB-INF" + userPath + ".jsp").forward(request, response);
     }

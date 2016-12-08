@@ -29,7 +29,6 @@ public class Part implements Serializable {
     private Integer price;
     private Integer duration;
 
-
     public Part() {
     }
 
@@ -120,7 +119,5 @@ public class Part implements Serializable {
         }
         return true;
     }
-    
-
 
 }

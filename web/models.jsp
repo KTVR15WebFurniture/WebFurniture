@@ -28,10 +28,10 @@
                                 <%--
                                 <c:forEach var="model" items="models">
                                     <c:if test="${model.id eq selectedModel.id}">
-                                        <option selected="true" value="${model.id}">${model.modelName}</option> 
+                                        <option selected="true" value="${model.id}">${model.name}</option> 
                                     </c:if>
                                     <c:if test="${model.id ne selectedModel.id}">
-                                        <option value="${model.id}">${model.modelName}</option>
+                                        <option value="${model.id}">${model.name}</option>
                                     </c:if>
                                 </c:forEach>
                                 --%>
@@ -49,10 +49,10 @@
                                 <%--
                                 <c:forEach var="part" items="parts">
                                     <c:if test="${part.id eq selectedPart.id}">
-                                        <option selected="true" value="${part.id}">${part.name}</option> 
+                                        <option selected="true" value="${part.id}">${part.serial}</option> 
                                     </c:if>
                                     <c:if test="${part.id ne selectedPart.id}">
-                                        <option value="${part.id}">${part.name}</option>
+                                        <option value="${part.id}">${part.serial}</option>
                                     </c:if>
                                 </c:forEach>
                                 --%>
@@ -86,10 +86,10 @@
                     <c:forEach var="operation" items="${operations}">
                     --%>
                     <tr>
-                        <td>${part.name}</td>
+                        <td>${part.serial}</td>
                         <td>${part.price}</td>
-                        <td></td>
-                        <td></td>
+                        <td>${part.duration}</td>
+                        <td>${part.desctiption}</td>
                         <td>            
                             <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationEdit" data-remote="">
                                 <span class="glyphicon glyphicon-edit" title="Изменить" ></span></a>
