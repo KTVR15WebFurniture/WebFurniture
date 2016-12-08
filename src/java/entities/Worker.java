@@ -20,12 +20,14 @@ public class Worker extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String status; //professija
 
     public Worker() {
     }
 
-    public Worker(String firstname, String lastname, String isikukood, String mail, String telefon) {
-        super(firstname, lastname, isikukood, mail, telefon);
+    public Worker(String status, String firstname, String lastname, String isikukood, String mail, String telephon) {
+        super(firstname, lastname, isikukood, mail, telephon);
+        this.status = status;
     }
 
     @Override
@@ -38,18 +40,24 @@ public class Worker extends Person{
         this.id = id;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.status);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if( !super.equals(obj)){
-            return false;
-        }
         if (this == obj) {
             return true;
         }
@@ -60,12 +68,14 @@ public class Worker extends Person{
             return false;
         }
         final Worker other = (Worker) obj;
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
-    
-    
+
     
 }

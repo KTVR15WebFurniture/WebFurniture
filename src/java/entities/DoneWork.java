@@ -32,6 +32,7 @@ public class DoneWork implements Serializable {
     private Model model;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     private Part part;
+    
 
     public DoneWork() {
     }
