@@ -24,7 +24,7 @@
                     <label for="usr">Наименование модели: </label>                    
                     <div class="row">
                         <div class="col-sm-9">
-                            <select class="form-control " id="_model" name="model">
+                            <select class="form-control " required="true" id="_model" name="model">
                                 <%--
                                 <c:forEach var="model" items="models">
                                     <c:if test="${model.id eq selectedModel.id}">
@@ -38,14 +38,14 @@
                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addModel">Добавить новую</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModel">Добавить новую</button>
                         </div>
                     </div>                  
                     <br>
                     <label for="usr">Наименование операции: </label>
                     <div class="row">
                         <div class="col-sm-9">
-                            <select class="form-control " id="_model" name="operation">
+                            <select class="form-control " required="true" id="_model" name="operation">
                                 <%--
                                 <c:forEach var="part" items="parts">
                                     <c:if test="${part.id eq selectedPart.id}">
@@ -59,7 +59,7 @@
                             </select>
                         </div>
                         <div class="col-sm-2">
-                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#addOperation">Добавить новую</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOperation">Добавить новую</button>
                         </div>
                     </div>   
                     <br>
@@ -118,7 +118,7 @@
                         <input type="text" class="form-control" id="_newmodel" name="newmodel">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Добавить</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Добавить</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -135,28 +135,28 @@
                     </div>
                     <div class="modal-body">
                         <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_name">
+                        <input type="text" class="form-control" id="_partname" name="partname">
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_description"></textarea>
+                        <textarea class="form-control" rows="5" id="_partdescription" name="partdescription"></textarea>
 
                         <br>                   
 
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_price">
+                                <input type="text" class="form-control" id="_partprice" name="partprice">
 
                                 <br>
 
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_time">
+                                <input type="text" class="form-control" id="_parttime" name="parttime">
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Добавить</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Добавить</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Сохранить</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Сохранить</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                     </div>
                 </div>
@@ -214,7 +214,7 @@
                         % название операции здесь %
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Удалить</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Удалить</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
                     </div>
                 </div>

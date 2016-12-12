@@ -44,15 +44,44 @@ public class ModelController extends HttpServlet {
 
         String userPath = request.getServletPath();
         if ("/models".equals(userPath)) {
-            String newModel = request.getParameter("newmodel");
-            if (newModel != null) {
-                //создaть запись в таблицу с названиями моделей
+            
+            String newmodel = request.getParameter("newmodel");
+            
+            if (newmodel != null) {
+                getServletContext().setAttribute("newmodel", newmodel);
             }
+            
+            String partname = request.getParameter("partname");
+            String partdescription = request.getParameter("partdescription");
+            String partprice = request.getParameter("partprice");
+            String parttime = request.getParameter("parttime");
+            
+            if (partname != null && partdescription != null && partprice != null && parttime != null ) {
+                getServletContext().setAttribute("partname", partname);
+                getServletContext().setAttribute("partdescription", partdescription);
+                getServletContext().setAttribute("partprice", partprice);
+                getServletContext().setAttribute("parttime", parttime);
+            }  
+                    
+            Long modelId = Long.parseLong(request.getParameter("model"));
+            Long partId = Long.parseLong(request.getParameter("operation"));
+            
+            if (modelId != 0L) {
+                Model selectedModel = modelFacade.find(modelId);
+                getServletContext().setAttribute("selectedModel", selectedModel);
+            }
+            
+            if (partId != 0L) {
+                Part selectedPart = partFacade.find(partId);
+                getServletContext().setAttribute("selectedPart", selectedPart);
+            }
+                            
             List<Model> models = modelFacade.findAll();
             getServletContext().setAttribute("models", models);
             
             List<Part> parts = partFacade.findAll();
             getServletContext().setAttribute("parts", parts);
+                        
         }
         request.getRequestDispatcher("/WEB-INF" + userPath + ".jsp").forward(request, response);
     }

@@ -37,7 +37,8 @@ public class DoneWork implements Serializable {
     public DoneWork() {
     }
 
-    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part) {
+    public DoneWork(Long id, Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part) {
+        this.id = id;
         this._week = _week;
         this._month = _month;
         this._year = _year;
@@ -104,14 +105,14 @@ public class DoneWork implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this._week);
-        hash = 29 * hash + Objects.hashCode(this._month);
-        hash = 29 * hash + Objects.hashCode(this._year);
-        hash = 29 * hash + Objects.hashCode(this.orderFurniture);
-        hash = 29 * hash + Objects.hashCode(this.model);
-        hash = 29 * hash + Objects.hashCode(this.part);
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this._week);
+        hash = 47 * hash + Objects.hashCode(this._month);
+        hash = 47 * hash + Objects.hashCode(this._year);
+        hash = 47 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 47 * hash + Objects.hashCode(this.model);
+        hash = 47 * hash + Objects.hashCode(this.part);
         return hash;
     }
 
