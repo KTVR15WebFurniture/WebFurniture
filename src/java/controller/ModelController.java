@@ -54,13 +54,13 @@ public class ModelController extends HttpServlet {
             String newpartname = request.getParameter("newpartname");
             String newpartdescription = request.getParameter("newpartdescription");
             String newpartprice = request.getParameter("newpartprice");
-            String newparttime = request.getParameter("newparttime");
+            String newpartduration = request.getParameter("newpartduration");
 
-            if (newpartname != null && newpartdescription != null && newpartprice != null && newparttime != null) {
+            if (newpartname != null && newpartdescription != null && newpartprice != null && newpartduration != null) {
                 getServletContext().setAttribute("newpartname", newpartname);
                 getServletContext().setAttribute("newpartdescription", newpartdescription);
                 getServletContext().setAttribute("newpartprice", newpartprice);
-                getServletContext().setAttribute("newparttime", newparttime);
+                getServletContext().setAttribute("newpartduration", newpartduration);
             }
 
             Long modelId = Long.parseLong(request.getParameter("model"));

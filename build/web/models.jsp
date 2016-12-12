@@ -151,7 +151,7 @@
                                 <br>
 
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_newparttime" name="newparttime">
+                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration">
                             </div>
                         </div>
                     </div>
@@ -173,24 +173,24 @@
                     </div>
                     <div class="modal-body">
                         <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_editpartname" name="editpartname">
+                        <input type="text" class="form-control" id="_editpartname" name="editpartname" value="${part.name}">
 
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_editpartdescription" name="editpartdescription"></textarea>
+                        <textarea class="form-control" rows="5" id="_editpartdescription" name="editpartdescription"> ${part.description} </textarea>
 
                         <br>                   
 
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_editpartprice" name="editpartprice">
+                                <input type="text" class="form-control" id="_editpartprice" name="editpartprice" value="${part.price}">
 
                                 <br>
 
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_editparttime" name="editparttime">
+                                <input type="text" class="form-control" id="_editparttime" name="editparttime" value="${part.duration}">
                             </div>
                         </div>
                     </div>
