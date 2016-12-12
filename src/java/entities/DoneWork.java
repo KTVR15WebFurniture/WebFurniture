@@ -20,17 +20,18 @@ import javax.persistence.OneToOne;
  */
 @Entity
 public class DoneWork implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Integer _week;// = OrderDate.getWeek();
     private Integer _month;// = OrderDate.getMonth();
     private Integer _year;// = OrderDate.getYear();
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private OrderFurniture orderFurniture;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Model model;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Part part;
 
     public DoneWork() {
@@ -149,8 +150,5 @@ public class DoneWork implements Serializable {
         }
         return true;
     }
-    
 
-
-    
 }
