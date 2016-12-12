@@ -135,23 +135,23 @@
                     </div>
                     <div class="modal-body">
                         <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_partname" name="partname">
+                        <input type="text" class="form-control" id="_newpartname" name="newpartname">
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_partdescription" name="partdescription"></textarea>
+                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription"></textarea>
 
                         <br>                   
 
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_partprice" name="partprice">
+                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice">
 
                                 <br>
 
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_parttime" name="parttime">
+                                <input type="text" class="form-control" id="_newparttime" name="newparttime">
                             </div>
                         </div>
                     </div>
@@ -173,24 +173,24 @@
                     </div>
                     <div class="modal-body">
                         <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_name">
+                        <input type="text" class="form-control" id="_editpartname" name="editpartname">
 
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_description"></textarea>
+                        <textarea class="form-control" rows="5" id="_editpartdescription" name="editpartdescription"></textarea>
 
                         <br>                   
 
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_price">
+                                <input type="text" class="form-control" id="_editpartprice" name="editpartprice">
 
                                 <br>
 
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_time">
+                                <input type="text" class="form-control" id="_editparttime" name="editparttime">
                             </div>
                         </div>
                     </div>
