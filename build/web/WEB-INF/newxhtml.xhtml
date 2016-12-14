@@ -1,0 +1,37 @@
+<c:forEach var="ord" items="${orders}">
+                                    <c:if test="${ord.id eq selectedOrder.id}">
+                                        <option value="${ord.id}" selected="true">${ord.name}</option>
+                                    </c:if>
+                                    <c:if test="${ord.id ne selectedOrder.id}">
+                                        <option value="${ord.id}">${ord.name}</option>
+                                    </c:if>
+                                </c:forEach>
+
+<c:forEach var="mode" items="${selectedOrder.models}">
+                                    <c:if test="${mode.id eq selectedModel}">
+                                        <option value="${mode.id}" selected="true">${mode.name}</option>
+                                    </c:if>
+                                    <c:if test="${mode.id ne selectedModel}">
+                                        <option value="${mode.id}">${mode.name}</option>
+                                    </c:if>
+                                </c:forEach>
+
+<c:forEach var="part" items="${slectedModel.parts}">
+                                    <c:if test="${part.id eq selectedPart.id}">
+                                        <option value="${part.id}" selected="true">${part.name}</option>
+                                    </c:if>
+                                    <c:if test="${part.id ne selectedPart.id}">
+                                        <option value="${part.id}">${part.name}</option>
+                                    </c:if>
+                                </c:forEach>
+
+
+<c:forEach var="doneWork" items="doneWorks">
+                    <td style="padding: 10px">${doneWork._week}</td>
+                    <td style="padding: 10px">${doneWork._month}</td>
+                    <td style="padding: 10px">${doneWork._year}</td>
+                    <td style="padding: 10px">${doneWork.order.id}</td>
+                    <td style="padding: 10px">${doneWork.model.id}</td>
+                    <td style="padding: 10px">${doneWork.part.id}</td>
+                    <td style="padding: 10px">${doneWork.part.price}</td>
+</c:forEach>
