@@ -46,7 +46,6 @@ public class ModelController extends HttpServlet {
         if ("/models".equals(userPath)) {
 
             String newmodel = request.getParameter("newmodel");
-
             if (newmodel != null) {
                 getServletContext().setAttribute("newmodel", newmodel);
             }
@@ -55,7 +54,6 @@ public class ModelController extends HttpServlet {
             String newpartdescription = request.getParameter("newpartdescription");
             String newpartprice = request.getParameter("newpartprice");
             String newpartduration = request.getParameter("newpartduration");
-
             if (newpartname != null && newpartdescription != null && newpartprice != null && newpartduration != null) {
                 getServletContext().setAttribute("newpartname", newpartname);
                 getServletContext().setAttribute("newpartdescription", newpartdescription);
@@ -64,13 +62,12 @@ public class ModelController extends HttpServlet {
             }
 
             Long modelId = Long.parseLong(request.getParameter("model"));
-            Long partId = Long.parseLong(request.getParameter("operation"));
-
             if (modelId != 0L) {
                 Model selectedModel = modelFacade.find(modelId);
                 getServletContext().setAttribute("selectedModel", selectedModel);
             }
-
+            
+            Long partId = Long.parseLong(request.getParameter("operation"));            
             if (partId != 0L) {
                 Part selectedPart = partFacade.find(partId);
                 getServletContext().setAttribute("selectedPart", selectedPart);
