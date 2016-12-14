@@ -89,7 +89,7 @@
                         <td>${part.serial}</td>
                         <td>${part.price}</td>
                         <td>${part.duration}</td>
-                        <td>${part.desctiption}</td>
+                        <td>${part.description}</td>
                         <td>            
                             <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationEdit" data-remote="">
                                 <span class="glyphicon glyphicon-edit" title="Изменить" ></span></a>
