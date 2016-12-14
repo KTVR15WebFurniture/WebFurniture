@@ -78,6 +78,8 @@ public class ModelController extends HttpServlet {
 
             List<Part> parts = partFacade.findAll();
             getServletContext().setAttribute("parts", parts);
+            
+            
 
         }
         request.getRequestDispatcher("/WEB-INF" + userPath + ".jsp").forward(request, response);

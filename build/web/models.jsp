@@ -16,7 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-
+        
         <section class="container">
             <h1 class="col-sm-offset-5">Модель: </h1>
             <form method="POST" class="col-sm-8 col-sm-offset-2" action="addmodel" id="_addproduct" name="addmodel">
