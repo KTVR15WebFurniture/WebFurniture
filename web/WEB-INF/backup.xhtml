@@ -16,7 +16,7 @@
                                     </c:if>
                                 </c:forEach>
 
-<c:forEach var="part" items="${slectedModel.parts}">
+<c:forEach var="part" items="${selectedModel.parts}">
                                     <c:if test="${part.id eq selectedPart.id}">
                                         <option value="${part.id}" selected="true">${part.name}</option>
                                     </c:if>

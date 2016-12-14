@@ -5,7 +5,9 @@
  */
 package session;
 
+import entities.DoneWork;
 import java.util.List;
+import javax.management.Query;
 import javax.persistence.EntityManager;
 
 /**
@@ -60,5 +62,4 @@ public abstract class AbstractFacade<T> {
         javax.persistence.Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-    
 }

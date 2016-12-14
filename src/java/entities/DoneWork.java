@@ -104,6 +104,14 @@ public class DoneWork implements Serializable {
         this.part = part;
     }
 
+    public Worker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;

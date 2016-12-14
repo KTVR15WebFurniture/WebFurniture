@@ -38,7 +38,6 @@
                     <tr><td><td>Пн<td>Вт<td>Ср<td>Чт<td>Пт<td>Сб<td>Вс
                 <tbody>
             </table>
-            <hr>
 
             <form action="addWork" method="POST">
                 <table style="margin: 0 auto">
@@ -56,22 +55,29 @@
                             <input name="year" value="${year}" style="width: 100px; margin-right: 5px;">
                         </div>
                     </div>
-                    <div class="form-inline" style="text-align: center; margin-bottom: 10px;">
-                        <div class="form-group">
-                            <label for="firstname">Имя</label>
-                            <input name="firstname" value="${firstname}"type="text"/>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastname">Фамилия</label>
-                            <input name="lastname"  value="${lastname} "type="text"/>
-                        </div>
-                    </div>
-                    <tr class="form-group" style="text-align: center">
+                    <tr>
                         <td>
-                            <label for="order" style="padding-right: 10px;">Заказ</label>
+                            <label for="workerId" style="padding-right: 10px;">Имя работника</label>
                         </td>
                         <td>
-                            <select name="order" id="order" style="width: 250px" onchange="orderSelection">
+                            <select name="workerId" style="width: 250px;">
+                                <c:forEach var="worker" items="${wokers}">
+                                    <c:if test="${worker.id eq selectedWorker.id}">
+                                        <option value="${worker.id}" selected="true">${worker.firstname} ${worker.lastname}</option>
+                                    </c:if>
+                                    <c:if test="${worker.id ne selectedWorker.id}">
+                                        <option value="${worker.id}">${worker.firstname} ${worker.lastname}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="form-group" style="text-align: center">
+                        <td>
+                            <label for="orderId" style="padding-right: 10px;">Заказ</label>
+                        </td>
+                        <td>
+                            <select name="orderId" id="order" style="width: 250px" onchange="orderSelection">
                                 <c:forEach var="ord" items="${orders}">
                                     <c:if test="${ord.id eq selectedOrder.id}">
                                         <option value="${ord.id}" selected="true">${ord.name}</option>
@@ -85,10 +91,10 @@
                     </tr>
                     <tr class="form-group" style="text-align: center">
                         <td>
-                            <label for="model" style="padding-right: 10px;">Модель</label>
+                            <label for="modelId" style="padding-right: 10px;">Модель</label>
                         </td>
                         <td>
-                            <select name="model" id="model" style="width: 250px" onchange="modelSelection">
+                            <select name="modelId" id="model" style="width: 250px" onchange="modelSelection">
                                 <c:forEach var="mode" items="${selectedOrder.models}">
                                     <c:if test="${mode.id eq selectedModel}">
                                         <option value="${mode.id}" selected="true">${mode.name}</option>
@@ -102,11 +108,11 @@
                     </tr>
                     <tr class="form-group" style="text-align: center">
                         <td>
-                            <label for="operation" style="padding-right: 10px;">Деталь</label>
+                            <label for="operationId" style="padding-right: 10px;">Деталь</label>
                         </td>
                         <td>
-                            <select name="operation" id="operation" style="width: 250px">
-                                <c:forEach var="part" items="${slectedModel.parts}">
+                            <select name="operationId" id="operation" style="width: 250px">
+                                <c:forEach var="part" items="${selectedModel.parts}">
                                     <c:if test="${part.id eq selectedPart.id}">
                                         <option value="${part.id}" selected="true">${part.name}</option>
                                     </c:if>
@@ -125,24 +131,33 @@
                     </tr>
                 </table>
             </form>
+            <c:if test="${selectedWorker.id ne null}">
+                <h4>Заработано: ${profit}</h4>
+                <table class="table-bordered" style="margin: 0 auto">
+                    <thead>
+                        <th style="padding: 10px">Неделя</th>
+                        <th style="padding: 10px">Месяц</th>
+                        <th style="padding: 10px">Год</th>
+                        <th style="padding: 10px">Номер заказа</th>
+                        <th style="padding: 10px">Модель</th>
+                        <th style="padding: 10px">Компонент</th>
+                        <th style="padding: 10px">Плата</th>
+                    </thead>
+                    <tbody>
 
-            <hr>
-            <h4>Заработано: ${profit}</h4>
-            <table class="table-bordered" style="margin: 0 auto">
-                <thead>
-                <th style="padding: 10px">Неделя</th>
-                <th style="padding: 10px">Месяц</th>
-                <th style="padding: 10px">Год</th>
-                <th style="padding: 10px">Номер заказа</th>
-                <th style="padding: 10px">Модель</th>
-                <th style="padding: 10px">Компонент</th>
-                <th style="padding: 10px">Плата</th>
-                </thead>
-                <tbody>
+                        <c:forEach var="doneWork" items="doneWorks">
+                            <td style="padding: 10px">${doneWork._week}</td>
+                            <td style="padding: 10px">${doneWork._month}</td>
+                            <td style="padding: 10px">${doneWork._year}</td>
+                            <td style="padding: 10px">${doneWork.order.id}</td>
+                            <td style="padding: 10px">${doneWork.model.id}</td>
+                            <td style="padding: 10px">${doneWork.part.id}</td>
+                            <td style="padding: 10px">${doneWork.part.price}</td>
+                        </c:forEach>
 
-
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </c:if>
         </div>
     </body>
     <style>
@@ -174,15 +189,14 @@
     </style>
 
     <script>
-        function orderSelection(){
-            <%
-                
-            %>
+        function orderSelection() {
+        <%
+
+        %>
         }
-        function modelSelection(){
-            <%
-                
-            %>
+        function modelSelection() {
+        <%
+        %>
         }
         function Calendar4(id, year, month) {
 
