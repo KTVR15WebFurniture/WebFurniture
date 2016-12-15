@@ -6,9 +6,11 @@
 package session;
 
 import entities.OrderFurniture;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,14 @@ public class OrderFurnitureFacade extends AbstractFacade<OrderFurniture> {
         super(OrderFurniture.class);
     }
     
+    public List<OrderFurniture> OrdersByDate (Integer week, Integer month, Integer year){
+        
+        Query query = getEntityManager().createQuery("Select o from OrderFurniture o where o.orderDate._week = :week && o.orderDate._month = :month && o.orderDate._year = :year", OrderFurniture.class)
+                .setParameter("week", week)
+                .setParameter("month", month)
+                .setParameter("year", year);
+        List<OrderFurniture> ordersByDate = query.getResultList();
+        
+        return ordersByDate;
+    }
 }
