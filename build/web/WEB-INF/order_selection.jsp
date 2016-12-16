@@ -60,8 +60,8 @@
                             <label for="workerId" style="padding-right: 10px;">Имя работника</label>
                         </td>
                         <td>
-                            <select name="workerId" style="width: 250px;">
-                                <c:forEach var="worker" items="${wokers}">
+                            <select name="workerId" style="width: 250px;" onchange="submit()">
+                                <c:forEach var="worker" items="${workers}">
                                     <c:if test="${worker.id eq selectedWorker.id}">
                                         <option value="${worker.id}" selected="true">${worker.firstname} ${worker.lastname}</option>
                                     </c:if>
@@ -77,7 +77,7 @@
                             <label for="orderId" style="padding-right: 10px;">Заказ</label>
                         </td>
                         <td>
-                            <select name="orderId" id="order" style="width: 250px" onchange="orderSelection">
+                            <select name="orderId" style="width: 250px"  onchange="submit()">
                                 <c:forEach var="ord" items="${orders}">
                                     <c:if test="${ord.id eq selectedOrder.id}">
                                         <option value="${ord.id}" selected="true">${ord.name}</option>
@@ -94,7 +94,7 @@
                             <label for="modelId" style="padding-right: 10px;">Модель</label>
                         </td>
                         <td>
-                            <select name="modelId" id="model" style="width: 250px" onchange="modelSelection">
+                            <select name="modelId" style="width: 250px"  onchange="submit()">
                                 <c:forEach var="mode" items="${selectedOrder.models}">
                                     <c:if test="${mode.id eq selectedModel}">
                                         <option value="${mode.id}" selected="true">${mode.name}</option>
@@ -111,7 +111,7 @@
                             <label for="operationId" style="padding-right: 10px;">Деталь</label>
                         </td>
                         <td>
-                            <select name="operationId" id="operation" style="width: 250px">
+                            <select name="operationId" id="operation" style="width: 250px" onchange="submit()>
                                 <c:forEach var="part" items="${selectedModel.parts}">
                                     <c:if test="${part.id eq selectedPart.id}">
                                         <option value="${part.id}" selected="true">${part.name}</option>
@@ -144,17 +144,6 @@
                         <th style="padding: 10px">Плата</th>
                     </thead>
                     <tbody>
-
-                        <c:forEach var="doneWork" items="doneWorks">
-                            <td style="padding: 10px">${doneWork._week}</td>
-                            <td style="padding: 10px">${doneWork._month}</td>
-                            <td style="padding: 10px">${doneWork._year}</td>
-                            <td style="padding: 10px">${doneWork.order.id}</td>
-                            <td style="padding: 10px">${doneWork.model.id}</td>
-                            <td style="padding: 10px">${doneWork.part.id}</td>
-                            <td style="padding: 10px">${doneWork.part.price}</td>
-                        </c:forEach>
-
                     </tbody>
                 </table>
             </c:if>
@@ -189,15 +178,6 @@
     </style>
 
     <script>
-        function orderSelection() {
-        <%
-
-        %>
-        }
-        function modelSelection() {
-        <%
-        %>
-        }
         function Calendar4(id, year, month) {
 
             Date.prototype.getWeek = function () {

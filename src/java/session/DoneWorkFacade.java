@@ -43,7 +43,7 @@ public class DoneWorkFacade extends AbstractFacade<DoneWork> {
         return doneWorkByWorkerForWeek;
     }
     
-    public Integer QountWorkersProfit(Long id){
+    public Integer CountWorkersProfit(Long id){
         
         Query query = getEntityManager().createQuery("SELECT p SUM(p.orderFurniture.models.parts.price) FROM DoneWork p WHERE p.worker.id = :id ", DoneWork.class)
                 .setParameter("id", id);

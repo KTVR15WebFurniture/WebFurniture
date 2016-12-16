@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,7 +29,7 @@ import session.WorkerFacade;
  * @author pupil
  */
 @WebServlet(name = "WorkerController", urlPatterns = {"/addWork"})
-public class WorkerController extends HttpServlet {
+public class WorkerOrderController extends HttpServlet {
 
     @EJB
     ModelFacade modelFacade;
@@ -56,6 +57,20 @@ public class WorkerController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if ("/addWork".equals(request.getServletPath())) {
+//            Worker worker = new Worker("ivan", "ivanov", "39212234556", "iban@mail.ee", "53596251");
+//        Part part = new Part("46131", "leg", 20, 20);
+//        List<Part> parts = new ArrayList<>();
+//        parts.add(part);
+//        Model model = new Model("chair", parts);
+//        List<Model> models = new ArrayList<>();
+//        models.add(model);
+//        OrderDate orderDate = new OrderDate(50, 12, 2016);
+//        OrderFurniture orderFurniture = new OrderFurniture("kichen", models, orderDate);
+//        workerFacade.create(worker);
+//        partFacade.create(part);
+//        modelFacade.create(model);
+//        orderDateFacade.create(orderDate);
+//        orderFacade.create(orderFurniture);
             Calendar today = Calendar.getInstance();
             Integer week = today.get(Calendar.WEEK_OF_YEAR) - 1; //Integer.parseInt(request.getParameter("week"));
             Integer month = today.get(Calendar.MONTH) + 1; //Integer.parseInt(request.getParameter("month"));
@@ -63,13 +78,14 @@ public class WorkerController extends HttpServlet {
             getServletContext().setAttribute("week", week);
             getServletContext().setAttribute("month", month);
             getServletContext().setAttribute("year", year);
+            getServletContext().setAttribute("workers", workerFacade.findAll());
 
             if (week != 0 && month != 0 && year != 0) {
 
                 List<OrderFurniture> orderFurnitures = orderFacade.findAll();
                 List<OrderFurniture> orders = new ArrayList<>();
                 for (OrderFurniture furniture : orderFurnitures) {
-                    if (furniture.getOrderDate().getWeek() == week && furniture.getOrderDate().getMonth() == month && furniture.getOrderDate().getYear() == year) {
+                    if (Objects.equals(furniture.getOrderDate().getWeek(), week) && Objects.equals(furniture.getOrderDate().getMonth(), month) && Objects.equals(furniture.getOrderDate().getYear(), year)) {
                         orders.add(furniture);
                     }
                 }
@@ -79,7 +95,7 @@ public class WorkerController extends HttpServlet {
                 Long workerId = Long.parseLong(request.getParameter("workerId"));
                 OrderFurniture selectedWorker = orderFacade.find(workerId);
                 getServletContext().setAttribute("selectedWorker", selectedWorker);
-                List<DoneWork> doneWorks = doneWorkFacade.DoneWorkByWorkerForWeek(week, month, year, workerId);
+                List<DoneWork> doneWorks = doneWorkFacade.findAll(); //DoneWorkByWorkerForWeek(week, month, year, workerId);
                 getServletContext().setAttribute("doneWorks", doneWorks);
             }
             if (request.getParameter("orderId") != null) {
@@ -110,7 +126,7 @@ public class WorkerController extends HttpServlet {
                 DoneWork doneWork = new DoneWork(week, month, year, order, model, part, worker);
                 doneWorkFacade.create(doneWork);
 
-                Integer profit = doneWorkFacade.QountWorkersProfit(workerId);
+                Integer profit = doneWorkFacade.CountWorkersProfit(workerId);
                 getServletContext().setAttribute("profit", profit);
 
             }
