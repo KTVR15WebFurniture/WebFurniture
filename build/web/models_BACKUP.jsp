@@ -42,33 +42,26 @@
                         </div>
                     </div>                  
                     <br>
-                    
-                    <%-- добавление новой операции --%>
-
-                            
-                    <div>
-                        <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_newpartname" name="newpartname">
-                        <br>
-
-                        <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription"></textarea>
-
-                        <br>                   
-
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice">
-
-                                <br>
-
-                                <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration">
-                            </div>
+                    <label for="usr">Наименование операции: </label>
+                    <div class="row">
+                        <div class="col-sm-9">
+                            <select class="form-control " required="true" id="_model" name="operation">
+                                
+                                <c:forEach var="part" items="${parts}">
+                                    <c:if test="${part.id eq selectedPart.id}">
+                                        <option selected="true" value="${part.id}">${part.serial}</option> 
+                                    </c:if>
+                                    <c:if test="${part.id ne selectedPart.id}">
+                                        <option value="${part.id}">${part.serial}</option>
+                                    </c:if>
+                                </c:forEach>
+                                
+                            </select>
                         </div>
-                    </div>
-                    
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addOperation">Добавить новую</button>
+                        </div>
+                    </div>   
                     <br>
                 </div>
                 <input type="submit" class="btn btn-primary btn-lg" id="_submit" name="submit" value="Добавить">
@@ -124,6 +117,46 @@
                         <div class="modal-body">
                             <label for="comment">Название: </label>
                             <input type="text" class="form-control" id="_newmodel" name="newmodel">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <%-- добавление новой операции --%>
+        <div class="modal fade" id="addOperation" role="dialog">
+            <form method="POST" action="addpart" id="_addmodelname" name="addpart">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Новая операция: </h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="comment">Название операции: </label>
+                            <input type="text" class="form-control" id="_newpartname" name="newpartname">
+                            <br>
+
+                            <label for="comment">Описание: </label>
+                            <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription"></textarea>
+
+                            <br>                   
+
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label for="comment">Стоимость операции: </label>
+                                    <input type="text" class="form-control" id="_newpartprice" name="newpartprice">
+
+                                    <br>
+
+                                    <label for="comment">Время выполнения: </label>
+                                    <input type="text" class="form-control" id="_newpartduration" name="newpartduration">
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Добавить</button>

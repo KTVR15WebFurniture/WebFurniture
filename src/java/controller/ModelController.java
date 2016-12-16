@@ -8,6 +8,8 @@ package controller;
 import entities.Model;
 import entities.Part;
 import java.io.IOException;
+import static java.lang.Integer.parseInt;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -22,7 +24,7 @@ import session.PartFacade;
  *
  * @author pupil
  */
-@WebServlet(name = "Controller", urlPatterns = {"/models"})
+@WebServlet(name = "Controller", urlPatterns = {"/models", "/addmodel", "/addmodelname"})
 public class ModelController extends HttpServlet {
 
     @EJB
@@ -43,46 +45,42 @@ public class ModelController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String userPath = request.getServletPath();
-        if ("/models".equals(userPath)) {
-
-            String newmodel = request.getParameter("newmodel");
-            if (newmodel != null) {
-                getServletContext().setAttribute("newmodel", newmodel);
+        
+        if("/models".equals(userPath)){
+            getServletContext().setAttribute("models", modelFacade.findAll());
+            
+        } else if("/addmodelname".equals(userPath)) {
+            String newmodelname = request.getParameter("newmodel");
+            Model newModel = new Model(newmodelname, new ArrayList());
+            if (newModel != null) {
+                modelFacade.create(newModel);
             }
-
+            getServletContext().setAttribute("models", modelFacade.findAll());
+            response.sendRedirect("models.jsp");
+            return;
+            
+        } else if ("/addmodel".equals(userPath)) {
+            Long modelId = Long.parseLong(request.getParameter("model"));
+            Model selectedModel = modelFacade.find(modelId);
+            
             String newpartname = request.getParameter("newpartname");
             String newpartdescription = request.getParameter("newpartdescription");
-            String newpartprice = request.getParameter("newpartprice");
-            String newpartduration = request.getParameter("newpartduration");
-            if (newpartname != null && newpartdescription != null && newpartprice != null && newpartduration != null) {
-                getServletContext().setAttribute("newpartname", newpartname);
-                getServletContext().setAttribute("newpartdescription", newpartdescription);
-                getServletContext().setAttribute("newpartprice", newpartprice);
-                getServletContext().setAttribute("newpartduration", newpartduration);
-            }
-
-            Long modelId = Long.parseLong(request.getParameter("model"));
-            if (modelId != 0L) {
-                Model selectedModel = modelFacade.find(modelId);
-                getServletContext().setAttribute("selectedModel", selectedModel);
-            }
+            Integer newpartprice = parseInt(request.getParameter("newpartprice"));
+            Integer newpartduration = parseInt(request.getParameter("newpartduration"));
             
-            Long partId = Long.parseLong(request.getParameter("operation"));            
-            if (partId != 0L) {
-                Part selectedPart = partFacade.find(partId);
-                getServletContext().setAttribute("selectedPart", selectedPart);
+            Part newPart = new Part(newpartname, newpartdescription, newpartprice, newpartduration);
+            // где-то тут затык - не переводит в тип лист
+            selectedModel.setParts((List<Part>) newPart);
+            if (newpartname != null && newpartdescription != null && newpartprice != 0 && newpartduration != 0) {
+                modelFacade.edit(selectedModel);
             }
-
-            List<Model> models = modelFacade.findAll();
-            getServletContext().setAttribute("models", models);
-
-            List<Part> parts = partFacade.findAll();
-            getServletContext().setAttribute("parts", parts);
+            getServletContext().setAttribute("models", modelFacade.findAll());
+            response.sendRedirect("models.jsp");
+            return;
             
-            
-
         }
-        request.getRequestDispatcher("/WEB-INF" + userPath + ".jsp").forward(request, response);
+
+        request.getRequestDispatcher(userPath + ".jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
