@@ -6,6 +6,7 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -28,7 +29,7 @@ public class Model implements Serializable {
     private Long id;
     private String name;
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Part> parts;
+    private List<Part> parts = new ArrayList<>();
 
     public Model() {
     }

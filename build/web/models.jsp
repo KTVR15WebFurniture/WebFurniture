@@ -24,11 +24,11 @@
                     <label for="usr">Наименование модели: </label>                    
                     <div class="row">
                         <div class="col-sm-9">
-                            <select class="form-control " required="true" id="_model" name="model">
+                            <select class="form-control " required="true" id="_model" name="model" onchange="submit()">
                                 
                                 <c:forEach var="model" items="${models}">
                                     <c:if test="${model.id eq selectedModel.id}">
-                                        <option selected="true" value="${model.id}">${model.name}</option> 
+                                        <option selected="true" value="${model.id}">${model.name}</option>
                                     </c:if>
                                     <c:if test="${model.id ne selectedModel.id}">
                                         <option value="${model.id}">${model.name}</option>
@@ -44,8 +44,6 @@
                     <br>
                     
                     <%-- добавление новой операции --%>
-
-                            
                     <div>
                         <label for="comment">Название операции: </label>
                         <input type="text" class="form-control" id="_newpartname" name="newpartname">

@@ -45,39 +45,39 @@ public class ModelController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String userPath = request.getServletPath();
-        
-        if("/models".equals(userPath)){
+
+        if ("/models".equals(userPath)) {
             getServletContext().setAttribute("models", modelFacade.findAll());
-            
-        } else if("/addmodelname".equals(userPath)) {
+
+        } else if ("/addmodelname".equals(userPath)) {
             String newmodelname = request.getParameter("newmodel");
-            Model newModel = new Model(newmodelname, new ArrayList());
-            if (newModel != null) {
-                modelFacade.create(newModel);
-            }
+            Model newModel = new Model(newmodelname, new ArrayList<Part>());
+            modelFacade.create(newModel);
             getServletContext().setAttribute("models", modelFacade.findAll());
             response.sendRedirect("models.jsp");
             return;
-            
+
         } else if ("/addmodel".equals(userPath)) {
-            Long modelId = Long.parseLong(request.getParameter("model"));
-            Model selectedModel = modelFacade.find(modelId);
-            
-            String newpartname = request.getParameter("newpartname");
-            String newpartdescription = request.getParameter("newpartdescription");
-            Integer newpartprice = parseInt(request.getParameter("newpartprice"));
-            Integer newpartduration = parseInt(request.getParameter("newpartduration"));
-            
-            Part newPart = new Part(newpartname, newpartdescription, newpartprice, newpartduration);
-            // где-то тут затык - не переводит в тип лист
-            selectedModel.setParts((List<Part>) newPart);
-            if (newpartname != null && newpartdescription != null && newpartprice != 0 && newpartduration != 0) {
+            Model selectedModel = new Model();
+            if (request.getParameter("model") != null) {
+                Long modelId = Long.parseLong(request.getParameter("model"));
+                selectedModel = modelFacade.find(modelId);
+            }
+            if (request.getParameter("newpartname") != null && request.getParameter("newpartdescription") != null
+                    && request.getParameter("newpartprice") != null && request.getParameter("newpartduration") != null) {
+
+                String newpartname = request.getParameter("newpartname");
+                String newpartdescription = request.getParameter("newpartdescription");
+                Integer newpartprice = parseInt(request.getParameter("newpartprice"));
+                Integer newpartduration = parseInt(request.getParameter("newpartduration"));
+                Part newPart = new Part(newpartname, newpartdescription, newpartprice, newpartduration);
+                selectedModel.getParts().add(newPart);
                 modelFacade.edit(selectedModel);
             }
             getServletContext().setAttribute("models", modelFacade.findAll());
             response.sendRedirect("models.jsp");
             return;
-            
+
         }
 
         request.getRequestDispatcher(userPath + ".jsp").forward(request, response);
