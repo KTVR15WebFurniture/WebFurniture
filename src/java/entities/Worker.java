@@ -20,7 +20,7 @@ public class Worker extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String status; //professija
+    private String status; //professija - specializacija
 
     public Worker() {
     }
@@ -75,6 +75,11 @@ public class Worker extends Person{
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Worker{" + "id=" + id + ", status=" + status + ": "+super.getFirstname()+super.getLastname()+super.getIsikukood()+super.getMail()+super.getTelephon()+'}';
     }
 
     
