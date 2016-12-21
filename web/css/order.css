@@ -1,0 +1,124 @@
+h1,h3{text-align: center;
+}
+fieldset {
+        border: none;
+	display: inline-block;
+	padding: 5px;
+	margin: 5px;
+}
+form{ 
+    position: relative;
+     left: 35%;
+      
+}
+.model { width:200px; }
+.orderN { width:50px; }
+.but {color: white; 
+	background: #377AB7;
+	border: solid #2e6da4;
+	border-radius: 2px;
+      
+}
+.zakaz {
+    display: inline;
+    position: absolute;
+    border-collapse: collapse;
+    left:50%;
+    top:50%;
+    width: 500px;
+    text-align: center;
+    .zakaz th{
+         text-align: center;
+         
+    } 
+   
+   
+}
+.zakaz td {
+	  border: 1px solid black;
+	
+}
+table{
+	margin: 30px auto;
+}
+th, td {
+    padding: 5px;
+    text-align: сenter;
+    width: 200px;
+    height: 20px;
+   
+}
+.botton {
+    position:absolute;
+    left:50%;
+    top:50%;
+}
+.num { width:5%; 
+}
+.name { width:100px;
+    
+}
+
+/*  Календарь */
+ 
+#calendar4 {
+
+    height:200px;
+
+    width:200px;
+
+    margin:auto;
+    
+    line-height: 1.5em;
+	
+
+}
+
+select{ 
+
+    padding: 3px;
+
+}
+
+
+
+
+#calendar4 thead tr:last-child {
+
+  font-size: small;
+
+  font-weight: 700;
+  padding:  5 px;
+
+  color: rgb(103, 103, 103);
+
+}
+
+#calendar4 tbody td {
+
+  color: rgb(44, 86, 122);
+
+}
+#calendar4 {
+	border: none;
+} 
+
+#calendar4 tbody td:nth-child(1) {
+
+  font-size: small;
+
+  color: rgba(103, 103, 103, .7);
+
+}
+
+#calendar4 tbody td:nth-child(n+7), #calendar4 .holiday {
+
+  color: rgb(231, 140, 92);
+
+}
+
+#calendar4 tbody td.today {
+
+  outline: 3px solid red;
+
+}
