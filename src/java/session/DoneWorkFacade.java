@@ -31,24 +31,5 @@ public class DoneWorkFacade extends AbstractFacade<DoneWork> {
         super(DoneWork.class);
     }
     
-    public List<DoneWork> DoneWorkByWorkerForWeek(Integer week, Integer month, Integer year, Long id){
-        
-        Query query = getEntityManager().createQuery("SELECT d FROM DoneWork d WHERE d.worker.id = :id && d._week = :week && d._month = :month && d._year = :year", DoneWork.class)
-                .setParameter("id", id)
-                .setParameter("week", week)
-                .setParameter("moth", month)
-                .setParameter("year", year);
-        List<DoneWork> doneWorkByWorkerForWeek = query.getResultList();
-        
-        return doneWorkByWorkerForWeek;
-    }
-    
-    public Integer CountWorkersProfit(Long id){
-        
-        Query query = getEntityManager().createQuery("SELECT p SUM(p.orderFurniture.models.parts.price) FROM DoneWork p WHERE p.worker.id = :id ", DoneWork.class)
-                .setParameter("id", id);
-        Integer profit = (Integer) query.getSingleResult();
-        
-        return profit;
-    }
+
 }

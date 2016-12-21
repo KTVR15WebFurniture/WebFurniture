@@ -35,3 +35,35 @@
                     <td style="padding: 10px">${doneWork.part.id}</td>
                     <td style="padding: 10px">${doneWork.part.price}</td>
 </c:forEach>
+
+    public List<DoneWork> DoneWorkByWorkerForWeek(Integer week, Integer month, Integer year, Long id){
+        
+        Query query = getEntityManager().createQuery("SELECT d FROM DoneWork d WHERE d.worker.id = :id && d._week = :week && d._month = :month && d._year = :year", DoneWork.class)
+                .setParameter("id", id)
+                .setParameter("week", week)
+                .setParameter("moth", month)
+                .setParameter("year", year);
+        List<DoneWork> doneWorkByWorkerForWeek = query.getResultList();
+        
+        return doneWorkByWorkerForWeek;
+    }
+    
+    public Integer CountWorkersProfit(Long id){
+        
+        Query query = getEntityManager().createQuery("SELECT p SUM(p.orderFurniture.models.parts.price) FROM DoneWork p WHERE p.worker.id = :id ", DoneWork.class)
+                .setParameter("id", id);
+        Integer profit = (Integer) query.getSingleResult();
+        
+        return profit;
+    }
+    
+        public List<OrderFurniture> OrdersByDate (Integer week, Integer month, Integer year){
+        
+        Query query = getEntityManager().createQuery("Select o from OrderFurniture o where o.orderDate._week = :week && o.orderDate._month = :month && o.orderDate._year = :year", OrderFurniture.class)
+                .setParameter("week", week)
+                .setParameter("month", month)
+                .setParameter("year", year);
+        List<OrderFurniture> ordersByDate = query.getResultList();
+        
+        return ordersByDate;
+    }

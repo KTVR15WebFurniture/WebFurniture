@@ -23,61 +23,34 @@ public class DoneWork implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer _week;// = OrderDate.getWeek();
-    private Integer _month;// = OrderDate.getMonth();
-    private Integer _year;// = OrderDate.getYear();
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
+    private OrderDate orderDate;
+    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
     private OrderFurniture orderFurniture;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
     private Model model;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
     private Part part;
-    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
     private Worker worker;
 
     public DoneWork() {
     }
 
-    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
-        this._week = _week;
-        this._month = _month;
-        this._year = _year;
+    public DoneWork(OrderDate orderDate, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
+        this.orderDate = orderDate;
         this.orderFurniture = orderFurniture;
         this.model = model;
         this.part = part;
         this.worker = worker;
     }
-
+    
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Integer getWeek() {
-        return _week;
-    }
-
-    public void setWeek(Integer _week) {
-        this._week = _week;
-    }
-
-    public Integer getMonth() {
-        return _month;
-    }
-
-    public void setMonth(Integer _month) {
-        this._month = _month;
-    }
-
-    public Integer getYear() {
-        return _year;
-    }
-
-    public void setYear(Integer _year) {
-        this._year = _year;
     }
 
     public OrderFurniture getOrderFurniture() {
@@ -112,17 +85,23 @@ public class DoneWork implements Serializable {
         this.worker = worker;
     }
 
+    public OrderDate getOrderDate() {
+        return orderDate;
+    }
+
+    public void setOrderDate(OrderDate orderDate) {
+        this.orderDate = orderDate;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + Objects.hashCode(this._week);
-        hash = 47 * hash + Objects.hashCode(this._month);
-        hash = 47 * hash + Objects.hashCode(this._year);
-        hash = 47 * hash + Objects.hashCode(this.orderFurniture);
-        hash = 47 * hash + Objects.hashCode(this.model);
-        hash = 47 * hash + Objects.hashCode(this.part);
-        hash = 47 * hash + Objects.hashCode(this.worker);
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.id);
+        hash = 67 * hash + Objects.hashCode(this.orderDate);
+        hash = 67 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 67 * hash + Objects.hashCode(this.model);
+        hash = 67 * hash + Objects.hashCode(this.part);
+        hash = 67 * hash + Objects.hashCode(this.worker);
         return hash;
     }
 
@@ -141,13 +120,7 @@ public class DoneWork implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this._week, other._week)) {
-            return false;
-        }
-        if (!Objects.equals(this._month, other._month)) {
-            return false;
-        }
-        if (!Objects.equals(this._year, other._year)) {
+        if (!Objects.equals(this.orderDate, other.orderDate)) {
             return false;
         }
         if (!Objects.equals(this.orderFurniture, other.orderFurniture)) {
@@ -164,6 +137,7 @@ public class DoneWork implements Serializable {
         }
         return true;
     }
+
 
     
 

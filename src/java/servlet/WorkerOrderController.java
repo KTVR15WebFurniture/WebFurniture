@@ -57,30 +57,29 @@ public class WorkerOrderController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if ("/addWork".equals(request.getServletPath())) {
-//            Worker worker = new Worker("ivan", "ivanov", "39212234556", "iban@mail.ee", "53596251");
-//        Part part = new Part("46131", "leg", 20, 20);
-//        List<Part> parts = new ArrayList<>();
-//        parts.add(part);
-//        Model model = new Model("chair", parts);
-//        List<Model> models = new ArrayList<>();
-//        models.add(model);
-//        OrderDate orderDate = new OrderDate(50, 12, 2016);
-//        OrderFurniture orderFurniture = new OrderFurniture("kichen", models, orderDate);
-//        workerFacade.create(worker);
-//        partFacade.create(part);
-//        modelFacade.create(model);
-//        orderDateFacade.create(orderDate);
-//        orderFacade.create(orderFurniture);
             Calendar today = Calendar.getInstance();
             Integer week = today.get(Calendar.WEEK_OF_YEAR) - 1; //Integer.parseInt(request.getParameter("week"));
             Integer month = today.get(Calendar.MONTH) + 1; //Integer.parseInt(request.getParameter("month"));
             Integer year = today.get(Calendar.YEAR);//Integer.parseInt(request.getParameter("year"));
-            getServletContext().setAttribute("week", week);
-            getServletContext().setAttribute("month", month);
-            getServletContext().setAttribute("year", year);
+            Worker worker = new Worker("ivan", "ivanov", "39212234556", "iban@mail.ee", "53596251");
+            Part part = new Part("46131", "leg", 20, 20);
+            List<Part> parts = new ArrayList<>();
+            parts.add(part);
+            Model model = new Model("chair", parts);
+            List<Model> models = new ArrayList<>();
+            models.add(model);
+            OrderDate orderDate = new OrderDate(week, month, year);
+            OrderFurniture orderFurniture = new OrderFurniture("kichen", models, orderDate);
+            workerFacade.create(worker);
+//        partFacade.create(part);
+//        modelFacade.create(model);
+//        orderDateFacade.create(orderDate);
+            orderFacade.create(orderFurniture);
+
+            getServletContext().setAttribute("orderDate", orderDate);
             getServletContext().setAttribute("workers", workerFacade.findAll());
 
-            if (week != 0 && month != 0 && year != 0) {
+            if (orderDate.getWeek() != 0 && orderDate.getMonth() != 0 && orderDate.getYear() != 0) {
 
                 List<OrderFurniture> orderFurnitures = orderFacade.findAll();
                 List<OrderFurniture> orders = new ArrayList<>();
@@ -93,7 +92,8 @@ public class WorkerOrderController extends HttpServlet {
             }
             if (request.getParameter("workerId") != null) {
                 Long workerId = Long.parseLong(request.getParameter("workerId"));
-                OrderFurniture selectedWorker = orderFacade.find(workerId);
+                getServletContext().setAttribute("workerId", workerId);
+                Worker selectedWorker = workerFacade.find(workerId);
                 getServletContext().setAttribute("selectedWorker", selectedWorker);
                 List<DoneWork> doneWorks = doneWorkFacade.findAll(); //DoneWorkByWorkerForWeek(week, month, year, workerId);
                 getServletContext().setAttribute("doneWorks", doneWorks);
@@ -114,23 +114,23 @@ public class WorkerOrderController extends HttpServlet {
                 Part selectedPart = partFacade.find(partId);
                 getServletContext().setAttribute("selectedPart", selectedPart);
             }
-            if (week != 0 && month != 0 && year != 0 && request.getParameter("orderId") != null && request.getParameter("modelId") != null && request.getParameter("operationId") != null && request.getParameter("workerId") != null) {
+            if (request.getParameter("week") != null && request.getParameter("month") != null && request.getParameter("year") != null && request.getParameter("orderId") != null && !"0".equals(request.getParameter("orderId")) && request.getParameter("modelId") != null && !"0".equals(request.getParameter("modelId")) && request.getParameter("operationId") != null && !"0".equals(request.getParameter("operationId")) && request.getParameter("workerId") != null && !"0".equals(request.getParameter("workerId"))) {
                 Long orderId = Long.parseLong(request.getParameter("orderId"));
                 Long modelId = Long.parseLong(request.getParameter("modelId"));
                 Long partId = Long.parseLong(request.getParameter("operationId"));
                 Long workerId = Long.parseLong(request.getParameter("workerId"));
                 OrderFurniture order = orderFacade.find(orderId);
-                Model model = modelFacade.find(modelId);
-                Part part = partFacade.find(partId);
-                Worker worker = workerFacade.find(workerId);
-                DoneWork doneWork = new DoneWork(week, month, year, order, model, part, worker);
+//                Model model = modelFacade.find(modelId);
+//                Part part = partFacade.find(partId);
+//                Worker worker = workerFacade.find(workerId);
+                orderDate = orderDateFacade.find(order.getOrderDate().getId());
+                DoneWork doneWork = new DoneWork(orderDate, order, model, part, worker);
                 doneWorkFacade.create(doneWork);
 
-                Integer profit = doneWorkFacade.CountWorkersProfit(workerId);
-                getServletContext().setAttribute("profit", profit);
-
+//                Integer profit = doneWorkFacade.CountWorkersProfit(workerId);
+//                getServletContext().setAttribute("profit", profit);
             }
-            
+
             request.getRequestDispatcher("WEB-INF/order_selection.jsp").forward(request, response);
         }
     }

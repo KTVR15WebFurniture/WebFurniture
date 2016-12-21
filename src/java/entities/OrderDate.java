@@ -25,17 +25,17 @@ public class OrderDate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer _week;
-    private Integer _month;
-    private Integer _year;
+    private Integer week;
+    private Integer month;
+    private Integer year;
     
     public OrderDate() {
     }
 
     public OrderDate(Integer week, Integer month, Integer year) {
-        this._week = week;
-        this._month = month;
-        this._year = year;
+        this.week = week;
+        this.month = month;
+        this.year = year;
     }
 
     public Long getId() {
@@ -47,36 +47,36 @@ public class OrderDate implements Serializable {
     }
 
     public Integer getWeek() {
-        return _week;
+        return week;
     }
 
-    public void setWeek(Integer _week) {
-        this._week = _week;
+    public void setWeek(Integer week) {
+        this.week = week;
     }
 
     public Integer getMonth() {
-        return _month;
+        return month;
     }
 
-    public void setMonth(Integer _month) {
-        this._month = _month;
+    public void setMonth(Integer month) {
+        this.month = month;
     }
 
     public Integer getYear() {
-        return _year;
+        return year;
     }
 
-    public void setYear(Integer _year) {
-        this._year = _year;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
         hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this._week);
-        hash = 23 * hash + Objects.hashCode(this._month);
-        hash = 23 * hash + Objects.hashCode(this._year);
+        hash = 23 * hash + Objects.hashCode(this.week);
+        hash = 23 * hash + Objects.hashCode(this.month);
+        hash = 23 * hash + Objects.hashCode(this.year);
         return hash;
     }
 
@@ -95,13 +95,13 @@ public class OrderDate implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this._week, other._week)) {
+        if (!Objects.equals(this.week, other.week)) {
             return false;
         }
-        if (!Objects.equals(this._month, other._month)) {
+        if (!Objects.equals(this.month, other.month)) {
             return false;
         }
-        if (!Objects.equals(this._year, other._year)) {
+        if (!Objects.equals(this.year, other.year)) {
             return false;
         }
         return true;

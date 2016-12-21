@@ -44,15 +44,15 @@
                     <div class="form-inline" style="text-align: center; margin-bottom: 10px;">
                         <div class="form-group">
                             <label for="week" style="margin-right: 5px;">Неделя</label>
-                            <input name="week" value="${week}" style="width: 100px; margin-right: 5px;">
+                            <input name="week" value="${orderDate.week}" readonly="true" style="width: 100px; margin-right: 5px;">
                         </div>
                         <div class="form-group">
                             <label for="month" style="margin-right: 5px;">Месяц</label>
-                            <input name="month" value="${month}" style="width: 100px; margin-right: 5px;">
+                            <input name="month" value="${orderDate.month}" readonly="true" style="width: 100px; margin-right: 5px;">
                         </div>
                         <div class="form-group">
                             <label for="year" style="margin-right: 5px;">Год</label>
-                            <input name="year" value="${year}" style="width: 100px; margin-right: 5px;">
+                            <input name="year" value="${orderDate.year}" readonly="true" style="width: 100px; margin-right: 5px;">
                         </div>
                     </div>
                     <tr>
@@ -61,12 +61,13 @@
                         </td>
                         <td>
                             <select name="workerId" style="width: 250px;" onchange="submit()">
+                                <option value="0">${workerId} Не выбрано</option>
                                 <c:forEach var="worker" items="${workers}">
                                     <c:if test="${worker.id eq selectedWorker.id}">
-                                        <option value="${worker.id}" selected="true">${worker.firstname} ${worker.lastname}</option>
+                                        <option value="${worker.id}" selected="true">${worker.id} ${worker.firstname} ${worker.lastname}</option>
                                     </c:if>
                                     <c:if test="${worker.id ne selectedWorker.id}">
-                                        <option value="${worker.id}">${worker.firstname} ${worker.lastname}</option>
+                                        <option value="${worker.id}">${worker.id} ${worker.firstname} ${worker.lastname}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -78,6 +79,7 @@
                         </td>
                         <td>
                             <select name="orderId" style="width: 250px"  onchange="submit()">
+                                <option value="0">Не выбрано</option>
                                 <c:forEach var="ord" items="${orders}">
                                     <c:if test="${ord.id eq selectedOrder.id}">
                                         <option value="${ord.id}" selected="true">${ord.name}</option>
@@ -95,11 +97,12 @@
                         </td>
                         <td>
                             <select name="modelId" style="width: 250px"  onchange="submit()">
+                                <option value="0">Не выбрано</option>
                                 <c:forEach var="mode" items="${selectedOrder.models}">
-                                    <c:if test="${mode.id eq selectedModel}">
+                                    <c:if test="${mode.id eq selectedModel.id}">
                                         <option value="${mode.id}" selected="true">${mode.name}</option>
                                     </c:if>
-                                    <c:if test="${mode.id ne selectedModel}">
+                                    <c:if test="${mode.id ne selectedModel.id}">
                                         <option value="${mode.id}">${mode.name}</option>
                                     </c:if>
                                 </c:forEach>
@@ -111,13 +114,14 @@
                             <label for="operationId" style="padding-right: 10px;">Деталь</label>
                         </td>
                         <td>
-                            <select name="operationId" id="operation" style="width: 250px" onchange="submit()>
+                            <select name="operationId" id="operation" style="width: 250px" onchange="submit()">
+                                <option value="0">Не выбрано</option>
                                 <c:forEach var="part" items="${selectedModel.parts}">
                                     <c:if test="${part.id eq selectedPart.id}">
-                                        <option value="${part.id}" selected="true">${part.name}</option>
+                                        <option value="${part.id}" selected="true">${part.desctiption}</option>
                                     </c:if>
                                     <c:if test="${part.id ne selectedPart.id}">
-                                        <option value="${part.id}">${part.name}</option>
+                                        <option value="${part.id}">${part.desctiption}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -135,15 +139,24 @@
                 <h4>Заработано: ${profit}</h4>
                 <table class="table-bordered" style="margin: 0 auto">
                     <thead>
-                        <th style="padding: 10px">Неделя</th>
-                        <th style="padding: 10px">Месяц</th>
-                        <th style="padding: 10px">Год</th>
-                        <th style="padding: 10px">Номер заказа</th>
-                        <th style="padding: 10px">Модель</th>
-                        <th style="padding: 10px">Компонент</th>
-                        <th style="padding: 10px">Плата</th>
+                    <th style="padding: 10px">Неделя</th>
+                    <th style="padding: 10px">Месяц</th>
+                    <th style="padding: 10px">Год</th>
+                    <th style="padding: 10px">Номер заказа</th>
+                    <th style="padding: 10px">Модель</th>
+                    <th style="padding: 10px">Компонент</th>
+                    <th style="padding: 10px">Плата</th>
                     </thead>
                     <tbody>
+                        <c:forEach var="doneWork" items="doneWorks">
+                    <td style="padding: 10px">${doneWork.orderDate.week}</td>
+                    <td style="padding: 10px">${doneWork.orderDate.month}</td>
+                    <td style="padding: 10px">${doneWork.orderDate.year}</td>
+                    <td style="padding: 10px">${doneWork.order.id}</td>
+                    <td style="padding: 10px">${doneWork.model.id}</td>
+                    <td style="padding: 10px">${doneWork.part.id}</td>
+                    <td style="padding: 10px">${doneWork.part.price}</td>
+</c:forEach>
                     </tbody>
                 </table>
             </c:if>
