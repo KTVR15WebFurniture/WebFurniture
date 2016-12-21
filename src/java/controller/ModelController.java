@@ -10,7 +10,6 @@ import entities.Part;
 import java.io.IOException;
 import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -48,7 +47,14 @@ public class ModelController extends HttpServlet {
 
         if ("/models".equals(userPath)) {
             getServletContext().setAttribute("models", modelFacade.findAll());
-
+            
+            Model selectedModel = new Model();
+            if (request.getParameter("model") != null) {
+                Long modelId = Long.parseLong(request.getParameter("model"));
+                selectedModel = modelFacade.find(modelId);
+                getServletContext().setAttribute("model", modelFacade.findAll());
+            }
+            
         } else if ("/addmodelname".equals(userPath)) {
             String newmodelname = request.getParameter("newmodel");
             Model newModel = new Model(newmodelname, new ArrayList<Part>());
@@ -65,7 +71,6 @@ public class ModelController extends HttpServlet {
             }
             if (request.getParameter("newpartname") != null && request.getParameter("newpartdescription") != null
                     && request.getParameter("newpartprice") != null && request.getParameter("newpartduration") != null) {
-
                 String newpartname = request.getParameter("newpartname");
                 String newpartdescription = request.getParameter("newpartdescription");
                 Integer newpartprice = parseInt(request.getParameter("newpartprice"));

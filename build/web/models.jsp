@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
         <title>JSP Page</title>
     </head>
     <body>
@@ -24,7 +25,7 @@
                     <label for="usr">Наименование модели: </label>                    
                     <div class="row">
                         <div class="col-sm-9">
-                            <select class="form-control " required="true" id="_model" name="model" onchange="submit()">
+                            <select class="form-control " required="true" id="_model" name="model" onChange="submit(this)">
                                 
                                 <c:forEach var="model" items="${models}">
                                     <c:if test="${model.id eq selectedModel.id}">
@@ -88,7 +89,7 @@
                 </thead>
                 <tbody>
                      
-                    <c:forEach var="operation" items="${operations}">       
+                    <c:forEach var="part" items="${model.parts}">       
                         
                         <tr>
                             <td>${part.serial}</td>
