@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        
+                
         <title>JSP Page</title>
     </head>
     <body>
@@ -25,7 +25,7 @@
                     <label for="usr">Наименование модели: </label>                    
                     <div class="row">
                         <div class="col-sm-9">
-                            <select class="form-control " required="true" id="_model" name="model" onChange="submit(this)">
+                            <select class="form-control" required="true" id="_model" name="model" onchange="submit()" >
                                 
                                 <c:forEach var="model" items="${models}">
                                     <c:if test="${model.id eq selectedModel.id}">
@@ -38,7 +38,7 @@
                                 
                             </select>
                         </div>
-                        <div class="col-sm-2">
+                        <div  class="col-sm-2">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModel">Добавить новую</button>
                         </div>
                     </div>                  
@@ -47,30 +47,31 @@
                     <%-- добавление новой операции --%>
                     <div>
                         <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_newpartname" name="newpartname">
+                        <input type="text" class="form-control" id="_newpartname" name="newpartname" value="${part.name}">
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription"></textarea>
+                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription" value="${part.description}"></textarea>
 
                         <br>                   
 
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice">
+                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice" value="${part.price}">
 
                                 <br>
 
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration">
+                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration" value="${part.duration}">
                             </div>
                         </div>
                     </div>
                     
                     <br>
+                    
                 </div>
-                <input type="submit" class="btn btn-primary btn-lg" id="_submit" name="submit" value="Добавить">
+                <input type="submit" class="btn btn-primary btn-lg" id="_submit" name="_submit" value="Добавить">
             </form>
         </section>
 
@@ -80,6 +81,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
+                       
                         <th>Название части: </th>
                         <th>Стоимость операции: </th>
                         <th>Время выполнения: </th>
@@ -89,12 +91,12 @@
                 </thead>
                 <tbody>
                      
-                    <c:forEach var="part" items="${model.parts}">       
-                        
+                    <c:forEach var="part" items="${model.parts}">                               
                         <tr>
+                            
                             <td>${part.serial}</td>
                             <td>${part.price}</td>
-                            <td>${part.duration}</td>
+                            <td><a href='part?part_id=${part.id}&model_id=${model.id}' mame='part_id'>${part.duration}</a></td>
                             <td>${part.description}</td>
                             <td>            
                                 <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationEdit" data-remote="">
@@ -103,8 +105,7 @@
                                 <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationDelete" data-remote="">
                                     <span class="glyphicon glyphicon-remove" title="Удалить" ></span></a>
                             </td>
-                        </tr>            
-                        
+                        </tr>                                    
                     </c:forEach>
                     
                 </tbody>
