@@ -130,13 +130,13 @@
                     <tr>
                         <td></td>
                         <td style="text-align: center">
-                            <button type="submit" class="btn btn-primary">Записать</button>
+                            <button onclick="refresh()" class="btn btn-primary">Записать</button>
                         </td>
                     </tr>
                 </table>
             </form>
             <c:if test="${selectedWorker.id ne null}">
-                <h4>Заработано: ${profit}</h4>
+                <h4>Заработано: ${profit} €</h4>
                 <table class="table-bordered" style="margin: 0 auto">
                     <thead>
                     <th style="padding: 10px">Неделя</th>
@@ -148,15 +148,17 @@
                     <th style="padding: 10px">Плата</th>
                     </thead>
                     <tbody>
-                        <c:forEach var="doneWork" items="doneWorks">
-                    <td style="padding: 10px">${doneWork.orderDate.week}</td>
-                    <td style="padding: 10px">${doneWork.orderDate.month}</td>
-                    <td style="padding: 10px">${doneWork.orderDate.year}</td>
-                    <td style="padding: 10px">${doneWork.order.id}</td>
-                    <td style="padding: 10px">${doneWork.model.id}</td>
-                    <td style="padding: 10px">${doneWork.part.id}</td>
-                    <td style="padding: 10px">${doneWork.part.price}</td>
-</c:forEach>
+                        <c:forEach var="doneWork" items="${doneWorks}">
+                            <tr>
+                                <td style="padding: 10px">${doneWork.orderDate.week}</td>
+                                <td style="padding: 10px">${doneWork.orderDate.month}</td>
+                                <td style="padding: 10px">${doneWork.orderDate.year}</td>
+                                <td style="padding: 10px">${doneWork.orderFurniture.id}</td>
+                                <td style="padding: 10px">${doneWork.model.name}</td>
+                                <td style="padding: 10px">${doneWork.part.desctiption}</td>
+                                <td style="padding: 10px">${doneWork.part.price}</td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </c:if>
