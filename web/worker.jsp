@@ -6,6 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,13 +19,21 @@
         <title>workers</title>
     </head>
     <body>
-        <h1>Данные работника</h1>
-        <div class="container">
+        
+         <div class="container">
+             <h1>Данные работника</h1>
+             
+                <div id="info">
+                    <c:out value="${infoMassage}" default="" escapeXml="true" />
+                </div>
+            
+               
             <form class="form-horizontal" action="forWorker">   
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="firstname">Имя:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="_firstname" name="firstname" value="${worker.firstname}" required>
+                        <input type="hidden" id="_id" name="id" value="${worker.id}">
                     </div>
                 </div>
                 <div class="form-group">

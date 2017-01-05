@@ -92,5 +92,10 @@ public class Model implements Serializable {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "Model{" + "id=" + id + ", name=" + name + '}';
+    }
     
 }

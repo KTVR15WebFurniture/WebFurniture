@@ -120,5 +120,10 @@ public class OrderFurniture implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "OrderFurniture{" + "id=" + id + ", name=" + name + '}';
+    }
+
 
 }

@@ -7,16 +7,20 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
 /**
  *
  * @author pupil
  */
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person implements Serializable {
 
     @Id
@@ -24,6 +28,7 @@ public class Person implements Serializable {
     private Long id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String isikukood;
     private String mail;
     private String telephon;
@@ -100,9 +105,6 @@ public class Person implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + Objects.hashCode(this.firstname);
-        hash = 47 * hash + Objects.hashCode(this.lastname);
         hash = 47 * hash + Objects.hashCode(this.isikukood);
         return hash;
     }
@@ -119,18 +121,11 @@ public class Person implements Serializable {
             return false;
         }
         final Person other = (Person) obj;
-        if (!Objects.equals(this.firstname, other.firstname)) {
-            return false;
-        }
-        if (!Objects.equals(this.lastname, other.lastname)) {
-            return false;
-        }
+
         if (!Objects.equals(this.isikukood, other.isikukood)) {
             return false;
         }
-        if (!Objects.equals(this.id, other.id)) {
-            return false;
-        }
+
         return true;
     }
 

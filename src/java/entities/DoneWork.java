@@ -23,9 +23,9 @@ public class DoneWork implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer _week;// = OrderDate.getWeek();
-    private Integer _month;// = OrderDate.getMonth();
-    private Integer _year;// = OrderDate.getYear();
+    private Integer week_;// = OrderDate.getWeek();
+    private Integer month_;// = OrderDate.getMonth();
+    private Integer year_;// = OrderDate.getYear();
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     private OrderFurniture orderFurniture;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
@@ -37,10 +37,10 @@ public class DoneWork implements Serializable {
     public DoneWork() {
     }
 
-    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part) {
-        this._week = _week;
-        this._month = _month;
-        this._year = _year;
+    public DoneWork(Integer week_, Integer month_, Integer year_, OrderFurniture orderFurniture, Model model, Part part) {
+        this.week_ = week_;
+        this.month_ = month_;
+        this.year_ = year_;
         this.orderFurniture = orderFurniture;
         this.model = model;
         this.part = part;
@@ -54,28 +54,28 @@ public class DoneWork implements Serializable {
         this.id = id;
     }
 
-    public Integer getWeek() {
-        return _week;
+    public Integer getWeek_() {
+        return week_;
     }
 
-    public void setWeek(Integer _week) {
-        this._week = _week;
+    public void setWeek_(Integer week_) {
+        this.week_ = week_;
     }
 
-    public Integer getMonth() {
-        return _month;
+    public Integer getMonth_() {
+        return month_;
     }
 
-    public void setMonth(Integer _month) {
-        this._month = _month;
+    public void setMonth_(Integer month_) {
+        this.month_ = month_;
     }
 
-    public Integer getYear() {
-        return _year;
+    public Integer getYear_() {
+        return year_;
     }
 
-    public void setYear(Integer _year) {
-        this._year = _year;
+    public void setYear_(Integer year_) {
+        this.year_ = year_;
     }
 
     public OrderFurniture getOrderFurniture() {
@@ -104,14 +104,14 @@ public class DoneWork implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this._week);
-        hash = 29 * hash + Objects.hashCode(this._month);
-        hash = 29 * hash + Objects.hashCode(this._year);
-        hash = 29 * hash + Objects.hashCode(this.orderFurniture);
-        hash = 29 * hash + Objects.hashCode(this.model);
-        hash = 29 * hash + Objects.hashCode(this.part);
+        int hash = 7;
+        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.week_);
+        hash = 79 * hash + Objects.hashCode(this.month_);
+        hash = 79 * hash + Objects.hashCode(this.year_);
+        hash = 79 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 79 * hash + Objects.hashCode(this.model);
+        hash = 79 * hash + Objects.hashCode(this.part);
         return hash;
     }
 
@@ -130,13 +130,13 @@ public class DoneWork implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this._week, other._week)) {
+        if (!Objects.equals(this.week_, other.week_)) {
             return false;
         }
-        if (!Objects.equals(this._month, other._month)) {
+        if (!Objects.equals(this.month_, other.month_)) {
             return false;
         }
-        if (!Objects.equals(this._year, other._year)) {
+        if (!Objects.equals(this.year_, other.year_)) {
             return false;
         }
         if (!Objects.equals(this.orderFurniture, other.orderFurniture)) {
@@ -150,8 +150,11 @@ public class DoneWork implements Serializable {
         }
         return true;
     }
-    
 
+    @Override
+    public String toString() {
+        return "DoneWork{" + "id=" + id + ", week_=" + week_ + ", month_=" + month_ + ", year_=" + year_ + ", orderFurniture=" + getOrderFurniture().getName() + ", model=" + getModel().getName() + ", part=" +getPart().getSerial()+". "+ getPart().getDesctiption() + '}';
+    }
 
-    
+       
 }

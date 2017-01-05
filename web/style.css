@@ -22,7 +22,10 @@ h1{
     
 }
 
-
+#info{
+    color: red;
+    text-align: center;
+}
 #calendar3 {
   width: 100%;
   font: monospace;

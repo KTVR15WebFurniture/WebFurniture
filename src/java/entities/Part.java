@@ -7,12 +7,10 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -119,6 +117,11 @@ public class Part implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Part{" + "id=" + id + ", serial=" + serial + ", desctiption=" + desctiption + ", price=" + price + ", duration=" + duration + '}';
     }
     
 
