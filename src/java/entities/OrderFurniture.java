@@ -30,6 +30,7 @@ public class OrderFurniture implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String descripiton;
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Model> models;
     @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
@@ -40,11 +41,20 @@ public class OrderFurniture implements Serializable {
     public OrderFurniture() {
     }
 
-    public OrderFurniture(String name, List<Model> models, OrderDate orderDate) {
+    public OrderFurniture(String name, String description, List<Model> models, OrderDate orderDate) {
         this.name = name;
+        this.descripiton= description;
         this.models = models;
         this.orderDate = orderDate;
         this.createOrderFurniture = (Date) java.util.Calendar.getInstance().getTime();
+    }
+
+    public String getDescripiton() {
+        return descripiton;
+    }
+
+    public void setDescripiton(String descripiton) {
+        this.descripiton = descripiton;
     }
 
     public Long getId() {

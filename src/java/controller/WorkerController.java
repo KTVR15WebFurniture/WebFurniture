@@ -18,11 +18,6 @@ public class WorkerController extends HttpServlet {
 //    @EJB
 //    WorkerFacade forWorkerFacade;
 
-    @Override
-    public void init() throws ServletException {
-        getServletContext().setAttribute("workers", workerFacade.findAll());
-    }
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
