@@ -13,11 +13,11 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-                
+
         <title>JSP Page</title>
     </head>
     <body>
-                
+
         <section class="container">
             <h1 class="col-sm-offset-5">Модель: </h1>
             <form method="POST" class="col-sm-8 col-sm-offset-2" action="addmodel" id="_addproduct" name="addmodel">
@@ -26,16 +26,15 @@
                     <div class="row">
                         <div class="col-sm-9">
                             <select class="form-control" required="true" id="_model" name="model" onchange="submit()" >
-                                
+                                <option disabled selected value="">Выберите модель</option>
                                 <c:forEach var="model" items="${models}">
-                                    <c:if test="${model.id eq selectedModel.id}">
-                                        <option selected="true" value="${model.id}">${model.name}</option>
-                                    </c:if>
-                                    <c:if test="${model.id ne selectedModel.id}">
-                                        <option value="${model.id}">${model.name}</option>
-                                    </c:if>
+                                <c:if test="${model.id eq selectedModel.id}">
+                                <option selected="true" value="${model.id}">${model.name}</option>
+                                </c:if>
+                                <c:if test="${model.id ne selectedModel.id}">
+                                <option value="${model.id}">${model.name}</option>
+                                </c:if>
                                 </c:forEach>
-                                
                             </select>
                         </div>
                         <div  class="col-sm-2">
@@ -43,7 +42,7 @@
                         </div>
                     </div>                  
                     <br>
-                    
+
                     <%-- добавление новой операции --%>
                     <div>
                         <label for="comment">Название операции: </label>
@@ -67,9 +66,9 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <br>
-                    
+
                 </div>
                 <input type="submit" class="btn btn-primary btn-lg" id="_submit" name="_submit" value="Добавить">
             </form>
@@ -81,7 +80,7 @@
             <table class="table table-hover">
                 <thead>
                     <tr>
-                       
+
                         <th>Название части: </th>
                         <th>Стоимость операции: </th>
                         <th>Время выполнения: </th>
@@ -90,24 +89,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                     
-                    <c:forEach var="part" items="${model.parts}">                               
-                        <tr>
-                            
-                            <td>${part.serial}</td>
-                            <td>${part.price}</td>
-                            <td><a href='part?part_id=${part.id}&model_id=${model.id}' mame='part_id'>${part.duration}</a></td>
-                            <td>${part.description}</td>
-                            <td>            
-                                <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationEdit" data-remote="">
-                                    <span class="glyphicon glyphicon-edit" title="Изменить" ></span></a>
-
-                                <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationDelete" data-remote="">
-                                    <span class="glyphicon glyphicon-remove" title="Удалить" ></span></a>
-                            </td>
-                        </tr>                                    
+                    <c:forEach var="part" items="${selectedModel.parts}">                               
+                    <tr>                            
+                        <td><a href='part_id=${part.id}&model_id=${selectedModel.id}' name='part_id'>${part.serial}</a></td>
+                        <td>${part.price}</td>
+                        <td>${part.duration}</td>
+                        <td>${part.description}</td>
+                        <td>            
+                            <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationEdit" data-remote="">
+                                <span class="glyphicon glyphicon-edit" title="Изменить" ></span></a>
+                            <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationDelete" data-remote="">
+                                <span class="glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})" ></span></a>
+                        </td>
+                    </tr>                                    
                     </c:forEach>
-                    
                 </tbody>
             </table>               
         </section> 
@@ -132,64 +127,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-
-        <%-- редактирование операции --%>
-        <div id="operationEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Изменить операцию: </h4>
-                    </div>
-                    <div class="modal-body">
-                        <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_editpartname" name="editpartname" value="${part.name}">
-
-                        <br>
-
-                        <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_editpartdescription" name="editpartdescription"> ${part.description} </textarea>
-
-                        <br>                   
-
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_editpartprice" name="editpartprice" value="${part.price}">
-
-                                <br>
-
-                                <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_editparttime" name="editparttime" value="${part.duration}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Сохранить</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                    </div>
-                </div>
-            </div>
-        </div> 
-
-        <%-- удаление операции --%>
-        <div id="operationDelete" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Удалить операцию: </h4>
-                    </div>
-                    <div class="modal-body">
-                        % название операции здесь %
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Удалить</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-                    </div>
-                </div>
-            </div>
         </div>
 
     </body>

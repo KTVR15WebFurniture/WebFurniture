@@ -23,7 +23,7 @@ import session.PartFacade;
  *
  * @author pupil
  */
-@WebServlet(name = "Controller", urlPatterns = {"/models", "/addmodel", "/addmodelname"})
+@WebServlet(name = "Controller", urlPatterns = {"/models", "/addmodel", "/addmodelname", "/part"})
 public class ModelController extends HttpServlet {
 
     @EJB
@@ -47,13 +47,14 @@ public class ModelController extends HttpServlet {
 
         if ("/models".equals(userPath)) {
             getServletContext().setAttribute("models", modelFacade.findAll());
-            
+
             Model selectedModel = new Model();
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
                 getServletContext().setAttribute("model", modelFacade.findAll());
             }
+            request.getRequestDispatcher("/models.jsp").forward(request, response);
             
         } else if ("/addmodelname".equals(userPath)) {
             String newmodelname = request.getParameter("newmodel");
@@ -65,27 +66,30 @@ public class ModelController extends HttpServlet {
 
         } else if ("/addmodel".equals(userPath)) {
             Model selectedModel = new Model();
+            
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
+                getServletContext().setAttribute("selectedModel", selectedModel);
+                request.getRequestDispatcher("/models.jsp").forward(request, response);
             }
-            if (request.getParameter("newpartname") != null && request.getParameter("newpartdescription") != null
-                    && request.getParameter("newpartprice") != null && request.getParameter("newpartduration") != null) {
+            
+            if (request.getParameter("newpartname") != "" && request.getParameter("newpartdescription") != ""
+                    && request.getParameter("newpartprice") != "" && request.getParameter("newpartduration") != "") {
                 String newpartname = request.getParameter("newpartname");
                 String newpartdescription = request.getParameter("newpartdescription");
-                Integer newpartprice = parseInt(request.getParameter("newpartprice"));
-                Integer newpartduration = parseInt(request.getParameter("newpartduration"));
+                Integer newpartprice = Integer.parseInt(request.getParameter("newpartprice"));
+                Integer newpartduration = Integer.parseInt(request.getParameter("newpartduration"));
                 Part newPart = new Part(newpartname, newpartdescription, newpartprice, newpartduration);
                 selectedModel.getParts().add(newPart);
                 modelFacade.edit(selectedModel);
+                getServletContext().setAttribute("models", modelFacade.findAll());
+                response.sendRedirect("models.jsp");
+                return;
             }
-            getServletContext().setAttribute("models", modelFacade.findAll());
-            response.sendRedirect("models.jsp");
-            return;
 
         }
 
-        request.getRequestDispatcher(userPath + ".jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
