@@ -8,7 +8,6 @@ package controller;
 import entities.Model;
 import entities.Part;
 import java.io.IOException;
-import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -23,7 +22,7 @@ import session.PartFacade;
  *
  * @author pupil
  */
-@WebServlet(name = "Controller", urlPatterns = {"/models", "/addmodel", "/addmodelname", "/part"})
+@WebServlet(name = "Controller", urlPatterns = {"/models", "/addmodel", "/addmodelname", "/part", "/deletePart"})
 public class ModelController extends HttpServlet {
 
     @EJB
@@ -84,10 +83,29 @@ public class ModelController extends HttpServlet {
                 selectedModel.getParts().add(newPart);
                 modelFacade.edit(selectedModel);
                 getServletContext().setAttribute("models", modelFacade.findAll());
-                response.sendRedirect("models.jsp");
-                return;
+                request.getRequestDispatcher("/models.jsp").forward(request, response);
             }
 
+        } else if ("/deletePart".equals(userPath)) {
+                Part partToDelete = new Part();
+                Model selectedModel = new Model();
+                
+                if (request.getParameter("delete-part-id") != null) {
+                    Integer partToDeleteId = Integer.parseInt(request.getParameter("delete-part-id"));
+                                        
+                    Long modelId = Long.parseLong(request.getParameter("selected-model-id"));
+                    selectedModel = modelFacade.find(modelId);
+                    
+                    selectedModel.getParts().remove(partToDeleteId);
+                    
+                    modelFacade.edit(selectedModel);
+
+                    
+                    
+                    getServletContext().setAttribute("models", modelFacade.findAll());
+                    request.getRequestDispatcher("/models.jsp").forward(request, response);
+                }
+            
         }
 
     }

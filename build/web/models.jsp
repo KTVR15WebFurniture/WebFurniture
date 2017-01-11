@@ -13,7 +13,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
         <title>JSP Page</title>
     </head>
     <body>
@@ -85,22 +84,33 @@
                         <th>Стоимость операции: </th>
                         <th>Время выполнения: </th>
                         <th>Описание: </th>
-                        <th></th>
+                        <th>Изменить: </th>
+                        <th>Удалить: </th>
                     </tr>
                 </thead>
                 <tbody>
                     <c:forEach var="part" items="${selectedModel.parts}">                               
                     <tr>                            
-                        <td><a href='part_id=${part.id}&model_id=${selectedModel.id}' name='part_id'>${part.serial}</a></td>
+                        <td><a href='partId=${part.id}&modelId=${selectedModel.id}' name='partId'>${part.serial}</a></td>
                         <td>${part.price}</td>
                         <td>${part.duration}</td>
                         <td>${part.description}</td>
-                        <td>            
-                            <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationEdit" data-remote="">
-                                <span class="glyphicon glyphicon-edit" title="Изменить" ></span></a>
-                            <a href="#" role="button" data-keyboard="false" class="btn btn-primary btn-sm" data-backdrop="static" data-toggle="modal" data-target="#operationDelete" data-remote="">
-                                <span class="glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})" ></span></a>
+                        <td>    
+                            <a class="btn btn-primary btn-sm" href="#" value="${part.id}">
+                            <span class="glyphicon glyphicon-edit" title="Изменить ${part.serial} (id = ${part.id})" ></span></a>                         
+                        </td>         
+                        
+                    
+                        <td>       
+                            <form method="POST" action="deletePart" id="_deletePart" name="deletePart">
+                                <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
+                                <input type="hidden" name="delete-part-id" value="${part.id}">
+                            <button type="submit" class="btn btn-danger btn-sm" id="_partToDelete" name="partToDelete">
+                            <span class="glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></button> 
+                            </form>
                         </td>
+                    
+                        
                     </tr>                                    
                     </c:forEach>
                 </tbody>
