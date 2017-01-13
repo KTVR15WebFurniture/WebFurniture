@@ -95,12 +95,15 @@
                         <td>${part.price}</td>
                         <td>${part.duration}</td>
                         <td>${part.description}</td>
-                        <td>    
-                            <a class="btn btn-primary btn-sm" href="#" value="${part.id}">
-                            <span class="glyphicon glyphicon-edit" title="Изменить ${part.serial} (id = ${part.id})" ></span></a>                         
+                        <!--
+                        <td>                     
+                            <form method="POST" action="editPart" id="_editPart" name="editPart">
+                                <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
+                                <input type="hidden" name="edit-part-id" value="${part.id}">
+                            <button type="submit" class="btn btn-primary btn-sm" id="_partToEdit" name="partToEdit">
+                            <span class="glyphicon glyphicon-remove" title="Изменить ${part.serial} (id = ${part.id})"></span></button> 
                         </td>         
-                        
-                    
+                        -->
                         <td>       
                             <form method="POST" action="deletePart" id="_deletePart" name="deletePart">
                                 <input type="hidden" name="selected-model-id" value="${selectedModel.id}">

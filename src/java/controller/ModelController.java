@@ -9,6 +9,8 @@ import entities.Model;
 import entities.Part;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -54,7 +56,7 @@ public class ModelController extends HttpServlet {
                 getServletContext().setAttribute("model", modelFacade.findAll());
             }
             request.getRequestDispatcher("/models.jsp").forward(request, response);
-            
+
         } else if ("/addmodelname".equals(userPath)) {
             String newmodelname = request.getParameter("newmodel");
             Model newModel = new Model(newmodelname, new ArrayList<Part>());
@@ -65,14 +67,14 @@ public class ModelController extends HttpServlet {
 
         } else if ("/addmodel".equals(userPath)) {
             Model selectedModel = new Model();
-            
+
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
                 getServletContext().setAttribute("selectedModel", selectedModel);
                 request.getRequestDispatcher("/models.jsp").forward(request, response);
             }
-            
+
             if (request.getParameter("newpartname") != "" && request.getParameter("newpartdescription") != ""
                     && request.getParameter("newpartprice") != "" && request.getParameter("newpartduration") != "") {
                 String newpartname = request.getParameter("newpartname");
@@ -87,26 +89,26 @@ public class ModelController extends HttpServlet {
             }
 
         } else if ("/deletePart".equals(userPath)) {
-                Part partToDelete = new Part();
-                Model selectedModel = new Model();
-                
-                if (request.getParameter("delete-part-id") != null) {
-                    Integer partToDeleteId = Integer.parseInt(request.getParameter("delete-part-id"));
-                                        
-                    Long modelId = Long.parseLong(request.getParameter("selected-model-id"));
-                    selectedModel = modelFacade.find(modelId);
-                    
-                    selectedModel.getParts().remove(partToDeleteId);
-                    
-                    modelFacade.edit(selectedModel);
+            Part partToDelete = new Part();
+            Model selectedModel = new Model();
 
-                    
-                    
-                    getServletContext().setAttribute("models", modelFacade.findAll());
-                    request.getRequestDispatcher("/models.jsp").forward(request, response);
+            if (request.getParameter("delete-part-id") != null) {
+                Long partToDeleteId = Long.parseLong(request.getParameter("delete-part-id"));
+                Long modelId = Long.parseLong(request.getParameter("selected-model-id"));
+                selectedModel = modelFacade.find(modelId);
+                List<Part> parts = selectedModel.getParts();
+                for (Part p : parts) {
+                    if (p.getId() == partToDeleteId) {
+                        partToDelete = p;
+                    }
                 }
-            
-        }
+                selectedModel.getParts().remove(partToDelete);
+                modelFacade.edit(selectedModel);
+                getServletContext().setAttribute("models", modelFacade.findAll());
+                request.getRequestDispatcher("/models.jsp").forward(request, response);
+            }
+
+        } 
 
     }
 
