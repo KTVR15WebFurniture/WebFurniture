@@ -25,13 +25,13 @@ body{
 .date-line{
     display: inline-block;
 }
-#_select-week{
+#select-week{
     width: 40px;  
 }
-#_select-month{
+#select-month{
     width: 80px;  
 }
-#_select-year{
+#select-year{
     width: 80px;  
 }
 /* boxes - внешний слой, после слоя с датой. 
@@ -40,7 +40,9 @@ body{
   Правая колонка, boxes-right, никак не учавствует в своем позиционировании, 
   только для содержимого*/
 #boxes{
-    width: 50%;
+    width: 25%;
+    position: relative;
+    left: 25%;
 }
 
 #wrap{
@@ -48,7 +50,6 @@ body{
     margin-right:-100%; /*  чтобы IE6 не раздвигал контейнер */
     position:relative;
     left: 100%;
-    
 }
 #boxes-left{
     float:left;
@@ -70,13 +71,13 @@ body{
     overflow:hidden;
 }
 
-#_order-name-box{
+#order-name-box{
     display: inline-block;
     width: 400px;
     text-align: left;
     padding: 5px;
 }
-#_order-name{
+#order-name{
     width: 350px;
 
 }
@@ -119,7 +120,8 @@ body{
 
 #button-box{
     display: block;
-    width: 50%;
-    margin: 40px 0;
-    margin-left: 300px;
+    width: 100%;
+    margin: 50px 0px;
+    padding: 0px;
+    text-align: center;
 }
