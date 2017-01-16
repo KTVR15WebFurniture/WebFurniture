@@ -9,7 +9,6 @@ import entities.Model;
 import entities.Part;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -108,7 +107,28 @@ public class ModelController extends HttpServlet {
                 request.getRequestDispatcher("/models.jsp").forward(request, response);
             }
 
-        } 
+        } else if ("/editPart".equals(userPath)) {
+            Part partToEdit = new Part();
+            Model selectedModel = new Model();
+
+            if (request.getParameter("edit-part-id") != null) {
+                Long partToEditId = Long.parseLong(request.getParameter("edit-part-id"));
+                Long modelId = Long.parseLong(request.getParameter("selected-model-id"));
+                selectedModel = modelFacade.find(modelId);
+                List<Part> parts = selectedModel.getParts();
+                for (Part p : parts) {
+                    if (p.getId() == partToEditId) {
+                        partToEdit = p;
+                    }
+                }
+                
+                
+                
+                //getServletContext().setAttribute("models", modelFacade.findAll());
+                //request.getRequestDispatcher("/models.jsp").forward(request, response);
+            }
+
+        }
 
     }
 

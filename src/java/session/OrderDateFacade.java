@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Melnikov
+ * @author jvm
  */
 @Stateless
 public class OrderDateFacade extends AbstractFacade<OrderDate> {

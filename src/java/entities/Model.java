@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -20,16 +19,14 @@ import javax.persistence.OneToMany;
  *
  * @author pupil
  */
-
 @Entity
 public class Model implements Serializable {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Part> parts = new ArrayList<>();
+    private List<Part> parts;
 
     public Model() {
     }
@@ -96,4 +93,9 @@ public class Model implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Model{" + "id=" + id + ", name=" + name + '}';
+    }
+    
 }

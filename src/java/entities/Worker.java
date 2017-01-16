@@ -20,19 +20,13 @@ public class Worker extends Person{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String status;
+    private String status; //professija - specializacija
 
     public Worker() {
     }
 
-    public Worker(Long id, String status) {
-        this.id = id;
-        this.status = status;
-    }
-
-    public Worker(Long id, String status, String firstname, String lastname, String isikukood, String mail, String telephon) {
+    public Worker(String status, String firstname, String lastname, String isikukood, String mail, String telephon) {
         super(firstname, lastname, isikukood, mail, telephon);
-        this.id = id;
         this.status = status;
     }
 
@@ -57,13 +51,14 @@ public class Worker extends Person{
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 41 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.id);
+        hash = 23 * hash + Objects.hashCode(this.status);
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if( !super.equals(obj)){
+        if(!super.equals(obj)){
             return false;
         }
         if (this == obj) {
@@ -76,12 +71,19 @@ public class Worker extends Person{
             return false;
         }
         final Worker other = (Worker) obj;
+        if (!Objects.equals(this.status, other.status)) {
+            return false;
+        }
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "Worker{" + "id=" + id + ", status=" + status + ": "+super.getFirstname()+super.getLastname()+super.getIsikukood()+super.getMail()+super.getTelephon()+'}';
+    }
+
     
 }

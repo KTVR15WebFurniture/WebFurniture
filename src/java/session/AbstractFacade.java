@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 
 /**
  *
- * @author Melnikov
+ * @author jvm
  */
 public abstract class AbstractFacade<T> {
 
@@ -31,6 +31,7 @@ public abstract class AbstractFacade<T> {
     }
 
     public void remove(T entity) {
+       
         getEntityManager().remove(getEntityManager().merge(entity));
     }
 

@@ -22,58 +22,26 @@ public class OrderDate implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer _week;
-    private Integer _month;
-    private Integer _year;
+    private Integer week_;
+    private Integer month_;
+    private Integer year_;
    
     public OrderDate() {
     }
 
-    public OrderDate(Integer week, Integer month, Integer year) {
-        this._week = week;
-        this._month = month;
-        this._year = year;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getWeek() {
-        return _week;
-    }
-
-    public void setWeek(Integer _week) {
-        this._week = _week;
-    }
-
-    public Integer getMonth() {
-        return _month;
-    }
-
-    public void setMonth(Integer _month) {
-        this._month = _month;
-    }
-
-    public Integer getYear() {
-        return _year;
-    }
-
-    public void setYear(Integer _year) {
-        this._year = _year;
+    public OrderDate(Integer week_, Integer month_, Integer year_) {
+        this.week_ = week_;
+        this.month_ = month_;
+        this.year_ = year_;
     }
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this._week);
-        hash = 23 * hash + Objects.hashCode(this._month);
-        hash = 23 * hash + Objects.hashCode(this._year);
+        int hash = 7;
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.week_);
+        hash = 17 * hash + Objects.hashCode(this.month_);
+        hash = 17 * hash + Objects.hashCode(this.year_);
         return hash;
     }
 
@@ -92,19 +60,53 @@ public class OrderDate implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this._week, other._week)) {
+        if (!Objects.equals(this.week_, other.week_)) {
             return false;
         }
-        if (!Objects.equals(this._month, other._month)) {
+        if (!Objects.equals(this.month_, other.month_)) {
             return false;
         }
-        if (!Objects.equals(this._year, other._year)) {
+        if (!Objects.equals(this.year_, other.year_)) {
             return false;
         }
         return true;
     }
 
-    
-    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getWeek_() {
+        return week_;
+    }
+
+    public void setWeek_(Integer week_) {
+        this.week_ = week_;
+    }
+
+    public Integer getMonth_() {
+        return month_;
+    }
+
+    public void setMonth_(Integer month_) {
+        this.month_ = month_;
+    }
+
+    public Integer getYear_() {
+        return year_;
+    }
+
+    public void setYear_(Integer year_) {
+        this.year_ = year_;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderDate{" + "id=" + id + ", week_=" + week_ + ", month_=" + month_ + ", year_=" + year_ + '}';
+    }
 
 }

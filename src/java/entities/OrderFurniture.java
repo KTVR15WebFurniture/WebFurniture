@@ -7,13 +7,17 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKeyColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
@@ -30,23 +34,29 @@ public class OrderFurniture implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    
+    @ElementCollection
+    @CollectionTable(name="MODEL_COUNT")
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Model> models;
+    private Map<Model,Integer> models = new HashMap<>();
     @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private OrderDate orderDate;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createOrderFurniture;
+    @OneToOne(orphanRemoval = true, cascade = CascadeType.ALL)
+    private Date createOrderFurniture = (Date) java.util.Calendar.getInstance().getTime();
 
     public OrderFurniture() {
     }
 
-    public OrderFurniture(String name, List<Model> models, OrderDate orderDate) {
+    public OrderFurniture(String name, String description, Map<Model,Integer> models, OrderDate orderDate) {
         this.name = name;
+        
         this.models = models;
         this.orderDate = orderDate;
-        this.createOrderFurniture = (Date) java.util.Calendar.getInstance().getTime();
+        
     }
 
+   
     public Long getId() {
         return id;
     }
@@ -63,11 +73,11 @@ public class OrderFurniture implements Serializable {
         this.name = name;
     }
 
-    public List<Model> getModels() {
+    public Map<Model,Integer> getModels() {
         return models;
     }
 
-    public void setModels(List<Model> models) {
+    public void setModels(Map<Model,Integer> models) {
         this.models = models;
     }
 
@@ -118,6 +128,11 @@ public class OrderFurniture implements Serializable {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderFurniture{" + "id=" + id + ", name=" + name + '}';
     }
 
 

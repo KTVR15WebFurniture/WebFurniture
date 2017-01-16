@@ -118,4 +118,9 @@ public class Part implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Part{" + "id=" + id + ", serial=" + serial + ", description=" + description + ", price=" + price + ", duration=" + duration + '}';
+    }
+
 }

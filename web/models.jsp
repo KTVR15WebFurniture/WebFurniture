@@ -42,6 +42,56 @@
                     </div>                  
                     <br>
 
+                    <%-- таблица составляющих модели --%>
+                    
+                        <h2 class="col-sm-offset-4">Составляющие: </h2>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+
+                                    <th>Название части: </th>
+                                    <th>Стоимость операции: </th>
+                                    <th>Время выполнения: </th>
+                                    <th>Описание: </th>
+                                    <th>Удалить: </th>
+                                    <th>Изменить: </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="part" items="${selectedModel.parts}">                               
+                                <tr>                            
+                                    <td><a href='partId=${part.id}&modelId=${selectedModel.id}' name='partId'>${part.serial}</a></td>
+                                    <td>${part.price}</td>
+                                    <td>${part.duration}</td>
+                                    <td>${part.description}</td>
+                                    
+                                <form></form> <!-- необъяснимая форма, без кот. кнопки отказываются работать -->
+                                
+                                    <td>                                        
+                                        <form method="POST" action="deletePart" id="_deletePart" name="deletePart">
+                                            
+                                            <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
+                                            <input type="hidden" name="delete-part-id" value="${part.id}">
+                                        <button type="submit" class="btn btn-danger btn-sm" id="_partToDelete" name="partToDelete">
+                                        <span class="glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></button> 
+                                        </form>
+                                    </td>
+                                    
+                                    <td>                     
+                                        <form method="POST" action="editPart" id="_editPart" name="editPart">
+                                            <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
+                                            <input type="hidden" name="edit-part-id" value="${part.id}">
+                                        <button type="submit" class="btn btn-primary btn-sm" id="_partToEdit" name="partToEdit">
+                                        <span class="glyphicon glyphicon-edit" title="Изменить ${part.serial} (id = ${part.id})"></span></button> 
+                                        </form>
+                                    </td>        
+                                    
+                                </tr>                                    
+                                </c:forEach>
+                            </tbody>
+                        </table> 
+                        
+                    
                     <%-- добавление новой операции --%>
                     <div>
                         <label for="comment">Название операции: </label>
@@ -73,53 +123,7 @@
             </form>
         </section>
 
-        <%-- таблица составляющих модели --%>
-        <section class="container">
-            <h1 class="col-sm-offset-5">Операции: </h1>
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-
-                        <th>Название части: </th>
-                        <th>Стоимость операции: </th>
-                        <th>Время выполнения: </th>
-                        <th>Описание: </th>
-                        <th>Изменить: </th>
-                        <th>Удалить: </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="part" items="${selectedModel.parts}">                               
-                    <tr>                            
-                        <td><a href='partId=${part.id}&modelId=${selectedModel.id}' name='partId'>${part.serial}</a></td>
-                        <td>${part.price}</td>
-                        <td>${part.duration}</td>
-                        <td>${part.description}</td>
-                        <!--
-                        <td>                     
-                            <form method="POST" action="editPart" id="_editPart" name="editPart">
-                                <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
-                                <input type="hidden" name="edit-part-id" value="${part.id}">
-                            <button type="submit" class="btn btn-primary btn-sm" id="_partToEdit" name="partToEdit">
-                            <span class="glyphicon glyphicon-remove" title="Изменить ${part.serial} (id = ${part.id})"></span></button> 
-                        </td>         
-                        -->
-                        <td>       
-                            <form method="POST" action="deletePart" id="_deletePart" name="deletePart">
-                                <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
-                                <input type="hidden" name="delete-part-id" value="${part.id}">
-                            <button type="submit" class="btn btn-danger btn-sm" id="_partToDelete" name="partToDelete">
-                            <span class="glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></button> 
-                            </form>
-                        </td>
-                    
-                        
-                    </tr>                                    
-                    </c:forEach>
-                </tbody>
-            </table>               
-        </section> 
-
+        
         <%-- добавление новой модели --%>
         <div class="modal fade" id="addModel" role="dialog">
             <form method="POST" action="addmodelname" id="_addmodelname" name="addmodelname">
