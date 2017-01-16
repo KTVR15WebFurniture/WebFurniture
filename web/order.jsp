@@ -172,7 +172,7 @@
                                                 
                                                 <td>${status.getIndex()+1}</td>
                                                 <td><a href="load?load_order_id=${order.id}">${order.name}</a></td>
-                                                <td><a href="load?delete_order_id=${order.id}">x</a></td>
+                                                <td><a href="delete?delete_order_id=${order.id}">x</a></td>
                                             </tr>
                                         </c:forEach>  
                                     </tbody>

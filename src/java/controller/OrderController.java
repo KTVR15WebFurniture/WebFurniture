@@ -27,7 +27,7 @@ import util.DateMyFormat;
  *
  * @author pupil
  */
-@WebServlet(name = "OrderController", urlPatterns = {"/order","/create_order","/load_order_id","/delete_order_id"})
+@WebServlet(name = "OrderController", urlPatterns = {"/order","/create_order","/load","/delete"})
 public class OrderController extends HttpServlet {
     @EJB
     OrderFurnitureFacade orderFurnitureFacade;
@@ -103,20 +103,38 @@ public class OrderController extends HttpServlet {
             if(request.getParameter("update")!=null){
                 
             }
-        }else if("/load_order_id".equals(userPath)){
+        }else if("/load".equals(userPath)){
             OrderFurniture orderFurniture = null;
             try {
                 String orderId = request.getParameter("load_order_id");
                 orderFurniture = orderFurnitureFacade.find(Long.decode(orderId));
-                orderFurnitureFacade.remove(orderFurniture);
+                
                 
             } catch (Exception e) {
                 msg="Ордер ${orderFurniture.name} не был прочитан";
             }
             
-        }else if("/delete_order_id".equals(userPath)){
-        
-        }
+        }else if("/delete".equals(userPath)){
+            OrderFurniture orderFurniture = null;
+            try {
+                    String orderId = request.getParameter("delete_order_id");
+                    orderFurniture = orderFurnitureFacade.find(Long.decode(orderId));
+                    orderFurnitureFacade.remove(orderFurniture);
+                    msg="Ордер ${orderFurniture.name} удален!";
+                    request.setAttribute("infoMassage", msg);
+                    getServletContext().setAttribute("curentDate", curentDate);
+                    getServletContext().setAttribute("orders", orderFurnitureFacade.oderByTodey());
+                    getServletContext().setAttribute("models", modelFacade.findAll());
+                    request.getRequestDispatcher("/order.jsp").forward(request, response);
+                } catch (Exception e) {
+                    msg="Ордер ${orderFurniture.name} удалить не удалось";
+                    request.setAttribute("infoMassage", msg);
+                    getServletContext().setAttribute("curentDate", curentDate);
+                    getServletContext().setAttribute("orders", orderFurnitureFacade.oderByTodey());
+                    getServletContext().setAttribute("models", modelFacade.findAll());
+                    request.getRequestDispatcher("/order.jsp").forward(request, response);
+                }
+            }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
