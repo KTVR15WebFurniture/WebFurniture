@@ -27,13 +27,23 @@ public class Model implements Serializable {
     private String name;
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Part> parts;
+    private Integer ammount;
 
     public Model() {
     }
 
-    public Model(String name, List<Part> parts) {
+    public Model(String name, List<Part> parts, Integer ammount) {
         this.name = name;
         this.parts = parts;
+        this.ammount = ammount;
+    }
+
+    public Integer getAmmount() {
+        return ammount;
+    }
+
+    public void setAmmount(Integer ammount) {
+        this.ammount = ammount;
     }
 
     public Long getId() {
@@ -62,10 +72,11 @@ public class Model implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.name);
-        hash = 37 * hash + Objects.hashCode(this.parts);
+        int hash = 7;
+        hash = 53 * hash + Objects.hashCode(this.id);
+        hash = 53 * hash + Objects.hashCode(this.name);
+        hash = 53 * hash + Objects.hashCode(this.parts);
+        hash = 53 * hash + Objects.hashCode(this.ammount);
         return hash;
     }
 
@@ -88,6 +99,9 @@ public class Model implements Serializable {
             return false;
         }
         if (!Objects.equals(this.parts, other.parts)) {
+            return false;
+        }
+        if (!Objects.equals(this.ammount, other.ammount)) {
             return false;
         }
         return true;

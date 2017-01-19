@@ -34,50 +34,51 @@ public class DoneWork implements Serializable {
     private Part part;
     @OneToOne(cascade = CascadeType.REFRESH)
     private Worker worker;
+    private Integer done = 0;
 
     public DoneWork() {
     }
 
-    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
-        this.week = _week;
-        this.month = _month;
-        this.year = _year;
+    public DoneWork(Integer week, Integer month, Integer year, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
+        this.week = week;
+        this.month = month;
+        this.year = year;
         this.orderFurniture = orderFurniture;
         this.model = model;
         this.part = part;
         this.worker = worker;
     }
 
-    public Long getId() {
-        return id;
+    public Integer getDone() {
+        return done;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDone(Integer done) {
+        this.done = done;
     }
 
     public Integer getWeek() {
         return week;
     }
 
-    public void setWeek(Integer _week) {
-        this.week = _week;
+    public void setWeek(Integer week) {
+        this.week = week;
     }
 
     public Integer getMonth() {
         return month;
     }
 
-    public void setMonth(Integer _month) {
-        this.month = _month;
+    public void setMonth(Integer month) {
+        this.month = month;
     }
 
     public Integer getYear() {
         return year;
     }
 
-    public void setYear(Integer _year) {
-        this.year = _year;
+    public void setYear(Integer year) {
+        this.year = year;
     }
 
     public OrderFurniture getOrderFurniture() {
@@ -112,17 +113,26 @@ public class DoneWork implements Serializable {
         this.worker = worker;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.id);
-        hash = 47 * hash + Objects.hashCode(this.week);
-        hash = 47 * hash + Objects.hashCode(this.month);
-        hash = 47 * hash + Objects.hashCode(this.year);
-        hash = 47 * hash + Objects.hashCode(this.orderFurniture);
-        hash = 47 * hash + Objects.hashCode(this.model);
-        hash = 47 * hash + Objects.hashCode(this.part);
-        hash = 47 * hash + Objects.hashCode(this.worker);
+        hash = 31 * hash + Objects.hashCode(this.id);
+        hash = 31 * hash + Objects.hashCode(this.week);
+        hash = 31 * hash + Objects.hashCode(this.month);
+        hash = 31 * hash + Objects.hashCode(this.year);
+        hash = 31 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 31 * hash + Objects.hashCode(this.model);
+        hash = 31 * hash + Objects.hashCode(this.part);
+        hash = 31 * hash + Objects.hashCode(this.worker);
+        hash = 31 * hash + Objects.hashCode(this.done);
         return hash;
     }
 
@@ -162,11 +172,11 @@ public class DoneWork implements Serializable {
         if (!Objects.equals(this.worker, other.worker)) {
             return false;
         }
+        if (!Objects.equals(this.done, other.done)) {
+            return false;
+        }
         return true;
     }
-
-    
-
 
     
 }
