@@ -44,15 +44,15 @@
                     <div class="form-inline" style="text-align: center; margin-bottom: 10px;">
                         <div class="form-group">
                             <label for="week" style="margin-right: 5px;">Неделя</label>
-                            <input name="week" value="${orderDate.week}" readonly="true" style="width: 100px; margin-right: 5px;">
+                            <input name="week" value="${week}" style="width: 100px; margin-right: 5px;">
                         </div>
                         <div class="form-group">
                             <label for="month" style="margin-right: 5px;">Месяц</label>
-                            <input name="month" value="${orderDate.month}" readonly="true" style="width: 100px; margin-right: 5px;">
+                            <input name="month" value="${month}" style="width: 100px; margin-right: 5px;">
                         </div>
                         <div class="form-group">
                             <label for="year" style="margin-right: 5px;">Год</label>
-                            <input name="year" value="${orderDate.year}" readonly="true" style="width: 100px; margin-right: 5px;">
+                            <input name="year" value="${year}" style="width: 100px; margin-right: 5px;">
                         </div>
                     </div>
                     <tr>
@@ -61,13 +61,13 @@
                         </td>
                         <td>
                             <select name="workerId" style="width: 250px;" onchange="submit()">
-                                <option value="0">${workerId} Не выбрано</option>
+                                <option value="">Не выбрано</option>
                                 <c:forEach var="worker" items="${workers}">
                                     <c:if test="${worker.id eq selectedWorker.id}">
-                                        <option value="${worker.id}" selected="true">${worker.id} ${worker.firstname} ${worker.lastname}</option>
+                                        <option value="${worker.id}" selected="true">${worker.firstname} ${worker.lastname}</option>
                                     </c:if>
                                     <c:if test="${worker.id ne selectedWorker.id}">
-                                        <option value="${worker.id}">${worker.id} ${worker.firstname} ${worker.lastname}</option>
+                                        <option value="${worker.id}">${worker.firstname} ${worker.lastname}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -79,7 +79,7 @@
                         </td>
                         <td>
                             <select name="orderId" style="width: 250px"  onchange="submit()">
-                                <option value="0">Не выбрано</option>
+                                <option value="">Не выбрано</option>
                                 <c:forEach var="ord" items="${orders}">
                                     <c:if test="${ord.id eq selectedOrder.id}">
                                         <option value="${ord.id}" selected="true">${ord.name}</option>
@@ -96,8 +96,8 @@
                             <label for="modelId" style="padding-right: 10px;">Модель</label>
                         </td>
                         <td>
-                            <select name="modelId" style="width: 250px"  onchange="submit()">
-                                <option value="0">Не выбрано</option>
+                            <select name="modelId" style="width: 250px" onchange="submit()">
+                                <option value="">Не выбрано</option>
                                 <c:forEach var="mode" items="${selectedOrder.models}">
                                     <c:if test="${mode.id eq selectedModel.id}">
                                         <option value="${mode.id}" selected="true">${mode.name}</option>
@@ -114,8 +114,8 @@
                             <label for="operationId" style="padding-right: 10px;">Деталь</label>
                         </td>
                         <td>
-                            <select name="operationId" id="operation" style="width: 250px" onchange="submit()">
-                                <option value="0">Не выбрано</option>
+                            <select name="operationId" id="operation" style="width: 250px" >
+                                <option value="">Не выбрано</option>
                                 <c:forEach var="part" items="${selectedModel.parts}">
                                     <c:if test="${part.id eq selectedPart.id}">
                                         <option value="${part.id}" selected="true">${part.desctiption}</option>
@@ -130,7 +130,7 @@
                     <tr>
                         <td></td>
                         <td style="text-align: center">
-                            <button onclick="refresh()" class="btn btn-primary">Записать</button>
+                            <button type="submit" class="btn btn-primary">Записать</button>
                         </td>
                     </tr>
                 </table>
@@ -139,24 +139,35 @@
                 <h4>Заработано: ${profit} €</h4>
                 <table class="table-bordered" style="margin: 0 auto">
                     <thead>
-                    <th style="padding: 10px">Неделя</th>
-                    <th style="padding: 10px">Месяц</th>
-                    <th style="padding: 10px">Год</th>
-                    <th style="padding: 10px">Номер заказа</th>
-                    <th style="padding: 10px">Модель</th>
-                    <th style="padding: 10px">Компонент</th>
-                    <th style="padding: 10px">Плата</th>
+                        <tr>
+                            <th style="padding: 10px">Неделя</th>
+                            <th style="padding: 10px">Месяц</th>
+                            <th style="padding: 10px">Год</th>
+                            <th style="padding: 10px">Номер заказа</th>
+                            <th style="padding: 10px">Модель</th>
+                            <th style="padding: 10px">Компонент</th>
+                            <th style="padding: 10px">Плата</th>
+                            <th style="padding: 10px">Удалить</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <c:forEach var="doneWork" items="${doneWorks}">
                             <tr>
-                                <td style="padding: 10px">${doneWork.orderDate.week}</td>
-                                <td style="padding: 10px">${doneWork.orderDate.month}</td>
-                                <td style="padding: 10px">${doneWork.orderDate.year}</td>
+                                <td style="padding: 10px">${doneWork.week}</td>
+                                <td style="padding: 10px">${doneWork.month}</td>
+                                <td style="padding: 10px">${doneWork.year}</td>
                                 <td style="padding: 10px">${doneWork.orderFurniture.id}</td>
-                                <td style="padding: 10px">${doneWork.model.name}</td>
-                                <td style="padding: 10px">${doneWork.part.desctiption}</td>
+                                <td style="padding: 10px">${doneWork.model.id}</td>
+                                <td style="padding: 10px">${doneWork.part.id}</td>
                                 <td style="padding: 10px">${doneWork.part.price}</td>
+                                <td style="text-align: center;">
+                                    <form action="deleteWork" method="post">
+                                        <input name="parTID" hidden="true" value="${doneWork.part.id}">
+                                        <input name="workeRID" hidden="true" value="${doneWork.worker.id}">
+                                        <button type="submit" class="glyphicon glyphicon-trash"></button>
+                                    </form>
+                                
+                                </td>
                             </tr>
                         </c:forEach>
                     </tbody>
