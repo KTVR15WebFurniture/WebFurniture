@@ -3,13 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/Model.java</file>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/DoneWork.java</file>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/Worker.java</file>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/Part.java</file>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/Person.java</file>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/OrderDate.java</file>
-            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entity/Order.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/session/WorkerFacade.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entities/Person.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/session/AbstractFacade.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/entities/Worker.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/controller/SalaryController.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/src/java/controller/WorkerController.java</file>
+            <file>file:/C:/Users/pupil.IVKHK/Documents/NetBeansProjects/di/WebFurniture/web/worker.jsp</file>
         </group>
     </open-files>
 </project-private>

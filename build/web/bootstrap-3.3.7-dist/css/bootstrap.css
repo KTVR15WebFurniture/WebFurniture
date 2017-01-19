@@ -1582,8 +1582,8 @@ pre code {
   overflow-y: scroll;
 }
 .container {
-  padding-right: 350px;
-  padding-left: 350px;
+  padding-right: 250px;
+  padding-left: 250px;
   margin-right: auto;
   margin-left: auto;
 }
@@ -2261,7 +2261,7 @@ th {
   text-align: left;
 }
 .table {
-  width: 100%;
+  width: 90%;
   max-width: 100%;
   margin-bottom: 20px;
 }
@@ -2548,8 +2548,8 @@ output {
 }
 .form-control {
   display: block;
-  width: 100%;
   height: 34px;
+  width: 100%;
   padding: 6px 12px;
   font-size: 14px;
   line-height: 1.42857143;
@@ -2563,6 +2563,12 @@ output {
   -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
           transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+.form-control#sel1{
+    display:block;
+    width: 30%;
+    float:left;
+    margin-left: 60px;
 }
 .form-control:focus {
   border-color: #66afe9;

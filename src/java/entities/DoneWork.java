@@ -19,6 +19,7 @@ import javax.persistence.OneToOne;
  * @author pupil
  */
 @Entity
+
 public class DoneWork implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

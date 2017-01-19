@@ -18,6 +18,7 @@ import javax.persistence.ManyToOne;
  *
  * @author pupil
  */
+//операции для модели
 @Entity
 public class Part implements Serializable {
 

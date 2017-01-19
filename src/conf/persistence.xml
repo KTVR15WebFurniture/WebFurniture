@@ -5,10 +5,10 @@
     <class>entities.DoneWork</class>
     <class>entities.Model</class>
     <class>entities.OrderDate</class>
+    <class>entities.OrderFurniture</class>
     <class>entities.Part</class>
     <class>entities.Person</class>
     <class>entities.Worker</class>
-    <class>entities.OrderFurniture</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
