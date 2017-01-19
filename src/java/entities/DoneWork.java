@@ -23,34 +23,61 @@ public class DoneWork implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
-    private OrderDate orderDate;
-    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
+    private Integer week;// = OrderDate.getWeek();
+    private Integer month;// = OrderDate.getMonth();
+    private Integer year;// = OrderDate.getYear();
+    @OneToOne(cascade = CascadeType.REFRESH)
     private OrderFurniture orderFurniture;
-    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Model model;
-    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Part part;
-    @OneToOne(cascade = CascadeType.REFRESH, orphanRemoval = true)
+    @OneToOne(cascade = CascadeType.REFRESH)
     private Worker worker;
 
     public DoneWork() {
     }
 
-    public DoneWork(OrderDate orderDate, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
-        this.orderDate = orderDate;
+    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
+        this.week = _week;
+        this.month = _month;
+        this.year = _year;
         this.orderFurniture = orderFurniture;
         this.model = model;
         this.part = part;
         this.worker = worker;
     }
-    
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getWeek() {
+        return week;
+    }
+
+    public void setWeek(Integer _week) {
+        this.week = _week;
+    }
+
+    public Integer getMonth() {
+        return month;
+    }
+
+    public void setMonth(Integer _month) {
+        this.month = _month;
+    }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer _year) {
+        this.year = _year;
     }
 
     public OrderFurniture getOrderFurniture() {
@@ -85,23 +112,17 @@ public class DoneWork implements Serializable {
         this.worker = worker;
     }
 
-    public OrderDate getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(OrderDate orderDate) {
-        this.orderDate = orderDate;
-    }
-
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 67 * hash + Objects.hashCode(this.id);
-        hash = 67 * hash + Objects.hashCode(this.orderDate);
-        hash = 67 * hash + Objects.hashCode(this.orderFurniture);
-        hash = 67 * hash + Objects.hashCode(this.model);
-        hash = 67 * hash + Objects.hashCode(this.part);
-        hash = 67 * hash + Objects.hashCode(this.worker);
+        int hash = 7;
+        hash = 47 * hash + Objects.hashCode(this.id);
+        hash = 47 * hash + Objects.hashCode(this.week);
+        hash = 47 * hash + Objects.hashCode(this.month);
+        hash = 47 * hash + Objects.hashCode(this.year);
+        hash = 47 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 47 * hash + Objects.hashCode(this.model);
+        hash = 47 * hash + Objects.hashCode(this.part);
+        hash = 47 * hash + Objects.hashCode(this.worker);
         return hash;
     }
 
@@ -120,7 +141,13 @@ public class DoneWork implements Serializable {
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
-        if (!Objects.equals(this.orderDate, other.orderDate)) {
+        if (!Objects.equals(this.week, other.week)) {
+            return false;
+        }
+        if (!Objects.equals(this.month, other.month)) {
+            return false;
+        }
+        if (!Objects.equals(this.year, other.year)) {
             return false;
         }
         if (!Objects.equals(this.orderFurniture, other.orderFurniture)) {
@@ -137,7 +164,6 @@ public class DoneWork implements Serializable {
         }
         return true;
     }
-
 
     
 
