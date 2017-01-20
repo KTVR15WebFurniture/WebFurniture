@@ -16,7 +16,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-
+        
         <section class="container">
             <h1 class="col-sm-offset-5">Модель: </h1>
             <form method="POST" class="col-sm-8 col-sm-offset-2" action="addmodel" id="_addproduct" name="addmodel">
@@ -48,44 +48,23 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-
-                                    <th>Название части: </th>
+                                    <th>Серийный номер:</th>
                                     <th>Стоимость операции: </th>
                                     <th>Время выполнения: </th>
                                     <th>Описание: </th>
                                     <th>Удалить: </th>
-                                    <th>Изменить: </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="part" items="${selectedModel.parts}">                               
-                                <tr>                            
-                                    <td><a href='partId=${part.id}&modelId=${selectedModel.id}' name='partId'>${part.serial}</a></td>
+                                <tr>
+                                    <td><a href='editPart?partId=${part.id}&modelId=${selectedModel.id}' name='partId'>${part.serial}</a></td>
                                     <td>${part.price}</td>
                                     <td>${part.duration}</td>
-                                    <td>${part.description}</td>
-                                    
-                                <form></form> <!-- необъяснимая форма, без кот. кнопки отказываются работать -->
-                                
-                                    <td>                                        
-                                        <form method="POST" action="deletePart" id="_deletePart" name="deletePart">
-                                            
-                                            <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
-                                            <input type="hidden" name="delete-part-id" value="${part.id}">
-                                        <button type="submit" class="btn btn-danger btn-sm" id="_partToDelete" name="partToDelete">
-                                        <span class="glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></button> 
-                                        </form>
+                                    <td>${part.description}</td>                
+                                    <td><a href='deletePart?partId=${part.id}&modelId=${selectedModel.id}' name='partId'> 
+                                            <span class="btn btn-danger btn-sm glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></a>
                                     </td>
-                                    
-                                    <td>                     
-                                        <form method="POST" action="editPart" id="_editPart" name="editPart">
-                                            <input type="hidden" name="selected-model-id" value="${selectedModel.id}">
-                                            <input type="hidden" name="edit-part-id" value="${part.id}">
-                                        <button type="submit" class="btn btn-primary btn-sm" id="_partToEdit" name="partToEdit">
-                                        <span class="glyphicon glyphicon-edit" title="Изменить ${part.serial} (id = ${part.id})"></span></button> 
-                                        </form>
-                                    </td>        
-                                    
                                 </tr>                                    
                                 </c:forEach>
                             </tbody>
@@ -94,26 +73,24 @@
                     
                     <%-- добавление новой операции --%>
                     <div>
-                        <label for="comment">Название операции: </label>
-                        <input type="text" class="form-control" id="_newpartname" name="newpartname" value="${part.name}">
+                        
+                        <label for="comment">Серийный номер: </label>
+                        <input type="text" class="form-control" id="_newpartname" name="newpartname" value="${part.serial}">
                         <br>
 
                         <label for="comment">Описание: </label>
                         <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription" value="${part.description}"></textarea>
-
-                        <br>                   
-
+                        <br>  
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
                                 <input type="text" class="form-control" id="_newpartprice" name="newpartprice" value="${part.price}">
-
                                 <br>
-
                                 <label for="comment">Время выполнения: </label>
                                 <input type="text" class="form-control" id="_newpartduration" name="newpartduration" value="${part.duration}">
                             </div>
                         </div>
+
                     </div>
 
                     <br>
