@@ -23,7 +23,7 @@ public class Part implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String serial;
-    private String desctiption;
+    private String description;
     private Integer price;
     private Integer duration;
 
@@ -31,9 +31,9 @@ public class Part implements Serializable {
     public Part() {
     }
 
-    public Part(String serial, String desctiption, Integer price, Integer duration) {
+    public Part(String serial, String description, Integer price, Integer duration) {
         this.serial = serial;
-        this.desctiption = desctiption;
+        this.description = description;
         this.price = price;
         this.duration = duration;
     }
@@ -54,12 +54,12 @@ public class Part implements Serializable {
         this.serial = serial;
     }
 
-    public String getDesctiption() {
-        return desctiption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesctiption(String desctiption) {
-        this.desctiption = desctiption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Integer getPrice() {
@@ -83,7 +83,7 @@ public class Part implements Serializable {
         int hash = 5;
         hash = 43 * hash + Objects.hashCode(this.id);
         hash = 43 * hash + Objects.hashCode(this.serial);
-        hash = 43 * hash + Objects.hashCode(this.desctiption);
+        hash = 43 * hash + Objects.hashCode(this.description);
         hash = 43 * hash + Objects.hashCode(this.price);
         hash = 43 * hash + Objects.hashCode(this.duration);
         return hash;
@@ -104,7 +104,7 @@ public class Part implements Serializable {
         if (!Objects.equals(this.serial, other.serial)) {
             return false;
         }
-        if (!Objects.equals(this.desctiption, other.desctiption)) {
+        if (!Objects.equals(this.description, other.description)) {
             return false;
         }
         if (!Objects.equals(this.id, other.id)) {
@@ -121,7 +121,7 @@ public class Part implements Serializable {
 
     @Override
     public String toString() {
-        return "Part{" + "id=" + id + ", serial=" + serial + ", desctiption=" + desctiption + ", price=" + price + ", duration=" + duration + '}';
+        return "Part{" + "id=" + id + ", serial=" + serial + ", desctiption=" + description + ", price=" + price + ", duration=" + duration + '}';
     }
     
 

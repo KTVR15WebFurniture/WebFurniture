@@ -153,7 +153,7 @@ public class DoneWork implements Serializable {
 
     @Override
     public String toString() {
-        return "DoneWork{" + "id=" + id + ", week_=" + week_ + ", month_=" + month_ + ", year_=" + year_ + ", orderFurniture=" + getOrderFurniture().getName() + ", model=" + getModel().getName() + ", part=" +getPart().getSerial()+". "+ getPart().getDesctiption() + '}';
+        return "DoneWork{" + "id=" + id + ", week_=" + week_ + ", month_=" + month_ + ", year_=" + year_ + ", orderFurniture=" + getOrderFurniture().getName() + ", model=" + getModel().getName() + ", part=" +getPart().getSerial()+". "+ getPart().getDescription() + '}';
     }
 
        
