@@ -33,18 +33,20 @@ public class DoneWork implements Serializable {
     private Model model;
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     private Part part;
-    
+    @OneToOne(cascade = CascadeType.REFRESH)
+    private Worker worker;    
 
     public DoneWork() {
     }
 
-    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part) {
+    public DoneWork(Integer _week, Integer _month, Integer _year, OrderFurniture orderFurniture, Model model, Part part, Worker worker) {
         this._week = _week;
         this._month = _month;
         this._year = _year;
         this.orderFurniture = orderFurniture;
         this.model = model;
         this.part = part;
+        this.worker = worker;
     }
 
     public Long getId() {
@@ -103,16 +105,25 @@ public class DoneWork implements Serializable {
         this.part = part;
     }
 
+    public Worker getWorker() {
+        return worker;
+    }
+
+    public void setWorker(Worker worker) {
+        this.worker = worker;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 29 * hash + Objects.hashCode(this.id);
-        hash = 29 * hash + Objects.hashCode(this._week);
-        hash = 29 * hash + Objects.hashCode(this._month);
-        hash = 29 * hash + Objects.hashCode(this._year);
-        hash = 29 * hash + Objects.hashCode(this.orderFurniture);
-        hash = 29 * hash + Objects.hashCode(this.model);
-        hash = 29 * hash + Objects.hashCode(this.part);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this._week);
+        hash = 59 * hash + Objects.hashCode(this._month);
+        hash = 59 * hash + Objects.hashCode(this._year);
+        hash = 59 * hash + Objects.hashCode(this.orderFurniture);
+        hash = 59 * hash + Objects.hashCode(this.model);
+        hash = 59 * hash + Objects.hashCode(this.part);
+        hash = 59 * hash + Objects.hashCode(this.worker);
         return hash;
     }
 
@@ -149,8 +160,12 @@ public class DoneWork implements Serializable {
         if (!Objects.equals(this.part, other.part)) {
             return false;
         }
+        if (!Objects.equals(this.worker, other.worker)) {
+            return false;
+        }
         return true;
     }
+
     
 
 

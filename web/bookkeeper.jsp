@@ -20,7 +20,7 @@
     <body>
         <h1>Зарплата</h1>
 <div class="container">           
-                <select class="form-control" id="_selectMonth" name="selectMonth">
+                <select class="form-control" id="sel1" name="selectMonth">
                                 <option value="1">Январь</option>
                                 <option value="2">Февраль</option>
                                 <option value="3">Март</option>
@@ -34,7 +34,7 @@
                                 <option value="11">Ноябрь</option>
                                 <option value="12">Декабрь</option>
                 </select>                
-                <select class="form-control" id="_selectYear" name="selectYear">
+                <select class="form-control" id="sel1" name="selectYear">
                     <option>2017</option>
                     <option>2016</option>
                     <option>2015</option>

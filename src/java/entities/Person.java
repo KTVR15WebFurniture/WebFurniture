@@ -7,6 +7,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,7 @@ public class Person implements Serializable {
     private Long id;
     private String firstname;
     private String lastname;
+    @Column(unique = true)
     private String isikukood;
     private String mail;
     private String telephon;
@@ -37,7 +39,6 @@ public class Person implements Serializable {
         this.isikukood = isikukood;
         this.mail = mail;
         this.telephon = telephon;
-       
     }
 
 
