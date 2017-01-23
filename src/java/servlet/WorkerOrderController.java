@@ -9,7 +9,9 @@ import entities.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -57,17 +59,17 @@ public class WorkerOrderController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         if ("/addWork".equals(request.getServletPath())) {
-//            Worker worker = new Worker("ivan", "ivanov", "39212234556", "ivan@mail.ee", "53596251");
-//        Part part = new Part("46131", "leg", 20, 20);
-//        List<Part> parts = new ArrayList<>();
-//        parts.add(part);
-//        Model model = new Model("chair", parts, 4);
-//        List<Model> models = new ArrayList<>();
-//        models.add(model);
-//        OrderDate orderDate = new OrderDate(3, 1, 2017);
-//        OrderFurniture orderFurniture = new OrderFurniture("kichen", models, orderDate);
-//        workerFacade.create(worker);
-//        orderFacade.create(orderFurniture);
+            Worker worker = new Worker("ivan", "ivanov", "39212234556", "ivan@mail.ee", "53596251");
+        Part part = new Part("46131", "leg", 20, 20);
+        List<Part> parts = new ArrayList<>();
+        parts.add(part);
+        Model model = new Model("chair", parts);
+        Map<Model,Integer> models = new HashMap<>();
+        models.put(model, 4);
+        OrderDate orderDate = new OrderDate(4, 1, 2017);
+        OrderFurniture orderFurniture = new OrderFurniture("kichen", models, orderDate);
+        workerFacade.create(worker);
+        orderFacade.create(orderFurniture);
             Integer profit = 0;
             Calendar today = Calendar.getInstance();
             Integer week = today.get(Calendar.WEEK_OF_YEAR); //Integer.parseInt(request.getParameter("week"));
@@ -110,16 +112,8 @@ public class WorkerOrderController extends HttpServlet {
 
             }
             if (request.getParameter("modelId") != null && !"".equals(request.getParameter("modelId"))) {
-                Long orderId = Long.parseLong(request.getParameter("orderId"));
                 Long modelId = Long.parseLong(request.getParameter("modelId"));
                 Model selectedModel = modelFacade.find(modelId);
-                
-                int quantity = selectedModel.getParts().toArray().length;
-                for (int i = 1; i < selectedModel.getAmmount(); i++) {
-                    for (int q = 0; q < quantity; q++) {
-                        selectedModel.getParts().add(selectedModel.getParts().get(q));
-                    }
-                }
 
                 getServletContext().setAttribute("selectedModel", selectedModel);
             }
@@ -128,9 +122,34 @@ public class WorkerOrderController extends HttpServlet {
                 Part selectedPart = partFacade.find(partId);
                 getServletContext().setAttribute("selectedPart", selectedPart);
             }
+            if(request.getParameter("orderId") != null && !"".equals(request.getParameter("orderId")) && request.getParameter("modelId") != null 
+                    && !"".equals(request.getParameter("modelId")) && request.getParameter("operationId") != null && !"".equals(request.getParameter("operationId")) 
+                    && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId"))){
+                List<DoneWork> doneWorks = doneWorkFacade.findAll();
+                Long orderId = Long.parseLong(request.getParameter("orderId"));
+                OrderFurniture selectedOrder = orderFacade.find(orderId);
+                Long modelId = Long.parseLong(request.getParameter("modelId"));
+                Model selectedModel = modelFacade.find(modelId);
+                Long partId = Long.parseLong(request.getParameter("operationId"));
+                Part selectedPart = partFacade.find(partId);
+                Integer ammountForPart = 0;
+                for(DoneWork doneWork : doneWorks){
+                    if(Objects.equals(selectedOrder.getId(), doneWork.getOrderFurniture().getId()) && Objects.equals(selectedModel.getId(), doneWork.getModel().getId()) 
+                            && Objects.equals(selectedPart.getId(), doneWork.getPart().getId())){
+                        ammountForPart += doneWork.getDone();
+                    }
+                }
+                List<Integer> ammounts = new ArrayList<>();
+                for(int i = 1; i <= selectedOrder.getModels().get(selectedModel) - ammountForPart; i++){
+                    ammounts.add(i);
+                }
+                
+                getServletContext().setAttribute("ammount", ammounts);
+            }
             if (week != 0 && month != 0 && year != 0 && request.getParameter("orderId") != null && !"".equals(request.getParameter("orderId"))
                     && request.getParameter("modelId") != null && !"".equals(request.getParameter("modelId")) && request.getParameter("operationId") != null
-                    && !"".equals(request.getParameter("operationId")) && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId"))) {
+                    && !"".equals(request.getParameter("operationId")) && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId") 
+                            && request.getParameter("ammount") != null)) {
                 Long orderId = Long.parseLong(request.getParameter("orderId"));
                 Long modelId = Long.parseLong(request.getParameter("modelId"));
                 Long partId = Long.parseLong(request.getParameter("operationId"));

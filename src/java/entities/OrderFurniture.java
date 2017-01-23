@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -31,7 +32,7 @@ public class OrderFurniture implements Serializable {
     private Long id;
     private String name;
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    private List<Model> models;
+    private Map<Model,Integer> models;
     @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private OrderDate orderDate;
     @Temporal(TemporalType.TIMESTAMP)
@@ -40,7 +41,7 @@ public class OrderFurniture implements Serializable {
     public OrderFurniture() {
     }
 
-    public OrderFurniture(String name, List<Model> models, OrderDate orderDate) {
+    public OrderFurniture(String name, Map<Model, Integer> models, OrderDate orderDate) {
         this.name = name;
         this.models = models;
         this.orderDate = orderDate;
@@ -63,11 +64,11 @@ public class OrderFurniture implements Serializable {
         this.name = name;
     }
 
-    public List<Model> getModels() {
+    public Map<Model,Integer> getModels() {
         return models;
     }
 
-    public void setModels(List<Model> models) {
+    public void setModels(Map<Model,Integer> models) {
         this.models = models;
     }
 
@@ -79,14 +80,22 @@ public class OrderFurniture implements Serializable {
         this.orderDate = orderDate;
     }
 
+    public Date getCreateOrderFurniture() {
+        return createOrderFurniture;
+    }
+
+    public void setCreateOrderFurniture(Date createOrderFurniture) {
+        this.createOrderFurniture = createOrderFurniture;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 71 * hash + Objects.hashCode(this.id);
-        hash = 71 * hash + Objects.hashCode(this.name);
-        hash = 71 * hash + Objects.hashCode(this.models);
-        hash = 71 * hash + Objects.hashCode(this.orderDate);
-        hash = 71 * hash + Objects.hashCode(this.createOrderFurniture);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
+        hash = 29 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + Objects.hashCode(this.models);
+        hash = 29 * hash + Objects.hashCode(this.orderDate);
+        hash = 29 * hash + Objects.hashCode(this.createOrderFurniture);
         return hash;
     }
 
@@ -119,6 +128,9 @@ public class OrderFurniture implements Serializable {
         }
         return true;
     }
+    
+
+
 
 
 }

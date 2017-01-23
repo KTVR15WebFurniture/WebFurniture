@@ -114,7 +114,7 @@
                             <label for="operationId" style="padding-right: 10px;">Деталь</label>
                         </td>
                         <td>
-                            <select name="operationId" id="operation" style="width: 250px" >
+                            <select name="operationId" id="operation" onchange="submit()" style="width: 250px" >
                                 <option value="">Не выбрано</option>
                                 <c:forEach var="part" items="${selectedModel.parts}">
                                     <c:if test="${part.id eq selectedPart.id}">
@@ -123,6 +123,19 @@
                                     <c:if test="${part.id ne selectedPart.id}">
                                         <option value="${part.id}">${part.desctiption}</option>
                                     </c:if>
+                                </c:forEach>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr class="form-group" style="text-align: center">
+                        <td>
+                            <label for="operationId" style="padding-right: 10px;">Номер </label>
+                        </td>
+                        <td>
+                            <select name="quantity" style="width: 250px" >
+                                <option value="">Не выбрано</option>
+                                <c:forEach var="ammount" items="${ammounts}">
+                                        <option value="${ammount}" >${ammount}</option>
                                 </c:forEach>
                             </select>
                         </td>
