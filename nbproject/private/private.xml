@@ -3,9 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/KTVR15%20Kurtsanov/WebFurniture/src/java/servlet/WorkerOrderController.java</file>
-            <file>file:/D:/KTVR15%20Kurtsanov/WebFurniture/src/java/entities/OrderFurniture.java</file>
-            <file>file:/D:/KTVR15%20Kurtsanov/WebFurniture/web/WEB-INF/order_selection.jsp</file>
+            <file>file:/home/pupil/NetBeansProjects/WebFurniture/src/conf/persistence.xml</file>
+            <file>file:/home/pupil/NetBeansProjects/WebFurniture/web/order_selection.jsp</file>
+            <file>file:/home/pupil/NetBeansProjects/WebFurniture/src/java/servlet/WorkerOrderController.java</file>
         </group>
     </open-files>
 </project-private>

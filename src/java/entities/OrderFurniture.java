@@ -7,10 +7,12 @@ package entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,12 +33,15 @@ public class OrderFurniture implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @ElementCollection
+    @CollectionTable(name = "MODEL_COUNT")
     @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
-    private Map<Model,Integer> models;
+    private Map<Model,Integer> models = new HashMap<>();
     @OneToOne(orphanRemoval = true,cascade = CascadeType.ALL)
     private OrderDate orderDate;
     @Temporal(TemporalType.TIMESTAMP)
     private Date createOrderFurniture;
+    
 
     public OrderFurniture() {
     }

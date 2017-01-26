@@ -6,11 +6,9 @@
 package session;
 
 import entities.OrderFurniture;
-import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -31,5 +29,4 @@ public class OrderFurnitureFacade extends AbstractFacade<OrderFurniture> {
         super(OrderFurniture.class);
     }
     
-
 }

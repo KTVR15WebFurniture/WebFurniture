@@ -99,11 +99,11 @@
                             <select name="modelId" style="width: 250px" onchange="submit()">
                                 <option value="">Не выбрано</option>
                                 <c:forEach var="mode" items="${selectedOrder.models}">
-                                    <c:if test="${mode.id eq selectedModel.id}">
-                                        <option value="${mode.id}" selected="true">${mode.name}</option>
+                                    <c:if test="${mode.key.id eq selectedModel.id}">
+                                        <option value="${mode.key.id}" selected="true">${mode.key.name}</option>
                                     </c:if>
-                                    <c:if test="${mode.id ne selectedModel.id}">
-                                        <option value="${mode.id}">${mode.name}</option>
+                                    <c:if test="${mode.key.id ne selectedModel.id}">
+                                        <option value="${mode.key.id}">${mode.key.name}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
