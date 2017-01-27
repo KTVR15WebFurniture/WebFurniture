@@ -58,11 +58,11 @@
                             <tbody>
                                 <c:forEach var="part" items="${selectedModel.parts}">                               
                                 <tr>
-                                    <td><a href='editPart?partId=${part.id}&modelId=${selectedModel.id}' name='partId'>${part.serial}</a></td>
+                                    <td><a href='editPart?edit_part_id=${part.id}&selected_model_id=${selectedModel.id}' name='edit_part_id'>${part.serial}</a></td>
                                     <td>${part.price}</td>
                                     <td>${part.duration}</td>
                                     <td>${part.description}</td>                
-                                    <td><a href='deletePart?partId=${part.id}&modelId=${selectedModel.id}' name='partId'> 
+                                    <td><a href='deletePart?delete_part_id=${part.id}&selected_model_id=${selectedModel.id}' name='delete_part_id'> 
                                             <span class="btn btn-danger btn-sm glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></a>
                                     </td>
                                 </tr>                                    
@@ -75,19 +75,19 @@
                     <div>
                         
                         <label for="comment">Серийный номер: </label>
-                        <input type="text" class="form-control" id="_newpartname" name="newpartname" value="${part.serial}">
+                        <input type="text" class="form-control" id="_newpartname" name="newpartname" value="${partToEdit.serial}">
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription" value="${part.description}"></textarea>
+                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription">${partToEdit.description}</textarea>
                         <br>  
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice" value="${part.price}">
+                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice" value="${partToEdit.price}">
                                 <br>
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration" value="${part.duration}">
+                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration" value="${partToEdit.duration}">
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
                     <br>
 
                 </div>
-                <input type="submit" class="btn btn-primary btn-lg" id="_submit" name="_submit" value="Добавить">
+                <input type="submit" class="btn btn-primary btn-lg" id="save" name="save" value="Сохранить">
             </form>
         </section>
 
