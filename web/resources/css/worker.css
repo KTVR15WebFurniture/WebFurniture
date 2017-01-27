@@ -26,6 +26,31 @@ h1{
     color: red;
     text-align: center;
 }
+
+.tdWorker{
+    text-align: left !important;
+    background-color: lightgreen;
+    padding: 30px;
+    box-shadow: 0 0 0 3px purple, 
+                0 0 0 6px black,
+                0 0 0 9px darkcyan;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.alignLeft{
+    text-align: left !important;
+    padding-right: 0;
+}
+
+.paddingR{
+    padding-right:15px;
+}
+
+.selWorker{
+    background-color: lightcyan;
+}
+
 #calendar3 {
   width: 100%;
   font: monospace;

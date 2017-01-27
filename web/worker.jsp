@@ -21,47 +21,47 @@
     <body>
         
          <div class="container">
-             <h1>Данные работника</h1>
+             <h1>Данные работника:</h1>
              
                 <div id="info">
                     <c:out value="${infoMassage}" default="" escapeXml="true" />
                 </div>
             
                
-            <form class="form-horizontal" action="forWorker">   
+            <form class="form-horizontal tdWorker" action="forWorker">   
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="firstname">Имя:</label>
-                    <div class="col-sm-10">
+                    <label class="control-label col-sm-2 alignLeft " for="firstname">Имя:</label>
+                    <div class="col-sm-10 ">
                         <input type="text" class="form-control" id="_firstname" name="firstname" value="${worker.firstname}" required>
                         <input type="hidden" id="_id" name="id" value="${worker.id}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="lastname">Фамилия:</label>
+                    <label class="control-label col-sm-2 alignLeft" for="lastname">Фамилия:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="_lastname" name="lastname" value="${worker.lastname}" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="isikukood">Isikukood:</label>
+                    <label class="control-label col-sm-2 alignLeft" for="isikukood">Isikukood:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="_isikukood" name="isikukood" value="${worker.isikukood}" required>
                     </div>   
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="mail">Электронная почта:</label>
+                    <label class="control-label col-sm-2 alignLeft" for="mail">E-почта:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="_mail" name="mail" value="${worker.mail}" required>
                     </div>   
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="telephon">Телефон:</label>
+                    <label class="control-label col-sm-2 alignLeft" for="telephon">Телефон:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="_telephon" name="telephon" value="${worker.telephon}" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="status">Статус:</label>
+                    <label class="control-label col-sm-2 alignLeft" for="status">Статус:</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" id="_status" name="status" value="${worker.status}" required>
                     </div>
@@ -74,10 +74,12 @@
                     </div>
                 </div>
             </form>
-            <form action="selectWorker" method="POST">
+                    <hr>
+                    
+            <form action="selectWorker" class="" method="POST">
                 <div class="form-group">
-                    <select class="form-control" id="_selectWorker" name="selectWorker" onchange="submit(this)">
-                        <option value="#">Выберите работника</option>
+                    <select class="form-control selWorker" style="font-weight: bold;" id="_selectWorker" name="selectWorker" onchange="submit(this)">
+                        <option value="#" style="font-style: italic;">*** Выберите работника ***</option>
                         <c:forEach var="worker" items="${workers}">
                             <option value="${worker.id}">${worker.firstname} ${worker.lastname}</option>  
                         </c:forEach>
