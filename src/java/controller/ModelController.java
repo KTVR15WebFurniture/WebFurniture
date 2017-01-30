@@ -23,7 +23,7 @@ import session.PartFacade;
  *
  * @author pupil
  */
-@WebServlet(name = "Controller", urlPatterns = {"/models", "/addmodel", "/addmodelname", "/part", "/deletePart", "/editPart"})
+@WebServlet(name = "Controller", urlPatterns = {"/models", "/editmodel", "/addmodelname", "/part", "/deletePart", "/editPart"})
 public class ModelController extends HttpServlet {
 
     @EJB
@@ -47,13 +47,13 @@ public class ModelController extends HttpServlet {
 
         if ("/models".equals(userPath)) {
             getServletContext().setAttribute("models", modelFacade.findAll());
-
+            
             Model selectedModel = new Model();
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
                 getServletContext().setAttribute("model", modelFacade.findAll());
-            }
+            } 
             request.getRequestDispatcher("/models.jsp").forward(request, response);
 
         } else if ("/addmodelname".equals(userPath)) {
@@ -64,9 +64,9 @@ public class ModelController extends HttpServlet {
             response.sendRedirect("models.jsp");
             return;
 
-        } else if ("/addmodel".equals(userPath)) {
+        } else if ("/editmodel".equals(userPath)) {
             Model selectedModel = new Model();
-            
+
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
@@ -74,19 +74,49 @@ public class ModelController extends HttpServlet {
                 request.getRequestDispatcher("/models.jsp").forward(request, response);
 
                 if (request.getParameter("save") != null) {
-                    if (request.getParameter("newpartname") != "" && request.getParameter("newpartdescription") != ""
-                            && request.getParameter("newpartprice") != "" && request.getParameter("newpartduration") != "") {
-                        String newpartname = request.getParameter("newpartname");
-                        String newpartdescription = request.getParameter("newpartdescription");
-                        Integer newpartprice = Integer.parseInt(request.getParameter("newpartprice"));
-                        Integer newpartduration = Integer.parseInt(request.getParameter("newpartduration"));
+                    if (request.getParameter("part_name") != "" && request.getParameter("part_description") != ""
+                            && request.getParameter("part_price") != "" && request.getParameter("part_duration") != "") {
+                        String newpartname = request.getParameter("part_name");
+                        String newpartdescription = request.getParameter("part_description");
+                        Integer newpartprice = Integer.parseInt(request.getParameter("part_price"));
+                        Integer newpartduration = Integer.parseInt(request.getParameter("part_duration"));
                         Part newPart = new Part(newpartname, newpartdescription, newpartprice, newpartduration);
                         selectedModel.getParts().add(newPart);
+
                         modelFacade.edit(selectedModel);
                         getServletContext().setAttribute("models", modelFacade.findAll());
                         request.getRequestDispatcher("/models.jsp").forward(request, response);
                     }
-                } 
+                }
+                if (request.getParameter("update") != null) {
+                    if (request.getParameter("part_id") != null) {
+                        Part oldPart = new Part();
+                        Long oldPartId = Long.parseLong(request.getParameter("part_id"));
+                        List<Part> parts = selectedModel.getParts();
+                        for (Part p : parts) {
+                            if (p.getId() == oldPartId) {
+                                oldPart = p;
+                            }
+                        }
+                        if (request.getParameter("part_id") != null && request.getParameter("part_name") != "" && request.getParameter("part_description") != ""
+                                && request.getParameter("part_price") != "" && request.getParameter("part_duration") != "") {
+
+                            String editedpartname = request.getParameter("part_name");
+                            String editedpartdescription = request.getParameter("part_description");
+                            Integer editedpartprice = Integer.parseInt(request.getParameter("part_price"));
+                            Integer editedpartduration = Integer.parseInt(request.getParameter("part_duration"));
+                            Part editedPart = new Part(editedpartname, editedpartdescription, editedpartprice, editedpartduration);
+
+                            selectedModel.getParts().add(editedPart);
+                            selectedModel.getParts().remove(oldPart);
+                            modelFacade.edit(selectedModel);
+
+                            getServletContext().setAttribute("models", modelFacade.findAll());                            
+                            request.getRequestDispatcher("/models.jps").forward(request, response);
+
+                        }
+                    }
+                }
             }
 
         } else if ("/deletePart".equals(userPath)) {
@@ -123,13 +153,12 @@ public class ModelController extends HttpServlet {
                         partToEdit = p;
                     }
                 }
-                
-                selectedModel.getParts().remove(partToEdit);
-                modelFacade.edit(selectedModel);
+
                 getServletContext().setAttribute("partToEdit", partToEdit);
                 getServletContext().setAttribute("models", modelFacade.findAll());
                 getServletContext().setAttribute("selectedModel", selectedModel);
                 request.getRequestDispatcher("/models.jsp").forward(request, response);
+                getServletContext().setAttribute("partToEdit", null);
             }
 
         }

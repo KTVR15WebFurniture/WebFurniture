@@ -19,7 +19,7 @@
         
         <section class="container">
             <h1 class="col-sm-offset-5">Модель: </h1>
-            <form method="POST" class="col-sm-8 col-sm-offset-2" action="addmodel" id="_addproduct" name="addmodel">
+            <form method="POST" class="col-sm-8 col-sm-offset-2" action="editmodel" id="_editmodel" name="editmodel">
                 <div class="form-group">
                     <label for="usr">Наименование модели: </label>                    
                     <div class="row">
@@ -27,17 +27,17 @@
                             <select class="form-control" required="true" id="_model" name="model" onchange="submit()" >
                                 <option disabled selected value="">Выберите модель</option>
                                 <c:forEach var="model" items="${models}">
-                                <c:if test="${model.id eq selectedModel.id}">
-                                <option selected="true" value="${model.id}">${model.name}</option>
-                                </c:if>
-                                <c:if test="${model.id ne selectedModel.id}">
-                                <option value="${model.id}">${model.name}</option>
-                                </c:if>
+                                    <c:if test="${model.id eq selectedModel.id}">
+                                        <option selected="true" value="${model.id}">${model.name}</option>
+                                    </c:if>
+                                    <c:if test="${model.id ne selectedModel.id}">
+                                        <option value="${model.id}">${model.name}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
                         <div  class="col-sm-2">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModel">Добавить новую</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModelName">Добавить новую</button>
                         </div>
                     </div>                  
                     <br>
@@ -72,22 +72,24 @@
                         
                     
                     <%-- добавление новой операции --%>
-                    <div>
+                    <div> 
+                        <label for="comment">ID: ${partToEdit.id}</label><br>
+                        <input type="hidden"  name="part_id" value="${partToEdit.id}">                            
                         
                         <label for="comment">Серийный номер: </label>
-                        <input type="text" class="form-control" id="_newpartname" name="newpartname" value="${partToEdit.serial}">
+                        <input type="text" class="form-control" id="_part_name" name="part_name" value="${partToEdit.serial}">                        
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_newpartdescription" name="newpartdescription">${partToEdit.description}</textarea>
+                        <textarea class="form-control" rows="5" id="_part_description" name="part_description">${partToEdit.description}</textarea>
                         <br>  
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_newpartprice" name="newpartprice" value="${partToEdit.price}">
+                                <input type="text" class="form-control" id="_part_price" name="part_price" value="${partToEdit.price}">
                                 <br>
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_newpartduration" name="newpartduration" value="${partToEdit.duration}">
+                                <input type="text" class="form-control" id="_part_duration" name="part_duration" value="${partToEdit.duration}">
                             </div>
                         </div>
 
@@ -96,13 +98,23 @@
                     <br>
 
                 </div>
-                <input type="submit" class="btn btn-primary btn-lg" id="save" name="save" value="Сохранить">
+                                
+                <c:if test="${partToEdit.id == null}">
+                    <input type="submit" class="btn btn-primary btn-lg" id="save" name="save" value="Сохранить">
+
+                </c:if>
+                <c:if test="${partToEdit.id != null}">
+                    <input type="submit" class="btn btn-primary btn-lg" id="update" name="update" value="Обновить">
+                </c:if>
+                                
+                
+                
             </form>
         </section>
 
         
         <%-- добавление новой модели --%>
-        <div class="modal fade" id="addModel" role="dialog">
+        <div class="modal fade" id="addModelName" role="dialog">
             <form method="POST" action="addmodelname" id="_addmodelname" name="addmodelname">
                 <div class="modal-dialog">
                     <div class="modal-content">
