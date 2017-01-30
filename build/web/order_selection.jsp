@@ -159,6 +159,7 @@
                             <th style="padding: 10px">Номер заказа</th>
                             <th style="padding: 10px">Модель</th>
                             <th style="padding: 10px">Компонент</th>
+                            <th style="padding: 10px">Количество</th>
                             <th style="padding: 10px">Плата</th>
                             <th style="padding: 10px">Удалить</th>
                         </tr>
@@ -172,11 +173,11 @@
                                 <td style="padding: 10px">${doneWork.orderFurniture.id}</td>
                                 <td style="padding: 10px">${doneWork.model.id}</td>
                                 <td style="padding: 10px">${doneWork.part.id}</td>
-                                <td style="padding: 10px">${doneWork.part.price}</td>
+                                <td style="padding: 10px">${doneWork.done}</td>
+                                <td style="padding: 10px">${doneWork.part.price * doneWork.done}</td>
                                 <td style="text-align: center;">
                                     <form action="deleteWork" method="post">
-                                        <input name="parTID" hidden="true" value="${doneWork.part.id}">
-                                        <input name="workeRID" hidden="true" value="${doneWork.worker.id}">
+                                        <input name="doneWorkId" hidden="true" value="${doneWork.id}">
                                         <button type="submit" class="glyphicon glyphicon-trash"></button>
                                     </form>
                                 

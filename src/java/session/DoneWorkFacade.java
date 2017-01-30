@@ -34,6 +34,7 @@ public class DoneWorkFacade extends AbstractFacade<DoneWork> {
         super(DoneWork.class);
     }
     
+    
     public List<DoneWork> listDoneWork(OrderFurniture order, Model model, Part part){
         Query query = getEntityManager().createQuery("SELECT d from DoneWork d WHERE d.orderFurniture = :order AND d.model = model AND d.part = :part")
                 .setParameter("order", order)

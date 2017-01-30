@@ -99,7 +99,7 @@ public class WorkerOrderController extends HttpServlet {
                 for (DoneWork doneWork : doneWorks1) {
                     if (Objects.equals(week, doneWork.getWeek()) && Objects.equals(month, doneWork.getMonth()) && Objects.equals(year, doneWork.getYear()) && Objects.equals(workerId, doneWork.getWorker().getId())) {
                         doneWorks.add(doneWork);
-                        profit += doneWork.getPart().getPrice();
+                        profit += doneWork.getPart().getPrice() * doneWork.getDone();
                     }
                 }
                 getServletContext().setAttribute("doneWorks", doneWorks);
@@ -122,37 +122,56 @@ public class WorkerOrderController extends HttpServlet {
                 Part selectedPart = partFacade.find(partId);
                 getServletContext().setAttribute("selectedPart", selectedPart);
             }
-            if(request.getParameter("orderId") != null && !"".equals(request.getParameter("orderId")) && request.getParameter("modelId") != null 
-                    && !"".equals(request.getParameter("modelId")) && request.getParameter("operationId") != null && !"".equals(request.getParameter("operationId")) 
-                    && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId"))){
-                
+            if (request.getParameter("orderId") != null && !"".equals(request.getParameter("orderId")) && request.getParameter("modelId") != null
+                    && !"".equals(request.getParameter("modelId")) && request.getParameter("operationId") != null && !"".equals(request.getParameter("operationId"))
+                    && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId"))) {
+
                 Long orderId = Long.parseLong(request.getParameter("orderId"));
                 OrderFurniture order = orderFacade.find(orderId);
-                Long modelId = Long.parseLong(request.getParameter("modelId"));
-                Model model = modelFacade.find(modelId);
-                Long partId = Long.parseLong(request.getParameter("operationId"));
-                Part part = partFacade.find(partId);
-                List<DoneWork> doneWorks = doneWorkFacade.listDoneWork(order, model, part);
+                Long selectedModelId = Long.parseLong(request.getParameter("modelId"));
+                Model selectedModel = modelFacade.find(selectedModelId);
+//                Map<Model, Integer> models = order.getModels();
+//                Model model = new Model();
+//                for(Model model1 : models.keySet()){
+//                    if(model1.getName().equals(selectedModel.getName())){
+//                        model = model1;
+//                    }
+//                }
+                Long selectedPartId = Long.parseLong(request.getParameter("operationId"));
+                Part selectedPart = partFacade.find(selectedPartId);
+//                Part part = new Part();
+//                List<Part> parts = model.getParts();
+//                for(Part part1 : parts){
+//                    if(part.getDesctiption().equals(selectedPart.getDesctiption())){
+//                        part = part1;
+//                    }
+//                }
+                List<DoneWork> doneWorks = doneWorkFacade.findAll(); //doneWorkFacade.listDoneWork(order, selectedModel, selectedPart);
                 Integer ammountForPart = 0;
-                for(DoneWork doneWork : doneWorks){
+                for (DoneWork doneWork : doneWorks) {
+                    if (doneWork.getOrderFurniture().equals(order) && doneWork.getModel().equals(selectedModel) && doneWork.getPart().equals(selectedPart)) {
                         ammountForPart += doneWork.getDone();
+                    }
+
                 }
                 List<Integer> ammounts = new ArrayList<>();
-                for(int i = 1; i <= order.getModels().get(model) - ammountForPart; i++){
-                    ammounts.add(i);
+                if (order.getModels().get(selectedModel) - ammountForPart != 0) {
+                    for (int i = 1; i <= order.getModels().get(selectedModel) - ammountForPart; i++) {
+                        ammounts.add(i);
+                    }
                 }
-                
+
                 getServletContext().setAttribute("ammounts", ammounts);
             }
             if (week != 0 && month != 0 && year != 0 && request.getParameter("orderId") != null && !"".equals(request.getParameter("orderId"))
                     && request.getParameter("modelId") != null && !"".equals(request.getParameter("modelId")) && request.getParameter("operationId") != null
-                    && !"".equals(request.getParameter("operationId")) && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId")) 
-                            && request.getParameter("ammount") != null && !"".equals(request.getParameter("ammount"))) {
+                    && !"".equals(request.getParameter("operationId")) && request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId"))
+                    && request.getParameter("quantity") != null && !"".equals(request.getParameter("quantity"))) {
                 Long orderId = Long.parseLong(request.getParameter("orderId"));
                 Long modelId = Long.parseLong(request.getParameter("modelId"));
                 Long partId = Long.parseLong(request.getParameter("operationId"));
                 Long workerId = Long.parseLong(request.getParameter("workerId"));
-                Integer ammount = Integer.parseInt(request.getParameter("ammount"));
+                Integer ammount = Integer.parseInt(request.getParameter("quantity"));
                 OrderFurniture order = orderFacade.find(orderId);
                 Model model = modelFacade.find(modelId);
                 Part part = partFacade.find(partId);
@@ -161,11 +180,11 @@ public class WorkerOrderController extends HttpServlet {
                 doneWork.setDone(ammount);
                 doneWorkFacade.create(doneWork);
 
-                getServletContext().removeAttribute("profit");
-                getServletContext().removeAttribute("selectedModel");
                 getServletContext().removeAttribute("selectedOrder");
+                getServletContext().removeAttribute("selectedModel");
                 getServletContext().removeAttribute("selectedPart");
-                getServletContext().removeAttribute("doneWorks");
+                getServletContext().removeAttribute("profit");
+                getServletContext().removeAttribute("quantity");
                 getServletContext().removeAttribute("selectedWorker");
 
             }
@@ -173,19 +192,13 @@ public class WorkerOrderController extends HttpServlet {
             request.getRequestDispatcher("order_selection.jsp").forward(request, response);
         }
         if ("/deleteWork".equals(request.getServletPath())) {
-            Long partId = Long.parseLong(request.getParameter("parTID"));
-            Long workerId = Long.parseLong(request.getParameter("workeRID"));
-            List<DoneWork> doneWorks = doneWorkFacade.findAll();
-            for (DoneWork doneWork : doneWorks) {
-                if (Objects.equals(partId, doneWork.getPart().getId()) && Objects.equals(workerId, doneWork.getWorker().getId())) {
-                    doneWorkFacade.remove(doneWorkFacade.find(doneWork.getId()));
-                }
-            }
-            getServletContext().removeAttribute("profit");
-            getServletContext().removeAttribute("selectedModel");
+            Long doneWorkId = Long.parseLong(request.getParameter("doneWorkId"));
+            doneWorkFacade.remove(doneWorkFacade.find(doneWorkId));
             getServletContext().removeAttribute("selectedOrder");
+            getServletContext().removeAttribute("selectedModel");
             getServletContext().removeAttribute("selectedPart");
-            getServletContext().removeAttribute("doneWorks");
+            getServletContext().removeAttribute("profit");
+            getServletContext().removeAttribute("quantity");
             getServletContext().removeAttribute("selectedWorker");
             response.sendRedirect("addWork");
         }
