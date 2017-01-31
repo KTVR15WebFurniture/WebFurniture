@@ -6,9 +6,11 @@
 package session;
 
 import entities.Worker;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -29,4 +31,9 @@ public class WorkerFacade extends AbstractFacade<Worker> {
         super(Worker.class);
     }
     
+    public List<Worker> workersSortedByLastname(){
+        Query query = getEntityManager().createQuery("Select w From Worker w Order by w.lastname");
+        
+        return query.getResultList();
+    }
 }
