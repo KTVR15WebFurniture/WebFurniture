@@ -23,7 +23,7 @@ import session.PartFacade;
  *
  * @author pupil
  */
-@WebServlet(name = "Controller", urlPatterns = {"/models", "/editmodel", "/addmodelname", "/part", "/deletePart", "/editPart"})
+@WebServlet(name = "Controller", urlPatterns = {"/models", "/editmodel", "/deletemodel", "/addmodelname", "/part", "/deletePart", "/editPart"})
 public class ModelController extends HttpServlet {
 
     @EJB
@@ -61,9 +61,19 @@ public class ModelController extends HttpServlet {
             Model newModel = new Model(newmodelname, new ArrayList<Part>());
             modelFacade.create(newModel);
             getServletContext().setAttribute("models", modelFacade.findAll());
-            response.sendRedirect("models.jsp");
-            return;
+            request.getRequestDispatcher("/models.jsp").forward(request, response);
 
+        } else if ("/deletemodel".equals(userPath)) {
+            Model selectedModel = new Model();        
+            
+            if (request.getParameter("selectedModelId") != null) {
+                Long modelId = Long.parseLong(request.getParameter("selectedModelId"));
+                selectedModel = modelFacade.find(modelId);                               
+            }  
+            modelFacade.remove(selectedModel); 
+            getServletContext().setAttribute("models", modelFacade.findAll());
+            request.getRequestDispatcher("/models.jsp").forward(request, response);
+                
         } else if ("/editmodel".equals(userPath)) {
             Model selectedModel = new Model();
 
@@ -111,9 +121,8 @@ public class ModelController extends HttpServlet {
                             selectedModel.getParts().remove(oldPart);
                             modelFacade.edit(selectedModel);
 
-                            getServletContext().setAttribute("models", modelFacade.findAll());                            
+                            getServletContext().setAttribute("models", modelFacade.findAll());
                             request.getRequestDispatcher("/models.jps").forward(request, response);
-
                         }
                     }
                 }
@@ -153,7 +162,6 @@ public class ModelController extends HttpServlet {
                         partToEdit = p;
                     }
                 }
-
                 getServletContext().setAttribute("partToEdit", partToEdit);
                 getServletContext().setAttribute("models", modelFacade.findAll());
                 getServletContext().setAttribute("selectedModel", selectedModel);

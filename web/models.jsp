@@ -23,7 +23,7 @@
                 <div class="form-group">
                     <label for="usr">Наименование модели: </label>                    
                     <div class="row">
-                        <div class="col-sm-9">
+                        <div class="col-sm-7">
                             <select class="form-control" required="true" id="_model" name="model" onchange="submit()" >
                                 <option disabled selected value="">Выберите модель</option>
                                 <c:forEach var="model" items="${models}">
@@ -36,9 +36,21 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div  class="col-sm-2">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModelName">Добавить новую</button>
+                        <div class="col-sm-5">
+                                        
+                            <div class="col-sm-4">
+                                <c:if test="${selectedModel.id != null}">  
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#deleteModel">Удалить</button>   
+                                </c:if>
+                            </div>
+                            
+                            <div class="col-sm-3">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModelName">Добавить новую</button>
+                            </div>
                         </div>
+                        
+                        
+                        
                     </div>                  
                     <br>
 
@@ -48,21 +60,21 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>Серийный номер:</th>
-                                    <th>Стоимость операции: </th>
-                                    <th>Время выполнения: </th>
-                                    <th>Описание: </th>
-                                    <th>Удалить: </th>
+                                    <th class="col-sm-2">Серийный номер:</th>
+                                    <th class="col-sm-2">Стоимость операции: </th>
+                                    <th class="col-sm-2">Время выполнения: </th>
+                                    <th class="col-sm-4">Описание: </th>
+                                    <th class="col-sm-1">Удалить: </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <c:forEach var="part" items="${selectedModel.parts}">                               
                                 <tr>
-                                    <td><a href='editPart?edit_part_id=${part.id}&selected_model_id=${selectedModel.id}' name='edit_part_id'>${part.serial}</a></td>
-                                    <td>${part.price}</td>
-                                    <td>${part.duration}</td>
-                                    <td>${part.description}</td>                
-                                    <td><a href='deletePart?delete_part_id=${part.id}&selected_model_id=${selectedModel.id}' name='delete_part_id'> 
+                                    <td class="col-sm-2"><a href='editPart?edit_part_id=${part.id}&selected_model_id=${selectedModel.id}' name='edit_part_id'>${part.serial}</a></td>
+                                    <td class="col-sm-2">${part.price}</td>
+                                    <td class="col-sm-2">${part.duration}</td>
+                                    <td class="col-sm-4">${part.description}</td>                
+                                    <td class="col-sm-1"><a href='deletePart?delete_part_id=${part.id}&selected_model_id=${selectedModel.id}' name='delete_part_id'> 
                                             <span class="btn btn-danger btn-sm glyphicon glyphicon-remove" title="Удалить ${part.serial} (id = ${part.id})"></span></a>
                                     </td>
                                 </tr>                                    
@@ -73,7 +85,6 @@
                     
                     <%-- добавление новой операции --%>
                     <div> 
-                        <label for="comment">ID: ${partToEdit.id}</label><br>
                         <input type="hidden"  name="part_id" value="${partToEdit.id}">                            
                         
                         <label for="comment">Серийный номер: </label>
@@ -92,22 +103,16 @@
                                 <input type="text" class="form-control" id="_part_duration" name="part_duration" value="${partToEdit.duration}">
                             </div>
                         </div>
-
                     </div>
-
                     <br>
-
                 </div>
                                 
                 <c:if test="${partToEdit.id == null}">
                     <input type="submit" class="btn btn-primary btn-lg" id="save" name="save" value="Сохранить">
-
                 </c:if>
                 <c:if test="${partToEdit.id != null}">
                     <input type="submit" class="btn btn-primary btn-lg" id="update" name="update" value="Обновить">
-                </c:if>
-                                
-                
+                </c:if>                              
                 
             </form>
         </section>
@@ -134,6 +139,29 @@
                 </div>
             </form>
         </div>
+        
+        <%-- удаление выбранной модели --%>
+        <div class="modal fade" id="deleteModel" role="dialog">
+            <form method="POST" action="deletemodel" id="_deletemodel" name="deletemodel">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Удалить: </h4>
+                        </div>
+                        <div class="modal-body">
+                            <label for="comment">${selectedModel.name}</label>
+                            <input type="hidden"  name="selectedModelId" value="${selectedModel.id}">
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-primary" value="Удалить">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
 
     </body>
 </html>
