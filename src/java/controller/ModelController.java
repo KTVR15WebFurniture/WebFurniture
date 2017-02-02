@@ -44,58 +44,67 @@ public class ModelController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         String userPath = request.getServletPath();
-
+        Model selectedModel = new Model();
+        
         if ("/models".equals(userPath)) {
             getServletContext().setAttribute("models", modelFacade.findAll());
-            
-            Model selectedModel = new Model();
+
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
                 getServletContext().setAttribute("model", modelFacade.findAll());
-            } 
+            }
             request.getRequestDispatcher("/models.jsp").forward(request, response);
 
         } else if ("/addmodelname".equals(userPath)) {
-            String newmodelname = request.getParameter("newmodel");
-            Model newModel = new Model(newmodelname, new ArrayList<Part>());
-            modelFacade.create(newModel);
+                                     
+            if (request.getParameter("newmodel") != "") {
+                String newmodelname = request.getParameter("newmodel");
+                Model newModel = new Model(newmodelname, new ArrayList<Part>());
+                modelFacade.create(newModel);
+                getServletContext().setAttribute("selectedModel", newModel);
+             }          
+
+            getServletContext().setAttribute("models", modelFacade.findAll());
+            request.getRequestDispatcher("/models").forward(request, response);
+
+        } else if ("/deletemodel".equals(userPath)) {
+            Long modelId = Long.parseLong(request.getParameter("selectedModelId"));
+            
+            if (request.getParameter("selectedModelId") != null) {                
+                selectedModel = modelFacade.find(modelId);
+                modelFacade.remove(selectedModel);
+            }
+            selectedModel = modelFacade.find(modelId);
+            getServletContext().setAttribute("selectedModel", selectedModel);            
             getServletContext().setAttribute("models", modelFacade.findAll());
             request.getRequestDispatcher("/models.jsp").forward(request, response);
 
-        } else if ("/deletemodel".equals(userPath)) {
-            Model selectedModel = new Model();        
-            
-            if (request.getParameter("selectedModelId") != null) {
-                Long modelId = Long.parseLong(request.getParameter("selectedModelId"));
-                selectedModel = modelFacade.find(modelId);                               
-            }  
-            modelFacade.remove(selectedModel); 
-            getServletContext().setAttribute("models", modelFacade.findAll());
-            request.getRequestDispatcher("/models.jsp").forward(request, response);
-                
         } else if ("/editmodel".equals(userPath)) {
-            Model selectedModel = new Model();
 
             if (request.getParameter("model") != null) {
                 Long modelId = Long.parseLong(request.getParameter("model"));
                 selectedModel = modelFacade.find(modelId);
                 getServletContext().setAttribute("selectedModel", selectedModel);
-                request.getRequestDispatcher("/models.jsp").forward(request, response);
 
+                String partname, partdescription;
+                Integer partprice, partduration;
+                
                 if (request.getParameter("save") != null) {
                     if (request.getParameter("part_name") != "" && request.getParameter("part_description") != ""
                             && request.getParameter("part_price") != "" && request.getParameter("part_duration") != "") {
-                        String newpartname = request.getParameter("part_name");
-                        String newpartdescription = request.getParameter("part_description");
-                        Integer newpartprice = Integer.parseInt(request.getParameter("part_price"));
-                        Integer newpartduration = Integer.parseInt(request.getParameter("part_duration"));
-                        Part newPart = new Part(newpartname, newpartdescription, newpartprice, newpartduration);
+                        partname = request.getParameter("part_name");
+                        partdescription = request.getParameter("part_description");
+                        partprice = Integer.parseInt(request.getParameter("part_price"));
+                        partduration = Integer.parseInt(request.getParameter("part_duration"));
+                        Part newPart = new Part(partname, partdescription, partprice, partduration);
                         selectedModel.getParts().add(newPart);
 
                         modelFacade.edit(selectedModel);
+
+                        selectedModel = modelFacade.find(modelId);
+                        getServletContext().setAttribute("selectedModel", selectedModel);
                         getServletContext().setAttribute("models", modelFacade.findAll());
-                        request.getRequestDispatcher("/models.jsp").forward(request, response);
                     }
                 }
                 if (request.getParameter("update") != null) {
@@ -111,26 +120,28 @@ public class ModelController extends HttpServlet {
                         if (request.getParameter("part_id") != null && request.getParameter("part_name") != "" && request.getParameter("part_description") != ""
                                 && request.getParameter("part_price") != "" && request.getParameter("part_duration") != "") {
 
-                            String editedpartname = request.getParameter("part_name");
-                            String editedpartdescription = request.getParameter("part_description");
-                            Integer editedpartprice = Integer.parseInt(request.getParameter("part_price"));
-                            Integer editedpartduration = Integer.parseInt(request.getParameter("part_duration"));
-                            Part editedPart = new Part(editedpartname, editedpartdescription, editedpartprice, editedpartduration);
+                            partname = request.getParameter("part_name");
+                            partdescription = request.getParameter("part_description");
+                            partprice = Integer.parseInt(request.getParameter("part_price"));
+                            partduration = Integer.parseInt(request.getParameter("part_duration"));
+                            Part editedPart = new Part(partname, partdescription, partprice, partduration);
 
                             selectedModel.getParts().add(editedPart);
                             selectedModel.getParts().remove(oldPart);
                             modelFacade.edit(selectedModel);
 
+                            selectedModel = modelFacade.find(modelId);
+                            getServletContext().setAttribute("selectedModel", selectedModel);
                             getServletContext().setAttribute("models", modelFacade.findAll());
-                            request.getRequestDispatcher("/models.jps").forward(request, response);
+
                         }
                     }
                 }
+                request.getRequestDispatcher("/models.jsp").forward(request, response);
             }
 
         } else if ("/deletePart".equals(userPath)) {
             Part partToDelete = new Part();
-            Model selectedModel = new Model();
 
             if (request.getParameter("delete_part_id") != null) {
                 Long partToDeleteId = Long.parseLong(request.getParameter("delete_part_id"));
@@ -145,12 +156,12 @@ public class ModelController extends HttpServlet {
                 selectedModel.getParts().remove(partToDelete);
                 modelFacade.edit(selectedModel);
                 getServletContext().setAttribute("models", modelFacade.findAll());
+                getServletContext().setAttribute("selectedModel", selectedModel);
                 request.getRequestDispatcher("/models.jsp").forward(request, response);
             }
 
         } else if ("/editPart".equals(userPath)) {
             Part partToEdit = new Part();
-            Model selectedModel = new Model();
 
             if (request.getParameter("edit_part_id") != null) {
                 Long partToEditId = Long.parseLong(request.getParameter("edit_part_id"));
