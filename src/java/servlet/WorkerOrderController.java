@@ -9,11 +9,15 @@ import entities.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import javax.ejb.EJB;
+import javax.management.ObjectName;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,7 +49,7 @@ public class WorkerOrderController extends HttpServlet {
     DoneWorkFacade doneWorkFacade;
     @EJB
     WorkerFacade workerFacade;
-            
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -57,7 +61,7 @@ public class WorkerOrderController extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         response.setContentType("text/html;charset=UTF-8");
         if ("/addWork".equals(request.getServletPath())) {
 //            Worker worker = new Worker("ivan", "ivanov", "39212234556", "ivan@mail.ee", "53596251");
@@ -73,38 +77,73 @@ public class WorkerOrderController extends HttpServlet {
 //        orderFacade.create(orderFurniture);
             Integer profit = 0;
             Calendar today = Calendar.getInstance();
-            Integer week = today.get(Calendar.WEEK_OF_YEAR); //Integer.parseInt(request.getParameter("week"));
+            Integer week = today.get(Calendar.WEEK_OF_YEAR) - 1; //Integer.parseInt(request.getParameter("week"));
             Integer month = today.get(Calendar.MONTH) + 1; //Integer.parseInt(request.getParameter("month"));
             Integer year = today.get(Calendar.YEAR);//Integer.parseInt(request.getParameter("year"));
             getServletContext().setAttribute("week", week);
             getServletContext().setAttribute("month", month);
             getServletContext().setAttribute("year", year);
-            getServletContext().setAttribute("workers", workerFacade.findAll());//workerFacade.workersSortedByLastname()
+            List<Worker> workers = workerFacade.findAll();
+            Collections
+                    .sort(workers, new Comparator<Worker>() {
+                        @Override
+                        public int compare(Worker o1, Worker o2) {
+                            return o1.getLastname().compareTo(o2.getLastname());
+                        }
+                    });
+            getServletContext().setAttribute("workers", workers);
             if (week != 0 && month != 0 && year != 0) {
+               
+               Integer currentWeek = 0;
+               Integer currentYear = 0;
+               Integer currentMonth = 0;
+               if(request.getParameter("currentWeek") != null) {
+                   currentWeek = Integer.parseInt(request.getParameter("currentWeek"));
+               }
+               if(week != currentWeek && currentWeek != 0){
+                   week = currentWeek;
+               }
+               
+               
+               if(request.getParameter("currentMonth") != null) {
+                   currentMonth = Integer.parseInt(request.getParameter("currentMonth"));
+               }
+               if(month != currentMonth && currentMonth != 0){
+                   month = currentMonth;
+               }
+               
+               
+               if(request.getParameter("currentYear") != null) {
+                   currentYear = Integer.parseInt(request.getParameter("currentYear"));
+               }
+               if(year != currentYear && currentYear != 0){
+                   year = currentYear;
+               }
 
-                List<OrderFurniture> orderFurnitures = orderFacade.findAll();//orderFacade.ordersByDate(week, month, year)
-                List<OrderFurniture> orders = new ArrayList<>();
-                for (OrderFurniture furniture : orderFurnitures) {
-                    if (Objects.equals(furniture.getOrderDate().getWeek(), week) && Objects.equals(furniture.getOrderDate().getMonth(), month) && Objects.equals(furniture.getOrderDate().getYear(), year)) {
-                        orders.add(furniture);
-                    }
-                }
-                getServletContext().setAttribute("orders", orders);
+                List<OrderFurniture> orderFurnitures = orderFacade.ordersByDate(week, month, year);
+                getServletContext().setAttribute("orders", orderFurnitures);
+                
+                getServletContext().removeAttribute("week");
+                getServletContext().setAttribute("week", week);
+                getServletContext().removeAttribute("month");
+                getServletContext().setAttribute("month", month);
+                getServletContext().removeAttribute("year");
+                getServletContext().setAttribute("year", year);
             }
             if (request.getParameter("workerId") != null && !"".equals(request.getParameter("workerId"))) {
                 Long workerId = Long.parseLong(request.getParameter("workerId"));
-                OrderFurniture selectedWorker = orderFacade.find(workerId);
+                Worker selectedWorker = workerFacade.find(workerId);
                 getServletContext().setAttribute("selectedWorker", selectedWorker);
-                List<DoneWork> doneWorks1 = doneWorkFacade.findAll();//doneWorkFacade.doneWorkByWorkerAndDate(week, month, year, worker)
-                List<DoneWork> doneWorks = new ArrayList<>();
-                for (DoneWork doneWork : doneWorks1) {
-                    if (Objects.equals(week, doneWork.getWeek()) && Objects.equals(month, doneWork.getMonth()) && Objects.equals(year, doneWork.getYear()) && Objects.equals(workerId, doneWork.getWorker().getId())) {
-                        doneWorks.add(doneWork);
+                List<DoneWork> doneWorks = doneWorkFacade.doneWorkByWorkerAndDate(month, year, selectedWorker);
+                for (DoneWork doneWork : doneWorks) {
+                    if (Objects.equals(workerId, doneWork.getWorker().getId())) {
+                        
                         profit += doneWork.getPart().getPrice() * doneWork.getDone();
                     }
                 }
+                
                 getServletContext().setAttribute("doneWorks", doneWorks);
-                getServletContext().setAttribute("profit", profit); //doneWorkFacade.countProfitForMonth(month, year, worker)
+                getServletContext().setAttribute("profit", profit);
             }
             if (request.getParameter("orderId") != null && !"".equals(request.getParameter("orderId"))) {
                 Long orderId = Long.parseLong(request.getParameter("orderId"));
@@ -131,30 +170,16 @@ public class WorkerOrderController extends HttpServlet {
                 OrderFurniture order = orderFacade.find(orderId);
                 Long selectedModelId = Long.parseLong(request.getParameter("modelId"));
                 Model selectedModel = modelFacade.find(selectedModelId);
-//                Map<Model, Integer> models = order.getModels();
-//                Model model = new Model();
-//                for(Model model1 : models.keySet()){
-//                    if(model1.getName().equals(selectedModel.getName())){
-//                        model = model1;
-//                    }
-//                }
+
                 Long selectedPartId = Long.parseLong(request.getParameter("operationId"));
                 Part selectedPart = partFacade.find(selectedPartId);
-//                Part part = new Part();
-//                List<Part> parts = model.getParts();
-//                for(Part part1 : parts){
-//                    if(part.getDesctiption().equals(selectedPart.getDesctiption())){
-//                        part = part1;
-//                    }
-//                }
-                List<DoneWork> doneWorks = doneWorkFacade.findAll(); //doneWorkFacade.listDoneWork(order, selectedModel, selectedPart)
-                Integer ammountForPart = 0;
-                for (DoneWork doneWork : doneWorks) {
-                    if (doneWork.getOrderFurniture().equals(order) && doneWork.getModel().equals(selectedModel) && doneWork.getPart().equals(selectedPart)) {
-                        ammountForPart += doneWork.getDone();
-                    }
 
+                List<DoneWork> doneWorks = doneWorkFacade.listDoneWork(order, selectedModel, selectedPart);
+                Integer ammountForPart = 0;
+                for (DoneWork doneWork : doneWorks) {                   
+                        ammountForPart += doneWork.getDone();
                 }
+                
                 List<Integer> ammounts = new ArrayList<>();
                 if (order.getModels().get(selectedModel) - ammountForPart != 0) {
                     for (int i = 1; i <= order.getModels().get(selectedModel) - ammountForPart; i++) {

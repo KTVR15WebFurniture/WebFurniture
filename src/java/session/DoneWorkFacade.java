@@ -34,9 +34,8 @@ public class DoneWorkFacade extends AbstractFacade<DoneWork> {
     public DoneWorkFacade() {
         super(DoneWork.class);
     }
-    public List<DoneWork> doneWorkByWorkerAndDate(Integer week, Integer month, Integer year, Worker worker){
-        Query query = getEntityManager().createQuery("Select d from DoneWork d Where d.week = :week AND d.month = :month AND d.year = :year AND d.worker = :worker")
-                .setParameter("week", week)
+    public List<DoneWork> doneWorkByWorkerAndDate(Integer month, Integer year, Worker worker){
+        Query query = getEntityManager().createQuery("Select d from DoneWork d Where d.month = :month AND d.year = :year AND d.worker = :worker")
                 .setParameter("month", month)
                 .setParameter("year", year)
                 .setParameter("worker", worker);
@@ -44,17 +43,8 @@ public class DoneWorkFacade extends AbstractFacade<DoneWork> {
         return query.getResultList();
     }
     
-    public Integer countProfitForMonth(Integer month, Integer year, Worker worker){
-        Query query = getEntityManager().createQuery("Select SUM(d.done * d.part.price) d from DoneWork d Where d.week = :week AND d.month = :month AND d.year = :year AND d.worker = :worker")
-                .setParameter("month", month)
-                .setParameter("year", year)
-                .setParameter("worker", worker);
-        
-        return (Integer) query.getSingleResult();
-    }
-    
     public List<DoneWork> listDoneWork(OrderFurniture order, Model model, Part part){
-        Query query = getEntityManager().createQuery("SELECT d from DoneWork d WHERE d.orderFurniture = :order AND d.model = model AND d.part = :part")
+        Query query = getEntityManager().createQuery("SELECT d from DoneWork d WHERE d.orderFurniture = :order AND d.model = :model AND d.part = :part")
                 .setParameter("order", order)
                 .setParameter("model", model)
                 .setParameter("part", part);

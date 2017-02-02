@@ -14,7 +14,7 @@ import java.util.Calendar;
 public class ParseCode {
     private String code;
     private String gender;
-    private int dey;
+    private int day;
     private int month;
     private int year;
 
@@ -31,12 +31,12 @@ public class ParseCode {
     private void setGender(String gender){
         this.gender=gender;
     }
-    public int getDey() {
-        return dey;
+    public int getDay() {
+        return day;
     }
 
-    private void setDey(int dey) {
-        this.dey = dey;
+    private void setDay(int dey) {
+        this.day = dey;
     }
 
     public int getMonth() {
@@ -95,7 +95,7 @@ public class ParseCode {
         String month = youCode.substring(3,5);
         setMonth(Integer.parseInt(month));
         String dey = youCode.substring(5,7);
-        setDey(Integer.parseInt(dey));
+        setDay(Integer.parseInt(dey));
         
     }
     
@@ -103,7 +103,7 @@ public class ParseCode {
         Calendar dob = Calendar.getInstance();
         Calendar today = Calendar.getInstance();
 
-        dob.set(getYear(), getMonth(), getDey());
+        dob.set(getYear(), getMonth(), getDay());
         // include day of birth
         dob.add(Calendar.DAY_OF_MONTH, -1);
     // System.out.println("\ntoday="+today.get(Calendar.YEAR)+" \ndob="+dob.get(Calendar.YEAR));
@@ -119,7 +119,7 @@ public class ParseCode {
     }
     
     public String getBirthdey(){
-        String d=Integer.toString(getDey());
+        String d=Integer.toString(getDay());
         String m=Integer.toString(getMonth());
         String y=Integer.toString(getYear());
         if(getMonth()>9){

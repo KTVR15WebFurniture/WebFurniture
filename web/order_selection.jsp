@@ -44,15 +44,44 @@
                     <div class="form-inline" style="text-align: center; margin-bottom: 10px;">
                         <div class="form-group">
                             <label for="week" style="margin-right: 5px;">Неделя</label>
-                            <input name="week" value="${week}" style="width: 100px; margin-right: 5px;">
+                            <select name="currentWeek" style="width: 100px; margin-right: 5px;" onchange="submit()">
+                                <c:forEach var="i" begin="1" end="53">
+                                    <c:if test="${i eq week}">
+                                        <option value="${week}" selected="true">${week}</option>
+                                    </c:if>
+                                    <c:if test="${i ne week}">
+                                        <option value="${i}">${i}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="month" style="margin-right: 5px;">Месяц</label>
-                            <input name="month" value="${month}" style="width: 100px; margin-right: 5px;">
+                            <select name="currentMonth" style="width: 100px; margin-right: 5px;" onchange="submit()">
+                                <c:forEach var="i" begin="1" end="12">
+                                    <c:if test="${i eq month}">
+                                        <option value="${month}" selected="true">${month}</option>
+                                    </c:if>
+                                    <c:if test="${i ne month}">
+                                        <option value="${i}">${i}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+
                         </div>
                         <div class="form-group">
                             <label for="year" style="margin-right: 5px;">Год</label>
-                            <input name="year" value="${year}" style="width: 100px; margin-right: 5px;">
+                            <select name="currentYear" style="width: 100px; margin-right: 5px;" onchange="submit()">
+                                <c:forEach var="i" begin="${year - 1}" end="${year + 1}">
+                                    <c:if test="${i eq year}">
+                                        <option value="${year}" selected="true">${year}</option>
+                                    </c:if>
+                                    <c:if test="${i ne year}">
+                                        <option value="${i}">${i}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+
                         </div>
                     </div>
                     <tr>
@@ -64,10 +93,10 @@
                                 <option value="">Не выбрано</option>
                                 <c:forEach var="worker" items="${workers}">
                                     <c:if test="${worker.id eq selectedWorker.id}">
-                                        <option value="${worker.id}" selected="true">${worker.firstname} ${worker.lastname}</option>
+                                        <option value="${worker.id}" selected="true">${worker.lastname} ${worker.firstname}</option>
                                     </c:if>
                                     <c:if test="${worker.id ne selectedWorker.id}">
-                                        <option value="${worker.id}">${worker.firstname} ${worker.lastname}</option>
+                                        <option value="${worker.id}">${worker.lastname} ${worker.firstname}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -135,7 +164,7 @@
                             <select name="quantity" style="width: 250px" >
                                 <option value="">Не выбрано</option>
                                 <c:forEach var="ammount" items="${ammounts}">
-                                        <option value="${ammount}" >${ammount}</option>
+                                    <option value="${ammount}" >${ammount}</option>
                                 </c:forEach>
                             </select>
                         </td>
@@ -175,11 +204,10 @@
                                 <td style="padding: 10px">${doneWork.part.price}</td>
                                 <td style="text-align: center;">
                                     <form action="deleteWork" method="post">
-                                        <input name="parTID" hidden="true" value="${doneWork.part.id}">
-                                        <input name="workeRID" hidden="true" value="${doneWork.worker.id}">
+                                        <input name="doneWorkId" hidden="true" value="${doneWork.id}">
                                         <button type="submit" class="glyphicon glyphicon-trash"></button>
                                     </form>
-                                
+
                                 </td>
                             </tr>
                         </c:forEach>

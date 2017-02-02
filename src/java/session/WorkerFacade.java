@@ -30,10 +30,5 @@ public class WorkerFacade extends AbstractFacade<Worker> {
     public WorkerFacade() {
         super(Worker.class);
     }
-    
-    public List<Worker> workersSortedByLastname(){
-        Query query = getEntityManager().createQuery("Select w From Worker w Order by w.lastname");
-        
-        return query.getResultList();
-    }
+ 
 }
