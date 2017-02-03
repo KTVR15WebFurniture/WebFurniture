@@ -99,12 +99,12 @@ public class ModelController extends HttpServlet {
                         partduration = Integer.parseInt(request.getParameter("part_duration"));
                         Part newPart = new Part(partname, partdescription, partprice, partduration);
                         selectedModel.getParts().add(newPart);
-
+                        
                         modelFacade.edit(selectedModel);
 
                         selectedModel = modelFacade.find(modelId);
                         getServletContext().setAttribute("selectedModel", selectedModel);
-                        getServletContext().setAttribute("models", modelFacade.findAll());
+                        getServletContext().setAttribute("models", modelFacade.findAll());                        
                     }
                 }
                 if (request.getParameter("update") != null) {

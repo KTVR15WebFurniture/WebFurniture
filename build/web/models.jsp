@@ -88,19 +88,19 @@
                         <input type="hidden"  name="part_id" value="${partToEdit.id}">                            
                         
                         <label for="comment">Серийный номер: </label>
-                        <input type="text" class="form-control" id="_part_name" name="part_name" value="${partToEdit.serial}">                        
+                        <input required="true" type="text" class="form-control" id="_part_name" name="part_name" value="${partToEdit.serial}">                        
                         <br>
 
                         <label for="comment">Описание: </label>
-                        <textarea class="form-control" rows="5" id="_part_description" name="part_description">${partToEdit.description}</textarea>
+                        <textarea required="true" class="form-control" rows="5" id="_part_description" name="part_description">${partToEdit.description}</textarea>
                         <br>  
                         <div class="row">
                             <div class="col-sm-3">
                                 <label for="comment">Стоимость операции: </label>
-                                <input type="text" class="form-control" id="_part_price" name="part_price" value="${partToEdit.price}">
+                                <input required="true" type="text" class="form-control" id="_part_price" name="part_price" value="${partToEdit.price}">
                                 <br>
                                 <label for="comment">Время выполнения: </label>
-                                <input type="text" class="form-control" id="_part_duration" name="part_duration" value="${partToEdit.duration}">
+                                <input required="true" type="text" class="form-control" id="_part_duration" name="part_duration" value="${partToEdit.duration}">
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
                         </div>
                         <div class="modal-body">
                             <label for="comment">Название: </label>
-                            <input type="text" class="form-control" id="_newmodel" name="newmodel">
+                            <input required="true" type="text" class="form-control" id="_newmodel" name="newmodel">
                         </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary">Добавить</button>
